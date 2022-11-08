@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "com.community.netcode.transport.steamnetworkingsockets": "https://github.com/Unity-Technologies/multiplayer-community-contributions.git?path=/Transports/com.community.netcode.transport.steamnetworkingsockets",
+    "com.heathen.steamworksfoundation": "https://github.com/heathen-engineering/SteamworksFoundation.git?path=Unity/com.heathen.steamworksfoundation",
+    "com.heathen.systemcore": "https://github.com/heathen-engineering/SystemCore.git?path=/com.heathen.systemcore",
+    "com.rlabrecque.steamworks.net": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net",
     "com.unity.collab-proxy": "1.17.6",
     "com.unity.feature.2d": "1.0.0",
     "com.unity.ide.rider": "3.0.15",
