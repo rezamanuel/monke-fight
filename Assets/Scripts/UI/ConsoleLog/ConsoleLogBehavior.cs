@@ -7,10 +7,11 @@ public class ConsoleLogBehavior : MonoBehaviour
 {
     ConsoleLogBehavior Instance;
     [SerializeField] private Queue<string> UI_LogQueue = new Queue<string>();
-    [SerializeField] private Transform UI_ParentTransform;
     [SerializeField] private int LogQueueCapacity = 500; // no more than 500 log messages
     [SerializeField] private TextMeshProUGUI UI_ConsoleText;
-    [SerializeField] private ScrollRect UI_ScrollRect;
+    private ScrollRect UI_ScrollRect;
+
+    bool isVisible;
      void Awake(){
 
         if(Instance != null){
@@ -22,11 +23,15 @@ public class ConsoleLogBehavior : MonoBehaviour
         }
 
         UI_ScrollRect = UI_ConsoleText.gameObject.GetComponentInParent<ScrollRect>();
-       
+        isVisible =false;
+        transform.GetChild(0).gameObject.SetActive(false);
+
      }
+
     void OnEnable()
     {
         Application.logMessageReceivedThreaded += HandleLog;
+        
     }
 
     void OnDisable()
@@ -62,5 +67,11 @@ public class ConsoleLogBehavior : MonoBehaviour
         UI_ScrollRect.verticalScrollbar.value= 0;
     }
 
+    void Update(){
+        if(Input.GetButtonDown("Console Log")){
+            transform.GetChild(0).gameObject.SetActive(!isVisible);
+            isVisible = !isVisible;
+        }
+    }
 
 }
