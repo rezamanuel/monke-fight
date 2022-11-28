@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using HeathenEngineering.SteamworksIntegration;
 
-namespace Bootstrap{
+namespace Systems{
         
-    public class BootstrapLogic : MonoBehaviour
+    public class ApplicationController : MonoBehaviour
     {
         [SerializeField] float loadProgress;
         // Start is called before the first frame update

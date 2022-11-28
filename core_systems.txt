@@ -1,0 +1,13 @@
+This is an overview of the logic flow within Monke
+
+
+1. StateNode:
+    enum state;
+    -- have states, enter and exit behaviour;
+2. StateManager: 
+    -- manage states, what nodes come next, send out events
+      -- GameStateManager: what stage of game are we in? 
+            global scene elements (ie: pause time)
+
+3. IDamagable (interface):
+    

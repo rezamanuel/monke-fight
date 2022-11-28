@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LoadingBar : MonoBehaviour
 {
     private Slider slider;
-    [SerializeField] Bootstrap.BootstrapLogic bootstrap;
+    [SerializeField] Systems.ApplicationController bootstrap;
     // Start is called before the first frame update
     void Start()
     {
