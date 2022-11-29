@@ -464,7 +464,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2931645145299431019, guid: 545ed62fae8c14b479fa51caaf3cb35a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00002670288
+      value: 0.000005722046
       objectReference: {fileID: 0}
     - target: {fileID: 2931645145505464563, guid: 545ed62fae8c14b479fa51caaf3cb35a, type: 3}
       propertyPath: m_Pivot.x
@@ -1100,14 +1100,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1908498151}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df3f51dcdaec3f7459278e3349e497df, type: 3}
+  m_Script: {fileID: 11500000, guid: 805da037f68a6fb42909e1d5bf28feb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
-  <Parent>k__BackingField: {fileID: 0}
-  <IsRoot>k__BackingField: 0
   initProgress: 0
   m_NetworkManager: {fileID: 768611616}
