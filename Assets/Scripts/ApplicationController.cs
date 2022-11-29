@@ -3,23 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using HeathenEngineering.SteamworksIntegration;
+using Unity.Netcode;
+using VContainer.Unity;
+using VContainer;
+using System;
 
 namespace Systems{
+
+     /// <summary>
+    /// An entry point to the application, where we bind all the common dependencies to the root DI scope.
+    /// </summary>
         
-    public class ApplicationController : MonoBehaviour
+    public class ApplicationController : LifetimeScope
+
     {
-        [SerializeField] float loadProgress;
+        [SerializeField] float initProgress;
+        [SerializeField] NetworkManager m_NetworkManager;
         // Start is called before the first frame update
+        
+        protected override void Configure (IContainerBuilder builder)
+        {
+            base.Configure(builder);
+            builder.RegisterComponent(m_NetworkManager);
+
+        }
+
         void Start()
         {
-            StartCoroutine(Validate());
+            StartCoroutine(ValidateSteamConnection());
+            DontDestroyOnLoad(gameObject);
+            Application.wantsToQuit += onWantstoQuit;
         }
+        
+        /// <summary>
+        ///     In builds, if we are in a lobby and try to send a Leave request on application quit, it won't go through if we're quitting on the same frame.
+        ///     So, we need to delay just briefly to let the request happen (though we don't need to wait for the result).
+        /// </summary>
+        private bool onWantstoQuit()
+        {
+            throw new NotImplementedException();
+        }
+
+        #region SteamAPIConnection
+
 
         public float getLoadProgress(){
-            return loadProgress;
+            return initProgress;
         }
 
-        private IEnumerator Validate(){
+        private IEnumerator ValidateSteamConnection(){
 
             yield return null;
 
@@ -44,10 +76,11 @@ namespace Systems{
             operation.allowSceneActivation = true; // load in as soon as it's ready.
 
             while (!operation.isDone){
-                loadProgress = operation.progress;
+                initProgress = operation.progress;
                 yield return new WaitForEndOfFrame();
             }
-            loadProgress = 1f;
+            initProgress = 1f;
         }
+        #endregion
     }
 }
