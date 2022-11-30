@@ -1,10 +1,10 @@
 {
-    "name": "Unity.BossRoom.Infrastructure.ScriptableObjectArchitecture.Editor",
+    "name": "Monke.Infrastructure.ScriptableObjectArchitecture.Editor",
     "rootNamespace": "",
     "references": [
         "Unity.Netcode.Runtime",
         "Unity.TextMeshPro",
-        "Unity.BossRoom.Infrastructure"
+        "Monke.Infrastructure"
     ],
     "includePlatforms": [
         "Editor"

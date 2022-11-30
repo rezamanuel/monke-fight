@@ -1,5 +1,5 @@
 {
-    "name": "Unity.BossRoom.Infrastructure",
+    "name": "Monke.Infrastructure",
     "rootNamespace": "",
     "references": [
         "Unity.Netcode.Runtime",

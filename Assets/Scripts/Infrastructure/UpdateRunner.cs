@@ -26,7 +26,7 @@ namespace Monke.Infrastructure
             m_Subscribers.Clear();
             m_SubscriberData.Clear();
         }
-
+ 
         /// <summary>
         /// Subscribe in order to have onUpdate called approximately every period seconds (or every frame, if period <= 0).
         /// Don't assume that onUpdate will be called in any particular order compared to other subscribers.
