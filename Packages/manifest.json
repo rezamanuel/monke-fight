@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.community.netcode.transport.steamnetworkingsockets": "https://github.com/Unity-Technologies/multiplayer-community-contributions.git?path=/Transports/com.community.netcode.transport.steamnetworkingsockets",
+    "com.community.netcode.transport.steamnetworking": "https://github.com/Unity-Technologies/multiplayer-community-contributions.git?path=/Transports/com.community.netcode.transport.steamnetworking",
     "com.heathen.steamworksfoundation": "https://github.com/heathen-engineering/SteamworksFoundation.git?path=Unity/com.heathen.steamworksfoundation",
     "com.heathen.systemcore": "https://github.com/heathen-engineering/SystemCore.git?path=/com.heathen.systemcore",
     "com.rlabrecque.steamworks.net": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net",
@@ -10,6 +10,7 @@
     "com.unity.ide.visualstudio": "2.0.16",
     "com.unity.ide.vscode": "1.2.5",
     "com.unity.inputsystem": "1.4.4",
+    "com.unity.multiplayer.samples.coop": "https://github.com/Unity-Technologies/com.unity.multiplayer.samples.coop.git?path=/Packages/com.unity.multiplayer.samples.coop#main",
     "com.unity.multiplayer.tools": "1.0.0",
     "com.unity.netcode.gameobjects": "1.0.2",
     "com.unity.test-framework": "1.1.33",

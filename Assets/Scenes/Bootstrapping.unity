@@ -462,9 +462,13 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2931645145014806113, guid: 545ed62fae8c14b479fa51caaf3cb35a, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2931645145299431019, guid: 545ed62fae8c14b479fa51caaf3cb35a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000005722046
+      value: -0.000047683716
       objectReference: {fileID: 0}
     - target: {fileID: 2931645145505464563, guid: 545ed62fae8c14b479fa51caaf3cb35a, type: 3}
       propertyPath: m_Pivot.x
@@ -610,7 +614,7 @@ GameObject:
   m_Component:
   - component: {fileID: 768611617}
   - component: {fileID: 768611616}
-  - component: {fileID: 768611615}
+  - component: {fileID: 768611618}
   m_Layer: 0
   m_Name: Network Manager
   m_TagString: Untagged
@@ -618,20 +622,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &768611615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 768611614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc4ccaff1920208429cca7c350560301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ConnectToSteamID: 480
-  options: []
 --- !u!114 &768611616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -648,10 +638,10 @@ MonoBehaviour:
   LogLevel: 1
   NetworkConfig:
     ProtocolVersion: 0
-    NetworkTransport: {fileID: 768611615}
-    PlayerPrefab: {fileID: 0}
+    NetworkTransport: {fileID: 768611618}
+    PlayerPrefab: {fileID: 7614116224725027697, guid: 71118d0937355484e8bcdd1458814406, type: 3}
     NetworkPrefabs: []
-    TickRate: 30
+    TickRate: 60
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
     ConnectionData: 
@@ -681,6 +671,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &768611618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768611614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b81d70b2c3b41142a37e631239ef533, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConnectToSteamID: 480
 --- !u!1 &934274776
 GameObject:
   m_ObjectHideFlags: 0

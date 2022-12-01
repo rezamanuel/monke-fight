@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   applicationId:
     m_AppId: 480
-  isDebugging: 0
+  isDebugging: 1
   server:
-    autoInitialize: 0
+    autoInitialize: 1
     autoLogon: 0
-    ip: 0
+    ip: 2130706433
     queryPort: 27016
     gamePort: 27015
     serverVersion: 1.0.0.0
@@ -29,14 +29,14 @@ MonoBehaviour:
     enableHeartbeats: 1
     supportSpectators: 0
     spectatorServerName: Usually GameDescription + Spectator
-    anonymousServerLogin: 0
-    gameServerToken: See https://steamcommunity.com/dev/managegameservers
+    anonymousServerLogin: 1
+    gameServerToken: FD16E09AC26F5A6411685DFC3911560C
     isPasswordProtected: 0
     serverName: My Server Name
     gameDescription: Usually the name of your game
     gameDirectory: e.g. its folder name
     isDedicated: 0
-    maxPlayerCount: 4
+    maxPlayerCount: 2
     botPlayerCount: 0
     mapName: 
     gameData: 
