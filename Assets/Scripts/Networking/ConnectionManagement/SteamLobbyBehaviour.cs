@@ -32,7 +32,7 @@ namespace Monke.Networking
 
         private void OnLobbyCreated(LobbyCreated_t callback)
         {
-            if (callback.m_eResult != EResult.k_EResultOK) { return; }
+            if (callback.m_eResult != EResult.k_EResultOK) { Debug.LogError("Could not successfully create Lobby"); return; }
 
             Debug.Log("Lobby created Successfully");
 
