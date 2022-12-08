@@ -22,6 +22,7 @@ namespace Monke.Networking
             LobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
             JoinRequest = Callback<GameLobbyJoinRequested_t>.Create(OnJoinRequest);
             LobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+            netmanager = this.GetComponent<Monke.Networking.MonkeNetworkManager>();
         }
 
         public void HostLobby()
