@@ -782,7 +782,7 @@ GameObject:
   - component: {fileID: 649397564}
   - component: {fileID: 649397563}
   m_Layer: 5
-  m_Name: NetworkManager
+  m_Name: NetworkCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -891,7 +891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2931645145299431019, guid: 545ed62fae8c14b479fa51caaf3cb35a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000034332275
+      value: -0.000020980835
       objectReference: {fileID: 0}
     - target: {fileID: 2931645145505464563, guid: 545ed62fae8c14b479fa51caaf3cb35a, type: 3}
       propertyPath: m_Pivot.x
@@ -1036,8 +1036,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 768611617}
-  - component: {fileID: 768611616}
   - component: {fileID: 768611618}
+  - component: {fileID: 768611620}
+  - component: {fileID: 768611619}
   m_Layer: 0
   m_Name: Network Manager
   m_TagString: Untagged
@@ -1045,40 +1046,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &768611616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 768611614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 593a2fe42fa9d37498c96f9a383b6521, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RunInBackground: 1
-  LogLevel: 1
-  NetworkConfig:
-    ProtocolVersion: 0
-    NetworkTransport: {fileID: 768611618}
-    PlayerPrefab: {fileID: 7614116224725027697, guid: 71118d0937355484e8bcdd1458814406, type: 3}
-    NetworkPrefabs: []
-    TickRate: 60
-    ClientConnectionBufferTimeout: 10
-    ConnectionApproval: 0
-    ConnectionData: 
-    EnableTimeResync: 0
-    TimeResyncInterval: 30
-    EnsureNetworkVariableLengthSafety: 0
-    EnableSceneManagement: 1
-    ForceSamePrefabs: 1
-    RecycleNetworkIds: 1
-    NetworkIdRecycleDelay: 120
-    RpcHashSize: 0
-    LoadSceneTimeOut: 120
-    SpawnTimeout: 1
-    EnableNetworkLogs: 1
 --- !u!4 &768611617
 Transform:
   m_ObjectHideFlags: 0
@@ -1107,6 +1074,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ConnectToSteamID: 480
+--- !u!114 &768611619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768611614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a99a2169a8b2b00488475c788ee0978e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentLobbyID: 0
+--- !u!114 &768611620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768611614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec463e8f8f03548498440e75619b40e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RunInBackground: 1
+  LogLevel: 1
+  NetworkConfig:
+    ProtocolVersion: 0
+    NetworkTransport: {fileID: 768611618}
+    PlayerPrefab: {fileID: 0}
+    NetworkPrefabs: []
+    TickRate: 45
+    ClientConnectionBufferTimeout: 10
+    ConnectionApproval: 0
+    ConnectionData: 
+    EnableTimeResync: 0
+    TimeResyncInterval: 30
+    EnsureNetworkVariableLengthSafety: 0
+    EnableSceneManagement: 1
+    ForceSamePrefabs: 1
+    RecycleNetworkIds: 1
+    NetworkIdRecycleDelay: 120
+    RpcHashSize: 0
+    LoadSceneTimeOut: 120
+    SpawnTimeout: 1
+    EnableNetworkLogs: 1
 --- !u!1 &788655120
 GameObject:
   m_ObjectHideFlags: 0
@@ -1601,7 +1615,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1501534127}
-  - component: {fileID: 1501534128}
   m_Layer: 5
   m_Name: NetworkManagerUI
   m_TagString: Untagged
@@ -1632,21 +1645,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1501534128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1501534126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4fb3723d4a392c48b024508e5104630, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serverBtn: {fileID: 249599285}
-  hostBtn: {fileID: 2001804422}
-  clientBtn: {fileID: 503643074}
 --- !u!1 &1652930967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1894,7 +1892,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   initProgress: 0
-  m_NetworkManager: {fileID: 768611616}
+  m_NetworkManager: {fileID: 0}
 --- !u!1 &2001804420
 GameObject:
   m_ObjectHideFlags: 0
@@ -1978,7 +1976,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2001804423}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 768611619}
+        m_TargetAssemblyTypeName: Monke.Networking.SteamLobbyBehaviour, Assembly-CSharp
+        m_MethodName: HostLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2001804423
 MonoBehaviour:
   m_ObjectHideFlags: 0
