@@ -646,7 +646,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 503643075}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 768611614}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &503643075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -891,7 +903,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2931645145299431019, guid: 545ed62fae8c14b479fa51caaf3cb35a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000020980835
+      value: -0.0000019073486
       objectReference: {fileID: 0}
     - target: {fileID: 2931645145505464563, guid: 545ed62fae8c14b479fa51caaf3cb35a, type: 3}
       propertyPath: m_Pivot.x
@@ -1867,7 +1879,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1908498151}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 999.0687, y: 336.84766, z: -8.910772}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1892,7 +1904,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   initProgress: 0
-  m_NetworkManager: {fileID: 0}
+  m_NetworkManager: {fileID: 768611620}
 --- !u!1 &2001804420
 GameObject:
   m_ObjectHideFlags: 0
