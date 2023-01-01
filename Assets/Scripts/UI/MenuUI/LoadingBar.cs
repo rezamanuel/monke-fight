@@ -17,5 +17,8 @@ public class LoadingBar : MonoBehaviour
     void Update()
     {
         slider.value = bootstrap.getLoadProgress();
+        if(slider.value == 1){
+            Destroy(this.gameObject);
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace Monke.GameState
     {
         Init,
         MainMenu,
-        Fight,
+        Match,
         PostGame
 
     }

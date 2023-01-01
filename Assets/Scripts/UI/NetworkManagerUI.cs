@@ -12,22 +12,26 @@ public class NetworkManagerUI : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-     serverBtn.onClick.AddListener(() => {
+        serverBtn.onClick.AddListener(() =>
+        {
             NetworkManager.Singleton.StartServer();
-     });
+        });
 
-     hostBtn.onClick.AddListener(() => {
+        hostBtn.onClick.AddListener(() =>
+        {
             NetworkManager.Singleton.StartHost();
-     });
+        });
 
-     clientBtn.onClick.AddListener(() => {
+        clientBtn.onClick.AddListener(() =>
+        {
             NetworkManager.Singleton.StartClient();
-     });
+
+        });
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

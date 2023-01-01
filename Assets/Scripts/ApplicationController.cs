@@ -11,7 +11,7 @@ using System;
 namespace Systems{
 
      /// <summary>
-    /// An entry point to the application, where we bind all the common dependencies to the root DI scope.
+    /// An entry point to the application, where we bind all the common dependencies to the root DI scope. Performs initialization.
     /// </summary>
         
     public class ApplicationController : LifetimeScope
@@ -64,17 +64,23 @@ namespace Systems{
             Debug.Log( "Waiting... 1");
             yield return new WaitForSeconds(1f);
 
-            yield return new WaitUntil(() => SteamSettings.Initialized);
+            
+            // UNCOMMENT BELOW FOR STEAM-COMPATIBLE BUILD
+            
+            // yield return new WaitUntil(() => SteamSettings.Initialized);
 
             Debug.Log( "Steam API is initialized. Starting Scene Load");
             // Must load the scene additively, meaning no scene unloaded
             // For additive structure, manually specify what scene gets unloaded and when.
             // never unload bootstrap; will house camera, other system-level things.
-            
-            var operation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-            
-            operation.allowSceneActivation = true; // load in as soon as it's ready.
 
+           StartCoroutine(LoadMenu()); // 1 is the main menu, TODO: make an enum list with the proper scene names?
+
+        }
+
+        private IEnumerator LoadMenu(){
+            var operation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive); 
+            operation.allowSceneActivation = true; // load in as soon as it's ready.
             while (!operation.isDone){
                 initProgress = operation.progress;
                 yield return new WaitForEndOfFrame();

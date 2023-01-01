@@ -56,7 +56,7 @@ namespace Monke.Networking
 
             CurrentLobbyID = callback.m_ulSteamIDLobby;
             Debug.Log("Lobby Name: " + SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name"));
-
+            Debug.Log("Client Connected: " + SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name"));
             //Clients
 
             netmanager.GetComponent<SteamNetworkingTransport>().ConnectToSteamID = callback.m_ulSteamIDLobby;

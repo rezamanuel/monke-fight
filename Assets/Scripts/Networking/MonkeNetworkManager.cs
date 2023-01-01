@@ -8,7 +8,9 @@ namespace Monke.Networking
         
     public class MonkeNetworkManager : NetworkManager
     {
-        
+        void OnLoadEventCompleted (){
+            
+        }
     }
 
 }
