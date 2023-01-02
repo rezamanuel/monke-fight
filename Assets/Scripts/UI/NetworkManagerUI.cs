@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class NetworkManagerUI : MonoBehaviour
 {
@@ -15,23 +16,22 @@ public class NetworkManagerUI : MonoBehaviour
         serverBtn.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartServer();
+            SceneManager.UnloadSceneAsync(1); // unload main menu
+
         });
 
         hostBtn.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartHost();
+            SceneManager.UnloadSceneAsync(1); // unload main menu
         });
 
         clientBtn.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartClient();
+            
+            SceneManager.UnloadSceneAsync(1); // unload main menu
 
         });
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

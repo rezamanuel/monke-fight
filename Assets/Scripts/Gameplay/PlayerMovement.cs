@@ -5,7 +5,7 @@ using Unity.Netcode;
 
 public class PlayerMovement : NetworkBehaviour
 {
-    [SerializeField] private float MoveSpeed = 4f;
+    [SerializeField] private float MoveSpeed = 6f;
     
     private Vector3 moveDir;
     // Start is called before the first frame update
