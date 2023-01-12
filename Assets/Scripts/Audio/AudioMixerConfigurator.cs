@@ -41,8 +41,8 @@ namespace Monke.Audio
 
         public void Configure()
         {
-            m_Mixer.SetFloat(m_MixerVarMainVolume, GetVolumeInDecibels(ClientPrefs.GetMasterVolume()));
-            m_Mixer.SetFloat(m_MixerVarMusicVolume, GetVolumeInDecibels(ClientPrefs.GetMusicVolume()));
+            m_Mixer.SetFloat(m_MixerVarMainVolume, GetVolumeInDecibels(Monke.Utilities.ClientPrefs.GetMasterVolume()));
+            m_Mixer.SetFloat(m_MixerVarMusicVolume, GetVolumeInDecibels(Monke.Utilities.ClientPrefs.GetMusicVolume()));
         }
 
         private float GetVolumeInDecibels(float volume)
