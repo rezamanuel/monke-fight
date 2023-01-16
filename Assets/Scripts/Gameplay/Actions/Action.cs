@@ -6,13 +6,34 @@ using Unity.Netcode;
 
 namespace Monke.Gameplay.Actions
 {
+    public enum ActionType
+    {
+        Shoot,
+        Block
+    }
     public class Action : ScriptableObject
     {
-        public ActionID ActionID;
+        [NonSerialized] public ActionID ActionID;
 
         protected ActionRequestData m_Data;
 
         public ref ActionRequestData Data => ref m_Data;
+
+        private float TimeStarted;
+
+        public void Initialize(ref ActionRequestData data)
+        {
+            m_Data = data;
+            ActionID = m_Data.actionID;
+        }
+
+
+        public virtual void Reset()
+        {
+            m_Data = default;
+            ActionID = default;
+            TimeStarted = 0;
+        }
         // Start is called before the first frame update
         void Start()
         {
@@ -67,7 +88,5 @@ namespace Monke.Gameplay.Actions
 
     }
 
-    public class ActionRequestData
-    {
-    }
+   
 }

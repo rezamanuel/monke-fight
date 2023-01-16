@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Unity.Multiplayer.Samples.BossRoom
+namespace Monke.Utilities
 {
     public interface ISessionPlayerData
     {
