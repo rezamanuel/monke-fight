@@ -10,8 +10,8 @@ namespace Monke.Gameplay.Actions
 {
     public static class ActionLibrary
     {
-
-        private static  Dictionary<ActionID, ObjectPool<Action>> s_ActionPools = new Dictionary<ActionID, ObjectPool<Action>>(); //holds a cached copy of action prototypes. (prototypes are like prefabs, but for Actions) each dict value is a separate Action Pool, w/ multiple copies
+        //ActionLibrary can clone multiple copies of the same Action (fetched from ActionSource) -- and cache it into memory, dispose of the clones as needed. Each pool exists as a value of the ActionID key.
+        private static  Dictionary<ActionID, ObjectPool<Action>> s_ActionPools = new Dictionary<ActionID, ObjectPool<Action>>(); //holds a cached copy of actions
 
         private static ObjectPool<Action> GetActionPool(ActionID actionId)
         {

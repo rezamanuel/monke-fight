@@ -9,6 +9,7 @@ namespace Monke.Gameplay.Actions
         public ActionID actionID;
         public Vector3 m_Position;
         public Vector3 m_Direction; // Direction of action, usually normalized
+        public ActionType m_actionType;
 
         public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
         {

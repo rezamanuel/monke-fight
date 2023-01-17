@@ -12,6 +12,8 @@ namespace Monke.Gameplay.Character
         
         NetworkHealthState healthState;
 
+        public ServerCharacterAttributes serverCharacterAttributes;
+
         [ServerRpc]
         public void DoActionServerRpc(ActionID actionId, ActionRequestData actionRequestData) 
         {
