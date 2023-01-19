@@ -17,7 +17,7 @@ namespace Monke.Gameplay.Character
         [ServerRpc]
         public void DoActionServerRpc(ActionID actionId, ActionRequestData actionRequestData) 
         {
-            // call Server Action Player PlayAction( actionRequestData) // only 1 server action player in lobby; will add action to its queue
+            // call Server Action Player PlayAction( actionRequestData)
             // check for 
         }
 

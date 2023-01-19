@@ -15,10 +15,11 @@ namespace Monke.Gameplay.Actions
     public abstract class Action : ScriptableObject
     {
         [NonSerialized] public ActionID ActionID;
-        protected ActionType m_ActionType;
+        public ActionType m_ActionType { get; private set; }
         public float TimeStarted { get; set; }
         public float TimeRunning { get { return (Time.time - TimeStarted); } }
-        
+        public bool isActive; // has this action End()'d?
+
         protected ActionRequestData m_Data;
 
         public ref ActionRequestData Data => ref m_Data;
@@ -42,21 +43,6 @@ namespace Monke.Gameplay.Actions
         public abstract void OnUpdate(ClientCharacter clientCharacter);
 
         public abstract void End();
-
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-         /// <summary>
-        /// Called when the Action ends naturally. By default just calls Cancel()
-        /// </summary>
         public virtual void End(ServerCharacter serverCharacter)
         {
             Cancel(serverCharacter);

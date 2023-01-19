@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class PlayerControls : NetworkBehaviour
+public class ClientPlayerControls : NetworkBehaviour
 {
     [SerializeField] private float MoveSpeed = 6f;
     

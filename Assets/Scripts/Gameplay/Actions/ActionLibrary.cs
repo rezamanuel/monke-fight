@@ -38,5 +38,10 @@ namespace Monke.Gameplay.Actions
             return action;
         }
 
+        public static void ReturnAction(Action action)
+        {
+            var pool = GetActionPool(action.ActionID);
+            pool.Release(action);
+        }
     }
 }
