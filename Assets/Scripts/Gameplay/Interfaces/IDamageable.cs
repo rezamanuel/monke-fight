@@ -2,7 +2,7 @@ using UnityEngine;
 using Monke.Gameplay.Character;
 using System;
 
-namespace Monke.Gameplay
+namespace Monke.Gameplay.Interfaces
 {
      /// <summary>
     /// Generic interface for damageable objects in the game. This includes ServerCharacter

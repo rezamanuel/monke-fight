@@ -20,33 +20,53 @@ namespace Monke.Gameplay.ClientPlayer
             MouseClick
         }
         struct ActionRequest{
-            ActionID actionID;
-            InputTriggerStyle inputTriggerStyle;
+            public ActionID actionID;
+            public InputTriggerStyle inputTriggerStyle;
         }
         //static array of action Requests that can be inputted per frame. 
         //static = less memory overhead, we won't need more than 5
         ActionRequest[] m_ActionRequests = new ActionRequest[5];
         int m_ActionRequestCount;
 
-        struct ActionSlot{
-            ActionID slottedActionID;
-            bool isEnabled;
-            void SetSlottedActionId(ActionID id)
-            {
-                isEnabled = true;
-                slottedActionID = id;
-            }
+        public class ActionSlot{
+            public ActionID slottedActionID;
+            public bool isEnabled = false;
         }
-        ActionSlot m_ActionSlot1 = new ActionSlot();
-        ActionSlot m_ActionSlot2 = new ActionSlot();
-        ActionSlot m_ActionSlot3= new ActionSlot();
+        
+        public ActionSlot m_ActionSlot1;
+        public ActionSlot m_ActionSlot2;
+        public ActionSlot m_ActionSlot3;
         public override void OnNetworkSpawn(){
             if (!IsClient || !IsOwner) enabled = false;
             m_ActionRequestCount = 0;
-            
+
+            // initialize 'skill slots' from character attribute Scriptable Object
+            if (ActionSource.Instance.TryGetActionPrototypeByID(m_ServerCharacter.m_ServerCharacterAttributes.actionPrototype1.ActionID, out Action action1)){
+                m_ActionSlot1 = new ActionSlot() { slottedActionID = action1.ActionID, isEnabled = true };
+            }
+            if (ActionSource.Instance.TryGetActionPrototypeByID(m_ServerCharacter.m_ServerCharacterAttributes.actionPrototype2.ActionID, out Action action2)){
+                m_ActionSlot2 = new ActionSlot() { slottedActionID = action2.ActionID, isEnabled = true };
+            }
+            if (ActionSource.Instance.TryGetActionPrototypeByID(m_ServerCharacter.m_ServerCharacterAttributes.actionPrototype1.ActionID, out Action action3)){
+                m_ActionSlot3 = new ActionSlot() { slottedActionID = action3.ActionID, isEnabled = true };
+            }
         }
         public override void OnNetworkDespawn(){
+            // unsubscribe from events / delegates
+        }
 
+        public void SendActionRequest(ActionRequestData action){
+            m_ServerCharacter.DoActionServerRpc(action);
+        }
+
+        void Update()
+        {
+            //Process Key Inputs + queue action requests.
+
+        }
+
+        void FixedUpdate(){
+            //dequeue action requests, pass onto ServerActionPlayer thru SendActionRequest
         }
         
     }

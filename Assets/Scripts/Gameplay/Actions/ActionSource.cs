@@ -18,6 +18,17 @@ namespace Monke.Gameplay.Actions
             // will 
             return m_actionPrototypes[actionId.ID];
         }
+        public bool TryGetActionPrototypeByID(ActionID actionId, out Action action)
+        {
+            // will return true if m_actionPrototypes contains the provided ID
+            try{
+                action = m_actionPrototypes[actionId.ID];
+                return true;
+            } catch{
+                action = null;
+                return false;
+            }
+        }
 
         private void PopulateAllActions()
         {
