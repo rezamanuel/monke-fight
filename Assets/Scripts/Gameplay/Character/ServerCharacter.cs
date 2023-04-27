@@ -40,7 +40,7 @@ namespace Monke.Gameplay.Character
         }
         public override void OnNetworkDespawn()
         {
-            
+             m_DamageReceiver.DamageReceived -= ReceiveHP;
         }
 
         /// <summary>
