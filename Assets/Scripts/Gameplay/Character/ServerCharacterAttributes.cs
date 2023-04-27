@@ -15,6 +15,9 @@ namespace Monke.Gameplay.Character
         public float bulletDamage;
         public float bulletSize;
 
+        public Action actionPrototype1;
+        public Action actionPrototype2;
+        public Action actionPrototype3;
         public int clipSize;
         public int maxHealth;
         public int moveSpeed;
