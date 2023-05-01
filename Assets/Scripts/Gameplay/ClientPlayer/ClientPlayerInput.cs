@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.Netcode;
 using Monke.Gameplay.Character;
 using Monke.Gameplay.Actions;
+using UnityEngine.Assertions;
 
 namespace Monke.Gameplay.ClientPlayer
 {
@@ -14,7 +15,7 @@ namespace Monke.Gameplay.ClientPlayer
     {
         // InputTriggerStyles are how actions are triggered (ie via key release, mouse click, etc.)
         ServerCharacter m_ServerCharacter;
-        enum InputTriggerStyle{
+        public enum InputTriggerStyle{
             KeyRelease,
             KeyPress,
             MouseClick
@@ -59,14 +60,37 @@ namespace Monke.Gameplay.ClientPlayer
             m_ServerCharacter.DoActionServerRpc(action);
         }
 
+         /// <summary>
+        /// Request an action be performed. This will occur on the next FixedUpdate.
+        /// </summary>
+        /// <param name="actionID"> The action you'd like to perform. </param>
+        /// <param name="triggerStyle"> What input style triggered this action. </param>
+        /// <param name="targetId"> NetworkObjectId of target. </param>
+        public void RequestAction(ActionID actionID, InputTriggerStyle triggerStyle)
+        {
+            Assert.IsNotNull(ActionSource.Instance.GetActionPrototypeByID(actionID),
+                $"Action with actionID {actionID} must be contained in the Action prototypes of ActionSource!");
+
+            if (m_ActionRequestCount < m_ActionRequests.Length)
+            {
+                m_ActionRequests[m_ActionRequestCount].actionID = actionID;
+                m_ActionRequests[m_ActionRequestCount].inputTriggerStyle = triggerStyle;
+                m_ActionRequestCount++;
+            }
+        }
+
         void Update()
         {
-            //Process Key Inputs + queue action requests.
+            //Process Key Inputs + request actions.
+            input
+            //if X key, Request Action
 
         }
 
         void FixedUpdate(){
             //dequeue action requests, pass onto ServerActionPlayer thru SendActionRequest
+
+            //foreach ActionRequests[], verify prototype exists in ActionSource, Send Action Request.
         }
         
     }
