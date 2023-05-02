@@ -37,6 +37,7 @@ namespace Monke.Gameplay.ClientPlayer
         public ActionSlot m_ActionSlot1;
         public ActionSlot m_ActionSlot2;
         public ActionSlot m_ActionSlot3;
+
         public override void OnNetworkSpawn(){
             if (!IsClient || !IsOwner) enabled = false;
             m_ActionRequestCount = 0;
@@ -79,10 +80,13 @@ namespace Monke.Gameplay.ClientPlayer
             }
         }
 
+        
+        
+
         void Update()
         {
             //Process Key Inputs + request actions.
-            input
+            
             //if X key, Request Action
 
         }

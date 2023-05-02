@@ -58,11 +58,11 @@ namespace Systems{
             // check for dependent systems or integrations; load required data (like system settings, etc.)
 
             Debug.Log( "Waiting... 3");
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0f);
             Debug.Log( "Waiting... 2");
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0f);
             Debug.Log( "Waiting... 1");
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0f);
 
             
             // UNCOMMENT BELOW FOR STEAM-COMPATIBLE BUILD
