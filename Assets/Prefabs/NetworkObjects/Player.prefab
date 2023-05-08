@@ -2858,16 +2858,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c99bf5c4b8149f44b192dba2c612545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 6
+  MoveSpeed: 10.53
   m_MovementInput: {x: 0, y: 0}
   m_Velocity: {x: 0, y: 0, z: 0}
-  jumpHeight: 13.79
-  lerpPercent: 10.28
-  jumpDecay: 8.19
-  isTouchingGround: 1
+  jumpVelocity: 0.46
+  jumpPower: 0.46
+  movementLerpPercent: 11.5
+  gravityLerpPercent: 512.4
+  jumpDecayTime: 0.54
+  isTouchingGround: 0
   isJumping: 0
-  gravity: 1
-  m_MovementCollider: {fileID: 2340738643432084034}
+  gravity: 20.17
+  m_MovementCollider: {fileID: 0}
 --- !u!114 &321842031224532683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2923,7 +2925,7 @@ MonoBehaviour:
   RotAngleThreshold: 0.01
   ScaleThreshold: 0.01
   InLocalSpace: 0
-  Interpolate: 1
+  Interpolate: 0
 --- !u!114 &5908509970897942176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3347,8 +3349,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8398064118927875543}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.87, z: 0}
+  m_LocalRotation: {x: -0, y: -0.70563823, z: -0, w: 0.7085724}
+  m_LocalPosition: {x: -0.035519924, y: -0.87, z: -0.043455854}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3357,7 +3359,7 @@ Transform:
   - {fileID: 4675019721453812011}
   m_Father: {fileID: 7614116224725027703}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -89.762, z: 0}
 --- !u!1 &8477920913514305143
 GameObject:
   m_ObjectHideFlags: 0
