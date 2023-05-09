@@ -2806,7 +2806,10 @@ GameObject:
   - component: {fileID: 5908509970897942176}
   - component: {fileID: 2340738643432084034}
   - component: {fileID: 5052505408558056683}
+  - component: {fileID: 712207777497342715}
   - component: {fileID: 3612081205233030812}
+  - component: {fileID: 7329179167017357156}
+  - component: {fileID: 656648316563225858}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -2858,17 +2861,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c99bf5c4b8149f44b192dba2c612545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 10.53
+  MoveSpeed: 15.39
+  m_MousePosition: {x: 1488, y: 310}
+  m_MouseWorldPosition: {x: 0.36442444, y: -0.071873605, z: 0}
   m_MovementInput: {x: 0, y: 0}
   m_Velocity: {x: 0, y: 0, z: 0}
-  jumpVelocity: 0.46
-  jumpPower: 0.46
-  movementLerpPercent: 11.5
+  jumpVelocity: 0.59
+  jumpPower: 0.59
+  movementLerpPercent: 12.9
   gravityLerpPercent: 512.4
-  jumpDecayTime: 0.54
+  jumpDecayTime: 1.5
   isTouchingGround: 0
   isJumping: 0
-  gravity: 20.17
+  gravity: 57.7
   m_MovementCollider: {fileID: 0}
 --- !u!114 &321842031224532683
 MonoBehaviour:
@@ -2968,6 +2973,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 1
+--- !u!114 &712207777497342715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614116224725027697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad33fead19c342409014bdaf8e281c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HitPoints:
+    m_InternalValue: 0
 --- !u!114 &3612081205233030812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2980,6 +2999,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7329179167017357156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614116224725027697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f1e12b949315624da489aba27c64583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testint: 0
+--- !u!114 &656648316563225858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614116224725027697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7032bb8a7262fa24d9a511a34234eeb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ServerCharacterAttributes: {fileID: 0}
 --- !u!1 &7729272868357391596
 GameObject:
   m_ObjectHideFlags: 0
