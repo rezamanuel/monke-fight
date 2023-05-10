@@ -18,8 +18,7 @@ namespace Monke.Utilities
     /// </summary>
     /// <remarks>
     /// Using a client-generated player ID and sending it directly could be problematic, as a malicious user could
-    /// intercept it and reuse it to impersonate the original user. We are currently investigating this to offer a
-    /// solution that handles security better.
+    /// intercept it and reuse it to impersonate the original user. :/
     /// </remarks>
     /// <typeparam name="T"></typeparam>
     public class SessionManager<T> where T : struct, ISessionPlayerData
