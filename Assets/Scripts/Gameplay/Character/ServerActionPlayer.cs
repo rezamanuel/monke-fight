@@ -13,7 +13,7 @@ namespace Monke.Gameplay.Character
         private List<Action> m_ActionQueue; // loaded at-will, unloaded each update()
         private List<Action> m_ActiveActionList; //list of active actions, check if still active every update(); if not, free from memory.
         private Dictionary<ActionType, Action> m_BlockingActionList; //list of actions that will block new action queuing, sorted by ActionType
-        ServerActionPlayer(ServerCharacter serverCharacter)
+        public ServerActionPlayer(ServerCharacter serverCharacter)
         {
             this.m_ServerCharacter = serverCharacter;
             this.m_ActionQueue = new List<Action>();
@@ -64,7 +64,7 @@ namespace Monke.Gameplay.Character
             foreach(var keyValuePair in m_BlockingActionList)
             {
                 var action = keyValuePair.Value;
-                float slot_cooldown = m_ServerCharacter.m_ServerCharacterAttributes.actionCooldowns[action.m_ActionType];
+                float slot_cooldown = m_ServerCharacter.m_CharacterAttributes.actionCooldowns[action.m_ActionType];
                 Action blocking_action = m_BlockingActionList[action.m_ActionType];
                 if (blocking_action.TimeRunning > slot_cooldown)
                 {

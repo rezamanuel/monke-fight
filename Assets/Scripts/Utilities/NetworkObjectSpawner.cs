@@ -37,8 +37,8 @@ namespace Monke.Utilities
             SpawnNetworkObject();
             Destroy(gameObject);
         }
-
-        void SpawnNetworkObject()
+        
+        public void SpawnNetworkObject()
         {
             var instantiatedNetworkObject = Instantiate(prefabReference, transform.position, transform.rotation, null);
             SceneManager.MoveGameObjectToScene(instantiatedNetworkObject.gameObject,

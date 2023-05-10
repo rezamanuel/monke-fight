@@ -2,9 +2,10 @@ using UnityEngine;
 using Unity.Netcode;
 using System.Collections.Generic;
 using Monke.Gameplay.Character;
+
 namespace Monke.Gameplay.Actions
 {
-
+[CreateAssetMenu(menuName = "Monke/Actions/ShootAction")]
     public class ShootAction : Action{
 
         [SerializeField] GameObject bulletPrefab;

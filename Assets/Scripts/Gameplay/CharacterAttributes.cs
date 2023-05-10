@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using Monke.Gameplay.Actions;
 
-namespace Monke.Gameplay.Character
+namespace Monke.Gameplay
 {
-    public class ServerCharacterAttributes : ScriptableObject 
-
+ [CreateAssetMenu(menuName = "Monke/CharacterAttributes")]
+    public class CharacterAttributes : ScriptableObject 
     // These attributes are baseline stats for each player, and get modified at runtime to reflect the bonuses from certain actions; IE: shootBullet offers no buffs, but Speedball offers +1 bulletSpeed, etc.
     {
         
@@ -22,4 +22,6 @@ namespace Monke.Gameplay.Character
         public int maxHealth;
         public int moveSpeed;
     }
+
 }
+   

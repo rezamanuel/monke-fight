@@ -5,20 +5,27 @@ using Unity.Netcode;
 
 namespace Monke.Gameplay.Character
 {
-    [RequireComponent(typeof(NetworkHealthState))]
+    [RequireComponent(typeof(NetworkHealthState))] [RequireComponent(typeof(DamageReceiver))]
     public class ServerCharacter : NetworkBehaviour
     {
-        ClientCharacter m_ClientCharacter;
+        public ClientCharacter m_ClientCharacter;
         ServerActionPlayer m_ServerActionPlayer;
         NetworkHealthState m_HealthState;
         DamageReceiver m_DamageReceiver;
 
-        public ServerCharacterAttributes m_ServerCharacterAttributes;
+        public CharacterAttributes m_CharacterAttributes;
 
         public int HitPoints
         {
             get => m_HealthState.HitPoints.Value;
             private set => m_HealthState.HitPoints.Value = value;
+        }
+        public void Awake()
+        {
+            m_ClientCharacter = GetComponentInChildren<ClientCharacter>();
+            m_ServerActionPlayer = new ServerActionPlayer(this);
+            m_HealthState = GetComponent<NetworkHealthState>();
+            m_DamageReceiver = GetComponent<DamageReceiver>();
         }
 
         [ServerRpc]
@@ -55,7 +62,7 @@ namespace Monke.Gameplay.Character
 
         void InitializeHitPoints()
         {
-            HitPoints = m_ServerCharacterAttributes.maxHealth;
+            HitPoints = m_CharacterAttributes.maxHealth;
         }
 
     }

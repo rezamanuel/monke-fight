@@ -57,7 +57,6 @@ public class ClientPlayerBasicMovement : NetworkBehaviour
         isJumping = false;
         m_Velocity.y = 0;
         jumpPower = jumpVelocity;
-        Debug.Log("homola homoula");
     }void OnCollisionExit(Collision c){
         isTouchingGround = false;
     }

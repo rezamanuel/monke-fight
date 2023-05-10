@@ -11,7 +11,7 @@ namespace Monke.Gameplay.Actions
         public static ActionSource Instance {  get; private set; }
         [SerializeField] private List<Action> m_actionPrototypes; // List of ActionPrototypes; 
         // used to generate ActionIDs and as a reference point for creating Actions (which have been configured thnks to Scriptable Object)
-        private List<Action> m_allActions;
+        [SerializeField] private List<Action> m_allActions;
 
         public Action GetActionPrototypeByID(ActionID actionId)
         {
@@ -51,6 +51,7 @@ namespace Monke.Gameplay.Actions
             else
             {
                 Instance = this;
+                PopulateAllActions();
             }
         }
     }
