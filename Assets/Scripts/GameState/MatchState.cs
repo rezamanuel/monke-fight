@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Monke.Utilities;
+using Monke.Networking;
 
 
 namespace Monke.GameState 
@@ -16,7 +17,7 @@ namespace Monke.GameState
     {
         public override GameState ActiveState { get { return GameState.Match; } }
 
-        NetcodeHooks m_NetcodeHooks;
+        [SerializeField] NetcodeHooks m_NetcodeHooks;
         [SerializeField]
         [Tooltip("A collection of locations for spawning players")]
         private Transform[] m_PlayerSpawnPoints;
@@ -29,6 +30,11 @@ namespace Monke.GameState
         }
         void OnNetworkSpawn()
         {
+             if (!MonkeNetworkManager.Singleton.IsServer)
+            {
+                enabled = false;
+                return;
+            }
             foreach(var p in Networking.MonkeNetworkManager.Singleton.ConnectedClientsList){
                 Debug.Log(p.ClientId);
             }

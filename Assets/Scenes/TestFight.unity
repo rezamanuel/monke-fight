@@ -408,6 +408,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1660722735}
   - component: {fileID: 1660722736}
+  - component: {fileID: 1660722738}
+  - component: {fileID: 1660722737}
   m_Layer: 0
   m_Name: Match State
   m_TagString: Untagged
@@ -447,6 +449,36 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 7704868082072432805}
+  m_NetcodeHooks: {fileID: 1660722738}
+  m_PlayerSpawnPoints: []
+--- !u!114 &1660722737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660722733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 607528754
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+--- !u!114 &1660722738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660722733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f54ef1fa411cfe4387ab2c9a15a5634, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1951371020
 GameObject:
   m_ObjectHideFlags: 0
