@@ -19,6 +19,7 @@ namespace Monke.Gameplay.Actions
         public float TimeStarted { get; set; }
         public float TimeRunning { get { return (Time.time - TimeStarted); } }
         public bool isActive; // has this action End()'d?
+        public float defaultCooldown; // how long should an action block an action of the same type in seconds.
 
         protected ActionRequestData m_Data;
 

@@ -13,7 +13,7 @@ namespace Monke.Gameplay.Character
         NetworkHealthState m_HealthState;
         DamageReceiver m_DamageReceiver;
 
-        public CharacterAttributes m_CharacterAttributes;
+        public ServerCharacterAttributes m_CharacterAttributes;
 
         public int HitPoints
         {
@@ -62,7 +62,7 @@ namespace Monke.Gameplay.Character
 
         void InitializeHitPoints()
         {
-            HitPoints = m_CharacterAttributes.maxHealth;
+            HitPoints = m_CharacterAttributes.m_MaxHealth.Value;
         }
 
     }

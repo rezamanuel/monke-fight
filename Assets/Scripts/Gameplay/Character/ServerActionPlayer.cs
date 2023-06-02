@@ -64,7 +64,7 @@ namespace Monke.Gameplay.Character
             foreach(var keyValuePair in m_BlockingActionList)
             {
                 var action = keyValuePair.Value;
-                float slot_cooldown = m_ServerCharacter.m_CharacterAttributes.actionCooldowns[action.m_ActionType];
+                float slot_cooldown = m_ServerCharacter.m_CharacterAttributes.m_ActionCooldowns[action.m_ActionType].Value;
                 Action blocking_action = m_BlockingActionList[action.m_ActionType];
                 if (blocking_action.TimeRunning > slot_cooldown)
                 {
