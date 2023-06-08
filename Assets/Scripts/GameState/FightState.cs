@@ -8,9 +8,7 @@ using Monke.Networking;
 namespace Monke.GameState 
 {
     /// <summary>
-    /// This State initializes in the Main Menu Scene, and is used to display lobby information
-    /// 
-    /// TODO: Populate Lobby, Join button, Hook into Connection Managers.
+    /// FightState means the Players are currently actively fighting!
     /// </summary>
     [RequireComponent(typeof(NetcodeHooks))]
     public class FightState : GameStateBehaviour

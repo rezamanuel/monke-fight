@@ -1,21 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-namespace Monke.UI
+namespace Monke.Cards
 {
-    public class CardPanel : MonoBehaviour
+    /// <summary>
+    /// Class used for storing a Character's cards during a Match. 
+    /// </summary>
+    public class CharacterCardInventory : NetworkBehaviour
     {
-        // Start is called before the first frame update
-
-        [SerializeField] GameObject cardTemplate;
-        [SerializeField] RectTransform anchor;
+        List<Card> CardList;
+        
         void Start()
         {
             
         }
 
-        void DisplayCard(int n){
+        void DrawCard(int n){
             for (int i = 0; i < n;i++){
 
             }
@@ -27,5 +29,3 @@ namespace Monke.UI
         }
 }
 }
-
-

@@ -48,7 +48,7 @@ namespace Monke.Gameplay.ClientPlayer
             if (!IsClient || !IsOwner) enabled = false;
             m_ActionRequestCount = 0;
             // initialize 'skill slots' from character attribute Scriptable Object
-            if (ActionSource.Instance.TryGetActionPrototypeByID(m_ServerCharacter.m_CharacterAttributes.m_ActionSlots[1].Value, out Action action1)){
+            if (GameDataSource.Instance.TryGetActionPrototypeByID(m_ServerCharacter.m_CharacterAttributes.m_ActionSlots[1].Value, out Action action1)){
                 m_ActionSlot1 = new ActionSlot() { slottedActionID = action1.ActionID, isEnabled = true };
             }
         }
@@ -68,7 +68,7 @@ namespace Monke.Gameplay.ClientPlayer
         /// <param name="targetId"> NetworkObjectId of target. </param>
         public void RequestAction(ActionID actionID, InputTriggerStyle triggerStyle)
         {
-            Assert.IsNotNull(ActionSource.Instance.GetActionPrototypeByID(actionID),
+            Assert.IsNotNull(GameDataSource.Instance.GetActionPrototypeByID(actionID),
                 $"Action with actionID {actionID} must be contained in the Action prototypes of ActionSource!");
 
             if (m_ActionRequestCount < m_ActionRequests.Length)

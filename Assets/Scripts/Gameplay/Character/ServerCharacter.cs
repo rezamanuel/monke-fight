@@ -5,7 +5,7 @@ using Unity.Netcode;
 
 namespace Monke.Gameplay.Character
 {
-    [RequireComponent(typeof(NetworkHealthState))] [RequireComponent(typeof(DamageReceiver))]
+    [RequireComponent(typeof(NetworkHealthState))] [RequireComponent(typeof(DamageReceiver))] [RequireComponent(typeof(ServerCharacterAttributes))]
     public class ServerCharacter : NetworkBehaviour
     {
         public ClientCharacter m_ClientCharacter;

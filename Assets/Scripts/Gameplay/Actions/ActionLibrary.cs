@@ -18,7 +18,7 @@ namespace Monke.Gameplay.Actions
             if(!s_ActionPools.TryGetValue(actionId, out var actionPool))
             {
                 actionPool = new ObjectPool<Action>(
-                    createFunc: () => Object.Instantiate(ActionSource.Instance.GetActionPrototypeByID(actionId)),
+                    createFunc: () => Object.Instantiate(GameDataSource.Instance.GetActionPrototypeByID(actionId)),
                     actionOnRelease: action => action.Reset(),
                     actionOnDestroy: Object.Destroy);
 

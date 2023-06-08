@@ -20,9 +20,12 @@ namespace Monke.Gameplay.Character
         public NetworkVariable<ActionID> []m_ActionSlots { get; private set; } = new NetworkVariable<ActionID>[3];
         public Dictionary<ActionType, NetworkVariable<float>> m_ActionCooldowns;
 
+        private void AssignActionSlots(){
+
+        }
         private void InitializeActionCooldowns(){
             foreach (var action in m_ActionSlots){
-                Action action_prototype = ActionSource.Instance.GetActionPrototypeByID(action.Value);
+                Action action_prototype = GameDataSource.Instance.GetActionPrototypeByID(action.Value);
                 m_ActionCooldowns[action_prototype.m_ActionType] = new NetworkVariable<float>(action_prototype.defaultCooldown);
             }
         }
@@ -32,7 +35,8 @@ namespace Monke.Gameplay.Character
                 enabled = false;
                 return;
             }
-
+            AssignActionSlots();
+            InitializeActionCooldowns();
             // set Serialized Attributes to defaults, sync them.
             
 
