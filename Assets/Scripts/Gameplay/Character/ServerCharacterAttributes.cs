@@ -17,11 +17,14 @@ namespace Monke.Gameplay.Character
         public NetworkVariable<int> m_ClipSize { get; private set; } 
         public NetworkVariable<int> m_MaxHealth { get; private set; } 
         public NetworkVariable<int> m_MoveSpeed { get; private set; }
-        public NetworkVariable<ActionID> []m_ActionSlots { get; private set; } = new NetworkVariable<ActionID>[3];
+        public Dictionary<ActionType, ActionID> m_ActionSlots;
         public Dictionary<ActionType, NetworkVariable<float>> m_ActionCooldowns;
+        [SerializeField] private Dictionary<ActionType, Action> m_ActionSlotDefaults;
 
         private void AssignActionSlots(){
-
+             foreach( ActionType action_type in m_ActionSlotDefaults.Keys){
+                m_ActionSlots[action_type] = m_ActionSlotDefaults[action_type].actionID;
+            }
         }
         private void InitializeActionCooldowns(){
             foreach (var action in m_ActionSlots){

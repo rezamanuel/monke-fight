@@ -26,15 +26,17 @@ public class NetworkManagerUI : MonoBehaviour
         hostBtn.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartHost();
-            SceneManager.UnloadSceneAsync(1); // unload main menu
-            SceneLoaderWrapper.Instance.LoadScene(m_MatchScene.name, false);
+            SceneLoaderWrapper.Instance.AddOnSceneEventCallback();
+             SceneManager.UnloadSceneAsync(1); // unload main menu
+            SceneLoaderWrapper.Instance.LoadScene(m_MatchScene.name, true, LoadSceneMode.Additive);
         });
 
         clientBtn.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartClient();
-            
-            SceneManager.UnloadSceneAsync(1); // unload main menu
+            SceneLoaderWrapper.Instance.AddOnSceneEventCallback();
+            SceneManager.UnloadSceneAsync(1); // unload main menu\
+             SceneLoaderWrapper.Instance.LoadScene(m_MatchScene.name, true, LoadSceneMode.Additive);
 
         });
     }

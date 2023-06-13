@@ -7,6 +7,7 @@ using Unity.Netcode;
 using VContainer.Unity;
 using VContainer;
 using System;
+using Monke.Utilities;
 
 namespace Systems{
 
@@ -74,18 +75,13 @@ namespace Systems{
             // For additive structure, manually specify what scene gets unloaded and when.
             // never unload bootstrap; will house camera, other system-level things.
 
-           StartCoroutine(LoadMenu()); // 1 is the main menu, TODO: make an enum list with the proper scene names?
+           LoadMenu(); // 1 is the main menu, TODO: make an enum list with the proper scene names?
 
         }
 
-        private IEnumerator LoadMenu(){
-            var operation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive); 
-            operation.allowSceneActivation = true; // load in as soon as it's ready.
-            while (!operation.isDone){
-                initProgress = operation.progress;
-                yield return new WaitForEndOfFrame();
-            }
-            initProgress = 1f;
+        private void LoadMenu(){
+            SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
+
         }
         #endregion
     }

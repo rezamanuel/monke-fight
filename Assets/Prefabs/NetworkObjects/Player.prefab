@@ -2807,7 +2807,7 @@ GameObject:
   - component: {fileID: 2340738643432084034}
   - component: {fileID: 712207777497342715}
   - component: {fileID: 656648316563225858}
-  - component: {fileID: 5071231697973144451}
+  - component: {fileID: 939038800615886075}
   - component: {fileID: 8907217660139862060}
   - component: {fileID: 7576840153877315406}
   - component: {fileID: 8034785858060891475}
@@ -2985,8 +2985,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ClientCharacter: {fileID: 4730678203811955074}
-  m_CharacterAttributes: {fileID: 5071231697973144451}
---- !u!114 &5071231697973144451
+  m_CharacterAttributes: {fileID: 939038800615886075}
+--- !u!114 &939038800615886075
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -14,7 +14,7 @@ namespace Monke.Gameplay.Actions
     }
     public abstract class Action : ScriptableObject
     {
-        [NonSerialized] public ActionID ActionID;
+        [NonSerialized] public ActionID actionID;
         public ActionType m_ActionType { get; private set; }
         public float TimeStarted { get; set; }
         public float TimeRunning { get { return (Time.time - TimeStarted); } }
@@ -28,7 +28,7 @@ namespace Monke.Gameplay.Actions
         public void Initialize(ref ActionRequestData data)
         {
             m_Data = data;
-            ActionID = m_Data.actionID;
+            actionID = m_Data.actionID;
             m_ActionType = m_Data.m_actionType;
         }
 
@@ -36,7 +36,7 @@ namespace Monke.Gameplay.Actions
         public virtual void Reset()
         {
             m_Data = default;
-            ActionID = default;
+            actionID = default;
             TimeStarted = 0;
         }
 

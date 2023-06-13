@@ -40,7 +40,7 @@ namespace Monke.Gameplay.Actions
 
         public static void ReturnAction(Action action)
         {
-            var pool = GetActionPool(action.ActionID);
+            var pool = GetActionPool(action.actionID);
             pool.Release(action);
         }
     }

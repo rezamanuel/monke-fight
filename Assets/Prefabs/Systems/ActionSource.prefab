@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6308434459444401054}
-  - component: {fileID: 1241279500647492731}
+  - component: {fileID: 4821827645873779945}
   m_Layer: 0
   m_Name: ActionSource
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1241279500647492731
+--- !u!114 &4821827645873779945
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,8 +41,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8284633305796577748}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b10c75a6ceec8b43a8fd28093a88201, type: 3}
+  m_Script: {fileID: 11500000, guid: dfe5e78a08ca91043b2557b761f8c5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_actionPrototypes:
+  m_ActionPrototypes: []
+  m_AllActions:
+  - {fileID: 11400000, guid: 401de344c29a3df41b67c66962625656, type: 2}
   - {fileID: 11400000, guid: 5304b897698999a4fa7af9e156e2138b, type: 2}
+  m_CardPrototypes:
+  - {fileID: 11400000, guid: edde51baf5892d04abe90e6c80750738, type: 2}
+  - {fileID: 11400000, guid: 3a22bd85abb7fcb4c94674b52109a1ac, type: 2}
+  m_AllCards: []

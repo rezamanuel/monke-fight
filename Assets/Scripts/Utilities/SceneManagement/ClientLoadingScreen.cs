@@ -5,6 +5,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Monke.Utilities
 {
@@ -20,9 +21,9 @@ namespace Monke.Utilities
         {
             public Slider ProgressBar { get; set; }
 
-            public Text NameText { get; set; }
+            public TextMeshProUGUI NameText { get; set; }
 
-            public LoadingProgressBar(Slider otherPlayerProgressBar, Text otherPlayerNameText)
+            public LoadingProgressBar(Slider otherPlayerProgressBar, TextMeshProUGUI otherPlayerNameText)
             {
                 ProgressBar = otherPlayerProgressBar;
                 NameText = otherPlayerNameText;
@@ -47,13 +48,13 @@ namespace Monke.Utilities
         Slider m_ProgressBar;
 
         [SerializeField]
-        Text m_SceneName;
+        TextMeshProUGUI m_SceneName;
 
         [SerializeField]
         List<Slider> m_OtherPlayersProgressBars;
 
         [SerializeField]
-        List<Text> m_OtherPlayerNamesTexts;
+        List<TextMeshProUGUI> m_OtherPlayerNamesTexts;
 
         [SerializeField]
         protected LoadingProgressManager m_LoadingProgressManager;

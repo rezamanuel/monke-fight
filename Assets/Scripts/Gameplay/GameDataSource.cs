@@ -15,14 +15,15 @@ namespace Monke.Gameplay
     {
 
         public static GameDataSource Instance { get; private set; }
-        [SerializeField] private List<Action> m_actionPrototypes; // List of ActionPrototypes; 
+        [SerializeField] private List<Action> m_ActionPrototypes; // List of ActionPrototypes; 
         // used to generate ActionIDs and as a reference point for creating Actions (which have been configured thnks to Scriptable Object)
-        [SerializeField] private List<Action> m_allActions;
-
+        [SerializeField] private List<Action> m_AllActions;
+    
         [SerializeField] private List<Card> m_CardPrototypes; // List of CardPrototypes; 
         // used to generate CardIDs and as a reference point for creating Cards (which have been configured thnks to Scriptable Object)
-        [SerializeField] private List<Card> m_allCards;
+        [SerializeField] private List<Card> m_AllCards;
 
+        [SerializeField] private Dictionary<Card, Action> m_CardActionMap; // Links specific Card Prototypes to specific Action Prototypes.
         public Card GetCardPrototypeByID(CardID CardId)
         {
             // will 
@@ -48,10 +49,17 @@ namespace Monke.Gameplay
             // todo: initialize ActionIDs for cards as well, ensure this happens after ActionSource
             var Cards = new HashSet<Card>(m_CardPrototypes);
             int i = 0;
-            foreach (Card a in Cards)
+            foreach (Card c in Cards)
             {
-                m_allCards.Add(a);
-                m_allCards[i].CardID = new CardID { ID = i };
+                m_AllCards.Add(c);
+                m_AllCards[i].cardID = new CardID { ID = i };
+                if (m_CardActionMap.ContainsKey(c))
+                {
+                    m_AllCards[i].m_CardActionID = new ActionID 
+                    { 
+                        ID = m_AllActions.IndexOf(m_CardActionMap.GetValueOrDefault(c)) 
+                    };
+                }
                 i++;
             }
         }
@@ -65,6 +73,7 @@ namespace Monke.Gameplay
             else
             {
                 Instance = this;
+                m_CardActionMap = new Dictionary<Card, Actions.Action>(); 
                 PopulateAllActions();
                 PopulateAllCards();
             }
@@ -73,14 +82,14 @@ namespace Monke.Gameplay
         public Action GetActionPrototypeByID(ActionID actionId)
         {
             // will 
-            return m_actionPrototypes[actionId.ID];
+            return m_ActionPrototypes[actionId.ID];
         }
         public bool TryGetActionPrototypeByID(ActionID actionId, out Action action)
         {
             // will return true if m_actionPrototypes contains the provided ID
             try
             {
-                action = m_actionPrototypes[actionId.ID];
+                action = m_ActionPrototypes[actionId.ID];
                 return true;
             }
             catch
@@ -92,12 +101,12 @@ namespace Monke.Gameplay
 
         private void PopulateAllActions()
         {
-            var actions = new HashSet<Action>(m_actionPrototypes);
+            var actions = new HashSet<Action>(m_ActionPrototypes);
             int i = 0;
             foreach (Action a in actions)
             {
-                m_allActions.Add(a);
-                m_allActions[i].ActionID = new ActionID { ID = i };
+                m_AllActions.Add(a);
+                m_AllActions[i].actionID = new ActionID { ID = i };
                 i++;
             }
         }

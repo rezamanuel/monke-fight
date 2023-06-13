@@ -48,8 +48,8 @@ namespace Monke.Gameplay.ClientPlayer
             if (!IsClient || !IsOwner) enabled = false;
             m_ActionRequestCount = 0;
             // initialize 'skill slots' from character attribute Scriptable Object
-            if (GameDataSource.Instance.TryGetActionPrototypeByID(m_ServerCharacter.m_CharacterAttributes.m_ActionSlots[1].Value, out Action action1)){
-                m_ActionSlot1 = new ActionSlot() { slottedActionID = action1.ActionID, isEnabled = true };
+            if (GameDataSource.Instance.TryGetActionPrototypeByID(m_ServerCharacter.m_CharacterAttributes.m_ActionSlots[ActionType.Shoot], out Action action1)){
+                m_ActionSlot1 = new ActionSlot() { slottedActionID = action1.actionID, isEnabled = true };
             }
         }
         public override void OnNetworkDespawn(){
