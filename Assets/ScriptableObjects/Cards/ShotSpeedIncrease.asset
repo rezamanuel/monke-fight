@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ShotSpeedIncrease
   m_EditorClassIdentifier: 
   m_CardRarity: 0
-  m_UICardPrefab: {fileID: 1644630351459536462, guid: e658c7275f6d0704aa9d15b375a5b1f0, type: 3}
+  m_UICardPrefab: {fileID: 1644630351459536462, guid: 26211ed23c53e9c4cad7b3b55ed52556, type: 3}

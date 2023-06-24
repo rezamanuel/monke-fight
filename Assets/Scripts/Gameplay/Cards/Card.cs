@@ -20,7 +20,8 @@ namespace Monke.Cards
         [NonSerialized] public ActionID m_CardActionID;
         // Action that gets unlocked for the character after picking up this card.
         // if Action with same ActionType is added to inventory, new Action replaces old Action.
-        public Dictionary<CardBuffType,float> m_Buffs;
+        public List<CardBuffType> m_BuffTypes;
+        public List<float> m_Buffs;
         public CardRarity m_CardRarity;
         public GameObject m_UICardPrefab;
         public void OnPlay(ServerCharacter serverCharacter){
@@ -33,34 +34,36 @@ namespace Monke.Cards
         } 
 
         public void ApplyBuffs(ServerCharacter serverCharacter){
-            foreach (CardBuffType buff in m_Buffs.Keys){
-                switch(buff){
+            int i = 0;
+            foreach (CardBuffType buffs in m_BuffTypes){
+                switch(buffs){
                     case CardBuffType.BulletSpeed:
-                        serverCharacter.m_CharacterAttributes.m_BulletSpeed.Value += m_Buffs[buff]; break;
+                        serverCharacter.m_CharacterAttributes.m_BulletSpeed.Value += m_Buffs[i]; break;
                     case CardBuffType.BulletForce:
-                        serverCharacter.m_CharacterAttributes.m_BulletForce.Value += m_Buffs[buff]; break;
+                        serverCharacter.m_CharacterAttributes.m_BulletForce.Value += m_Buffs[i]; break;
                     case CardBuffType.BulletDamage:
-                        serverCharacter.m_CharacterAttributes.m_BulletDamage.Value += m_Buffs[buff]; break;
+                        serverCharacter.m_CharacterAttributes.m_BulletDamage.Value += m_Buffs[i]; break;
                     case CardBuffType.BulletSize:
-                        serverCharacter.m_CharacterAttributes.m_BulletSize.Value += m_Buffs[buff]; break;
+                        serverCharacter.m_CharacterAttributes.m_BulletSize.Value += m_Buffs[i]; break;
                     case CardBuffType.ClipSize:
-                        serverCharacter.m_CharacterAttributes.m_ClipSize.Value += Mathf.RoundToInt(m_Buffs[buff]);
+                        serverCharacter.m_CharacterAttributes.m_ClipSize.Value += Mathf.RoundToInt(m_Buffs[i]);
                         break;
                     case CardBuffType.MaxHealth:
-                        serverCharacter.m_CharacterAttributes.m_MaxHealth.Value += Mathf.RoundToInt(m_Buffs[buff]);
+                        serverCharacter.m_CharacterAttributes.m_MaxHealth.Value += Mathf.RoundToInt(m_Buffs[i]);
                         break;
                     case CardBuffType.MoveSpeed:
-                        serverCharacter.m_CharacterAttributes.m_MoveSpeed.Value += Mathf.RoundToInt(m_Buffs[buff]);
+                        serverCharacter.m_CharacterAttributes.m_MoveSpeed.Value += Mathf.RoundToInt(m_Buffs[i]);
                         break;
                     case CardBuffType.ShootActionCooldown:
-                        serverCharacter.m_CharacterAttributes.m_ActionCooldowns[ActionType.Shoot].Value += m_Buffs[buff];
+                        serverCharacter.m_CharacterAttributes.m_ActionCooldowns[ActionType.Shoot].Value += m_Buffs[i];
                         break;
                     case CardBuffType.BlockActionCooldown:
-                        serverCharacter.m_CharacterAttributes.m_ActionCooldowns[ActionType.Block].Value += m_Buffs[buff];
+                        serverCharacter.m_CharacterAttributes.m_ActionCooldowns[ActionType.Block].Value += m_Buffs[i];
                         break;
                     default:
                         break;
                 }
+                i++;
             }
         }
     }
