@@ -11,9 +11,8 @@ namespace Monke.Gameplay.Character
     public class CharacterCardInventory : NetworkBehaviour
     {
         ServerCharacter m_ServerCharacter;
-        NetworkList<CardID> m_CardsInPlay;
-        NetworkList<CardID> m_CardDrawn;
-        ServerCardDeck m_ServerCardDeck;
+        NetworkList<CardID> m_ActiveCards;
+        NetworkList<CardID> m_DrawnCards;
         void Start()
         {
             m_ServerCharacter = GetComponentInParent<ServerCharacter>();
@@ -23,13 +22,20 @@ namespace Monke.Gameplay.Character
         {
             for (int i = 0; i < num; i++)
             {
-
+                int random_num = Random.Range(0, 100); // roll d100
+                if(random_num < 75){
+                    m_DrawnCards.Add(GameDataSource.Instance.GetRandomCard(CardRarity.Common));
+                }else if(random_num <90){
+                    m_DrawnCards.Add(GameDataSource.Instance.GetRandomCard(CardRarity.Rare));
+                }else{
+                    m_DrawnCards.Add(GameDataSource.Instance.GetRandomCard(CardRarity.Legendary));
+                }
             }
         }
 
         void PlayCard(CardID cardID)
         {
-            m_CardDrawn.Add(cardID);
+            m_DrawnCards.Add(cardID);
             Card card = GameDataSource.Instance.GetCardPrototypeByID(cardID);
             card.OnPlay(m_ServerCharacter);
         }

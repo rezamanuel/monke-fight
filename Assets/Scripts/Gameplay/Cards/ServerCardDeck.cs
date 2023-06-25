@@ -6,11 +6,11 @@ using Monke.Cards;
 namespace Monke.Gameplay
 {
     /// <summary>
-    /// Class used for storing a Character's cardDeck during a Match. 
+    /// Class used for storing a Character's cardDeck during a Match. (DEPRECATED)
     /// </summary>
     public class ServerCardDeck : NetworkBehaviour
     {
-        public List<CardID> m_CardDeck;
+        public List<CardID> m_CardDeck; //Set by GameDataSource 
         void Start()
         {
         }
@@ -22,6 +22,9 @@ namespace Monke.Gameplay
             m_CardDeck.Remove(card_id);
             return card_id;
 
+        }
+        public void InitializeDeck(){
+                //TODO
         }
         public void ShuffleDeck(){
             int card_count = m_CardDeck.Count;

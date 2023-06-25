@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a75f997390535074caa0a76329a855ef, type: 3}
   m_Name: DamageIncrease
   m_EditorClassIdentifier: 
+  m_BuffTypes: 02000000
+  m_Buffs:
+  - 2
   m_CardRarity: 0
-  m_UICardPrefab: {fileID: 1644630351459536462, guid: e658c7275f6d0704aa9d15b375a5b1f0, type: 3}
+  m_UICardPrefab: {fileID: 6700401748807304244, guid: df0b6282cc952b74b8d36a5528e6cd81, type: 3}
