@@ -39,24 +39,6 @@
       "dependencies": {},
       "hash": "8e5c46a9e6cc9b5d2a1d281eee41e28d117866f7"
     },
-    "com.spacepuppy.core": {
-      "version": "https://github.com/lordofduct/spacepuppy-unity-framework-4.0.git?path=Framework/com.spacepuppy.core",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.editorcoroutines": "1.0.0"
-      },
-      "hash": "2a35c90da5c0a74136c79fc9196c63136934f42d"
-    },
-    "com.spacepuppy.serialization": {
-      "version": "https://github.com/lordofduct/spacepuppy-unity-framework-4.0.git?path=Framework/com.spacepuppy.serialization",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.spacepuppy.core": "4.0.0"
-      },
-      "hash": "2a35c90da5c0a74136c79fc9196c63136934f42d"
-    },
     "com.unity.2d.animation": {
       "version": "7.0.8",
       "depth": 1,
@@ -168,13 +150,6 @@
         "com.unity.burst": "1.6.6",
         "com.unity.test-framework": "1.1.31"
       },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.editorcoroutines": {
-      "version": "1.0.0",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {
