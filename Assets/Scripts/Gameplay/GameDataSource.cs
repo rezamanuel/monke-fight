@@ -40,11 +40,11 @@ namespace Monke.Gameplay
             }
             else if (rarity == CardRarity.Rare)
             {
-                return m_RareCardIDs[UnityEngine.Random.Range(0, m_CommonCardIDs.Count)];
+                return m_RareCardIDs[UnityEngine.Random.Range(0, m_RareCardIDs.Count)];
             }
             else if (rarity == CardRarity.Legendary)
             {
-                return m_LegendaryCardIDs[UnityEngine.Random.Range(0, m_CommonCardIDs.Count)];
+                return m_LegendaryCardIDs[UnityEngine.Random.Range(0, m_LegendaryCardIDs.Count)];
             }
             else
             {

@@ -31,6 +31,7 @@ namespace Monke.GameState
             base.Awake();
             networkMatchLogic = GetComponent<NetworkMatchLogic>();
             m_ClientTurnQueue = new List<NetworkClient>();
+            clientMatchState = GetComponent<ClientMatchState>();
             networkMatchLogic.OnClientConnected += OnClientConnected;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkDespawn;
@@ -54,18 +55,15 @@ namespace Monke.GameState
             Debug.Log("Player " + client.ClientId + " Turn started");
             ServerCharacter server_character = client.PlayerObject.GetComponentInChildren<ServerCharacter>();
             server_character.m_CharacterCardInventory.DrawCards(5);
-            List<GameObject> spawned_cards = new List<GameObject>();
-            foreach(CardID c_id in server_character.m_CharacterCardInventory.m_DrawnCards){
-                GameObject card_prefab = GameDataSource.Instance.GetCardPrototypeByID(c_id).m_UICardPrefab;
-                GameObject card_go = Instantiate(card_prefab) as GameObject;
-                card_go.GetComponent<NetworkObject>().SpawnWithOwnership(client.ClientId, true);
-                spawned_cards.Add(card_go);
-            }
-            clientMatchState.OnDrawCards(spawned_cards);
+            clientMatchState.DisplayCardsClientRpc(server_character.m_CharacterCardInventory.m_DrawnCards);
+            GameObject[] all_cards = GameObject.FindGameObjectsWithTag("Card");
+            
+            clientMatchState.OnDrawCards();
 
 
         }
 
+        
         /// <summary>
         /// Cleans up Character Card Inventory, Despawns/Destroys UI for discarded cards thru NetworkManager.
         /// </summary>
@@ -85,6 +83,7 @@ namespace Monke.GameState
             if(!queueStarted){
                 m_ClientTurnQueue.Add(MonkeNetworkManager.Singleton.ConnectedClients[clientId]);
                 // if MonkeNetworkManager has at least 2 players connected, start turns
+                // Wait for 
                 if(m_ClientTurnQueue.Count >1){
                     queueStarted = true;
                     NetworkClient nextplayer = m_ClientTurnQueue[0];

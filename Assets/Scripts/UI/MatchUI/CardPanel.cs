@@ -29,13 +29,14 @@ namespace Monke.UI
             float partition_length = panel_length / count; // length of bound per card.
             int i = 0;
             displayedCards.Clear();
-            foreach(GameObject card_prefab in cardObjectList)
+            foreach(GameObject card_go in cardObjectList)
             {
-                displayedCards.Add(card_prefab);
+                displayedCards.Add(card_go);
+                card_go.transform.SetParent(this.transform, false);
                 // center on cardpanel
-                card_prefab.transform.position = Vector3.zero;
+                card_go.transform.position = Vector3.zero;
                 // distribute horizontally
-                card_prefab.transform.position = new Vector3(leftAnchor.position.x - (i * partition_length) - (partition_length / 2),
+                card_go.transform.position = new Vector3(leftAnchor.position.x - (i * partition_length) - (partition_length / 2),
                     this.transform.position.y,this.transform.position.z);
                 i++;
             }

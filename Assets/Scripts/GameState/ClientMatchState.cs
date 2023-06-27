@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Monke.Utilities;
-using Monke.Networking;
+using Monke.Cards;
 using Monke.UI;
-using Monke.Gameplay.Character;
+using Monke.Gameplay;
 using Unity.Netcode;
 
 namespace Monke.GameState
@@ -26,7 +26,7 @@ namespace Monke.GameState
         [SerializeField] NetcodeHooks m_NetcodeHooks;
         [SerializeField] NetworkMatchLogic m_MatchLogic;
         
-        [SerializeField] CardPanel m_CardPanel;
+        [SerializeField] CardPanel m_CardPanel; // needs to be set in inspector
         protected override void Awake()
         {
             base.Awake();
@@ -34,11 +34,22 @@ namespace Monke.GameState
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkDespawn;
         }
-
-        public void OnDrawCards(List<GameObject> cardObjectList){
-            m_CardPanel.SetDisplayedCards(cardObjectList);
+        [ClientRpc] public void DisplayCardsClientRpc(List<CardID> cardIDs){
+            foreach(CardID c_id in cardIDs){
+                GameObject card_prefab = GameDataSource.Instance.GetCardPrototypeByID(c_id).m_UICardPrefab;
+                GameObject card_go = Instantiate(card_prefab) as GameObject;
+            }
+        }
+        public void OnDrawCards(){
+            GameObject[] all_cards = GameObject.FindGameObjectsWithTag("Card");
+            List<GameObject> spawned_cards = new List<GameObject>();
+            foreach(GameObject c in all_cards){
+                spawned_cards.Add(c);
+            }
+            m_CardPanel.SetDisplayedCards(spawned_cards);
 
         }
+        
         void OnNetworkSpawn()
         {
 

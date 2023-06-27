@@ -17,7 +17,7 @@ namespace Monke.GameState
 
         [SerializeField] List<NetworkClient> m_ClientTurnQueue; //Server-side updates.
         public event Action<ulong> OnClientConnected;
-        
+
        
         [ServerRpc(RequireOwnership = false)] void InvokeOnClientConnectedServerRpc(ServerRpcParams serverRpcParams = default)
         {

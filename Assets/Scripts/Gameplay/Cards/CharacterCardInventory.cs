@@ -11,15 +11,14 @@ namespace Monke.Gameplay.Character
     public class CharacterCardInventory : NetworkBehaviour
     {
         ServerCharacter m_ServerCharacter;
-        public NetworkList<CardID> m_ActiveCards{ get; private set; }
-        public NetworkList<CardID> m_DrawnCards{ get; private set; }
+        public List<CardID> m_ActiveCards{ get; private set; }
+        public List<CardID> m_DrawnCards{ get; private set; }
         void Start()
         {
             m_ServerCharacter = GetComponentInParent<ServerCharacter>();
-            m_ActiveCards = new NetworkList<CardID>();
-            m_DrawnCards = new NetworkList<CardID>();
+            m_ActiveCards = new List<CardID>();
+            m_DrawnCards = new List<CardID>();
         }
-
         public void DrawCards(int num)
         {
             for (int i = 0; i < num; i++)
