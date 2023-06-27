@@ -19,11 +19,12 @@ namespace Monke.Gameplay.Character
         public NetworkVariable<int> m_MoveSpeed { get; private set; }
         public Dictionary<ActionType, ActionID> m_ActionSlots;
         public Dictionary<ActionType, NetworkVariable<float>> m_ActionCooldowns;
-        [SerializeField] private Dictionary<ActionType, Action> m_ActionSlotDefaults;
 
         private void AssignActionSlots(){
-             foreach( ActionType action_type in m_ActionSlotDefaults.Keys){
-                m_ActionSlots[action_type] = m_ActionSlotDefaults[action_type].actionID;
+            var action_defaults = GameDataSource.Instance.m_DefaultActionIDs;
+            foreach( ActionID action_id in action_defaults){
+                Action action = GameDataSource.Instance.GetActionPrototypeByID(action_id);
+                m_ActionSlots[action.Data.m_actionType] = action_id;
             }
         }
         private void InitializeActionCooldowns(){

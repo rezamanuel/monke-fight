@@ -5,10 +5,14 @@ using Unity.Netcode;
 
 namespace Monke.Gameplay.Character
 {
-    [RequireComponent(typeof(NetworkHealthState))] [RequireComponent(typeof(DamageReceiver))] [RequireComponent(typeof(ServerCharacterAttributes))]
+    [RequireComponent(typeof(NetworkHealthState))]
+    [RequireComponent(typeof(DamageReceiver))]
+    [RequireComponent(typeof(ServerCharacterAttributes))]
+    [RequireComponent(typeof(CharacterCardInventory))]
     public class ServerCharacter : NetworkBehaviour
     {
         public ClientCharacter m_ClientCharacter;
+        public CharacterCardInventory m_CharacterCardInventory;
         ServerActionPlayer m_ServerActionPlayer;
         NetworkHealthState m_HealthState;
         DamageReceiver m_DamageReceiver;
@@ -24,8 +28,10 @@ namespace Monke.Gameplay.Character
         {
             m_ClientCharacter = GetComponentInChildren<ClientCharacter>();
             m_ServerActionPlayer = new ServerActionPlayer(this);
+            m_CharacterCardInventory = GetComponent<CharacterCardInventory>();
             m_HealthState = GetComponent<NetworkHealthState>();
             m_DamageReceiver = GetComponent<DamageReceiver>();
+            m_CharacterAttributes = GetComponent<ServerCharacterAttributes>();
         }
 
         [ServerRpc]

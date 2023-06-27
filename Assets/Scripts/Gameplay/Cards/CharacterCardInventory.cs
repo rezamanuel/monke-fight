@@ -11,14 +11,16 @@ namespace Monke.Gameplay.Character
     public class CharacterCardInventory : NetworkBehaviour
     {
         ServerCharacter m_ServerCharacter;
-        NetworkList<CardID> m_ActiveCards;
-        NetworkList<CardID> m_DrawnCards;
+        public NetworkList<CardID> m_ActiveCards{ get; private set; }
+        public NetworkList<CardID> m_DrawnCards{ get; private set; }
         void Start()
         {
             m_ServerCharacter = GetComponentInParent<ServerCharacter>();
+            m_ActiveCards = new NetworkList<CardID>();
+            m_DrawnCards = new NetworkList<CardID>();
         }
 
-        void DrawCards(int num)
+        public void DrawCards(int num)
         {
             for (int i = 0; i < num; i++)
             {
@@ -32,8 +34,11 @@ namespace Monke.Gameplay.Character
                 }
             }
         }
+        public void ClearDrawnCards(){
+            m_DrawnCards.Clear();
+        }
 
-        void PlayCard(CardID cardID)
+        public void PlayCard(CardID cardID)
         {
             m_DrawnCards.Add(cardID);
             Card card = GameDataSource.Instance.GetCardPrototypeByID(cardID);

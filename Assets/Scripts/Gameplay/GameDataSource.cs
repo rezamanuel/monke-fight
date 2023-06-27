@@ -16,15 +16,16 @@ namespace Monke.Gameplay
         public List<CardID> m_CommonCardIDs; // List of Common Card IDs
         public List<CardID> m_RareCardIDs; // List of Rare Card IDs
         public List<CardID> m_LegendaryCardIDs; // List of Legendary Card IDs
+        public List<ActionID> m_DefaultActionIDs; // List of Default actions (ie: shoot and block)
         public static GameDataSource Instance { get; private set; }
         [SerializeField] private List<Action> m_ActionPrototypes; // List of ActionPrototypes; 
         // used to generate ActionIDs and as a reference point for creating Actions (which have been configured thnks to Scriptable Object)
-        [SerializeField] private List<Action> m_AllActions;
-
+        private List<Action> m_AllActions;
+        [SerializeField] private List<Action> m_DefaultActions;
         [SerializeField] private List<Card> m_CardPrototypes; // List of CardPrototypes; 
         // used to generate CardIDs and as a reference point for creating Cards (which have been configured thnks to Scriptable Object)
-        [SerializeField] private List<Card> m_AllCards;
-        [SerializeField] private Dictionary<Card, Action> m_CardActionMap; // Links specific Card Prototypes to specific Action Prototypes.
+        private List<Card> m_AllCards;
+        private Dictionary<Card, Action> m_CardActionMap; // Links specific Card Prototypes to specific Action Prototypes.
 
         public Card GetCardPrototypeByID(CardID CardId)
         {
@@ -112,6 +113,9 @@ namespace Monke.Gameplay
                 m_CommonCardIDs = new List<CardID>();
                 m_RareCardIDs = new List<CardID>();
                 m_LegendaryCardIDs = new List<CardID>();
+                m_DefaultActionIDs = new List<ActionID>();
+                m_AllActions = new List<Action>();
+                m_AllCards = new List<Card>();
                 PopulateAllActions();
                 PopulateAllCards();
             }
@@ -144,7 +148,11 @@ namespace Monke.Gameplay
             foreach (Action a in actions)
             {
                 m_AllActions.Add(a);
-                m_AllActions[i].actionID = new ActionID { ID = i };
+                ActionID id = new ActionID { ID = i };
+                m_AllActions[i].actionID = id;
+                if(m_DefaultActions.Contains(a)){
+                    m_DefaultActionIDs.Add(id);
+                }
                 i++;
             }
         }

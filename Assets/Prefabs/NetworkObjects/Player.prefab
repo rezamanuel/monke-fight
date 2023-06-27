@@ -2802,7 +2802,6 @@ GameObject:
   - component: {fileID: 7614116224725027702}
   - component: {fileID: 3192609505330127769}
   - component: {fileID: 321842031224532683}
-  - component: {fileID: 6078284405727702920}
   - component: {fileID: 5908509970897942176}
   - component: {fileID: 2340738643432084034}
   - component: {fileID: 712207777497342715}
@@ -2811,6 +2810,8 @@ GameObject:
   - component: {fileID: 8907217660139862060}
   - component: {fileID: 7576840153877315406}
   - component: {fileID: 8034785858060891475}
+  - component: {fileID: 4026817700341623079}
+  - component: {fileID: 9143579324616849861}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -2906,32 +2907,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &6078284405727702920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7614116224725027697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 0
-  SyncRotAngleX: 0
-  SyncRotAngleY: 0
-  SyncRotAngleZ: 0
-  SyncScaleX: 0
-  SyncScaleY: 0
-  SyncScaleZ: 0
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  InLocalSpace: 0
-  Interpolate: 0
 --- !u!114 &5908509970897942176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2985,6 +2960,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ClientCharacter: {fileID: 4730678203811955074}
+  m_CharacterCardInventory: {fileID: 4026817700341623079}
   m_CharacterAttributes: {fileID: 939038800615886075}
 --- !u!114 &939038800615886075
 MonoBehaviour:
@@ -3039,6 +3015,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4026817700341623079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614116224725027697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d55e7089c16b49f4d9e2154f0fd8b4dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9143579324616849861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614116224725027697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  InLocalSpace: 0
+  Interpolate: 1
 --- !u!1 &7729272868357391596
 GameObject:
   m_ObjectHideFlags: 0

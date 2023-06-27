@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6308434459444401054}
   - component: {fileID: 4821827645873779945}
   m_Layer: 0
-  m_Name: ActionSource
+  m_Name: GameDataSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
