@@ -25,7 +25,7 @@ namespace Monke.GameState
 
         [SerializeField] NetcodeHooks m_NetcodeHooks;
         [SerializeField] NetworkMatchLogic m_MatchLogic;
-        
+
         [SerializeField] CardPanel m_CardPanel; // needs to be set in inspector
         protected override void Awake()
         {
