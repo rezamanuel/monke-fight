@@ -21,7 +21,7 @@ namespace Monke.GameState
         /// Instance variable so UI can access the GameState obj
         /// </summary>
         /// <value></value>
-        public ClientMatchState Instance {get; private set;}
+        public static ClientMatchState Instance {get; private set;}
 
         [SerializeField] NetcodeHooks m_NetcodeHooks;
         [SerializeField] NetworkMatchLogic m_MatchLogic;
@@ -34,20 +34,8 @@ namespace Monke.GameState
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkDespawn;
         }
-        [ClientRpc] public void DisplayCardsClientRpc(List<CardID> cardIDs){
-            foreach(CardID c_id in cardIDs){
-                GameObject card_prefab = GameDataSource.Instance.GetCardPrototypeByID(c_id).m_UICardPrefab;
-                GameObject card_go = Instantiate(card_prefab) as GameObject;
-            }
-        }
-        public void OnDrawCards(){
-            GameObject[] all_cards = GameObject.FindGameObjectsWithTag("Card");
-            List<GameObject> spawned_cards = new List<GameObject>();
-            foreach(GameObject c in all_cards){
-                spawned_cards.Add(c);
-            }
-            m_CardPanel.SetDisplayedCards(spawned_cards);
-
+        public void OnDisplayCards(List<GameObject> cards){
+            m_CardPanel.SetDisplayedCards(cards);
         }
         
         void OnNetworkSpawn()
@@ -58,6 +46,7 @@ namespace Monke.GameState
                 enabled = false;
                 return;
             }
+            
 
         }
         void OnNetworkDespawn()

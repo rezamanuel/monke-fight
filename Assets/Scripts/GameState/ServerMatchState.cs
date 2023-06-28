@@ -55,11 +55,7 @@ namespace Monke.GameState
             Debug.Log("Player " + client.ClientId + " Turn started");
             ServerCharacter server_character = client.PlayerObject.GetComponentInChildren<ServerCharacter>();
             server_character.m_CharacterCardInventory.DrawCards(5);
-            clientMatchState.DisplayCardsClientRpc(server_character.m_CharacterCardInventory.m_DrawnCards);
-            GameObject[] all_cards = GameObject.FindGameObjectsWithTag("Card");
-            
-            clientMatchState.OnDrawCards();
-
+            networkMatchLogic.DisplayCardsClientRpc(server_character.m_CharacterCardInventory.m_DrawnCards.ToArray());
 
         }
 
