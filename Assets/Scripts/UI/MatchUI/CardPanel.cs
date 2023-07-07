@@ -12,17 +12,21 @@ namespace Monke.UI
         [SerializeField] RectTransform leftAnchor;
         [SerializeField] RectTransform RightAnchor;
         [SerializeField] List<GameObject> m_DisplayedCards;
-        [SerializeField] NetworkVariable<int> m_SelectedCardIndex = new NetworkVariable<int>();
-        [SerializeField] NetworkVariable<int> m_HoveredCardIndex = new NetworkVariable<int>();
+        [SerializeField] int m_SelectedCardIndex;
+        [SerializeField] int m_HoveredCardIndex;
         public void SetSelectedCardIndex(int index)
         {
-            m_SelectedCardIndex.Value = index;
+            m_SelectedCardIndex = index;
             Debug.Log("Selected Index: "+ index);
 
         }
-         public void SetHoveredCardIndex(int index)
+        [ClientRpc] public void SetHoveredCardIndexClientRpc(int index)
         {
-            m_HoveredCardIndex.Value = index;
+            m_DisplayedCards[m_HoveredCardIndex].GetComponent<CardUI>().HoverOutline.gameObject.SetActive(false);
+            m_HoveredCardIndex = index;
+            m_DisplayedCards[index].GetComponent<CardUI>().HoverOutline.gameObject.SetActive(true);
+        }
+        public void OnHoverCardIndexChange(){
 
         }
         public void InitiateSelectionAnimation()
@@ -53,7 +57,7 @@ namespace Monke.UI
                 card_go.transform.position = new Vector3(leftAnchor.position.x - (i * partition_length) - (partition_length / 2),
                     this.transform.position.y, this.transform.position.z);
                 card_go.GetComponent<CardUI>().SetCardIndex(i);
-                card_go.GetComponent<CardUI>().OnHover += SetHoveredCardIndex;
+                card_go.GetComponent<CardUI>().OnHover += SetHoveredCardIndexClientRpc;
                 i++;
             }
         }
