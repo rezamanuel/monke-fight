@@ -24,6 +24,7 @@ namespace Monke.GameState
         [SerializeField] NetcodeHooks m_NetcodeHooks;
         [SerializeField] NetworkMatchLogic networkMatchLogic;
         List<NetworkClient> m_ClientTurnQueue;
+        [SerializeField] NetworkObject MatchUI;
         
 
         protected override void Awake()
@@ -59,6 +60,7 @@ namespace Monke.GameState
             server_character.m_CharacterCardInventory.DrawCards(5);
             networkMatchLogic.DisplayCardsClientRpc(server_character.m_CharacterCardInventory.m_DrawnCards.ToArray());
             networkMatchLogic.SetControlClientRpc(client.ClientId);
+            
         }
 
         /// <summary>
@@ -89,6 +91,7 @@ namespace Monke.GameState
 
         void CheckForPendingTurns(){
             // if there's more  characters left in the turn queue, start next one.
+            Debug.Log("checking for pending turns, queue count: " + m_ClientTurnQueue.Count);
             if(m_ClientTurnQueue.Count > 0){
                 StartPlayerTurn(m_ClientTurnQueue[0]);
             }
@@ -100,6 +103,7 @@ namespace Monke.GameState
 
         void OnClientConnected(ulong clientId){
             // add client to turn queue
+            Debug.Log("client connected, queue count: " + m_ClientTurnQueue.Count);
             if(!queueStarted){
                 m_ClientTurnQueue.Add(MonkeNetworkManager.Singleton.ConnectedClients[clientId]);
                 // if MonkeNetworkManager has at least 2 players connected, start turns
@@ -108,7 +112,6 @@ namespace Monke.GameState
                     queueStarted = true;
                     NetworkClient nextplayer = m_ClientTurnQueue[0];
                     StartPlayerTurn(nextplayer);
-                    m_ClientTurnQueue.Remove(nextplayer);
                 }
             }
         }

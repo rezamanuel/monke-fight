@@ -45,7 +45,7 @@ namespace Monke.GameState
         }
 
         [ServerRpc(RequireOwnership = false)] public void SelectCardServerRpc(CardID selectedCardID){
-            Debug.Log("InvokedOnCardSelected");
+            
             OnCardSelected?.Invoke(selectedCardID);
             
         }

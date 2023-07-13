@@ -53,7 +53,7 @@ namespace Monke.UI
             foreach (GameObject card_go in m_DisplayedCards){
                 card_go.GetComponent<CardUI>().OnHover -= RequestHover;
                 card_go.GetComponent<CardUI>().OnClick -= RequestSelect;
-                Destroy(card_go);
+                Destroy(card_go,.5f);
             }
         }
         public void SetDisplayedCards(List<GameObject> cardObjectList)

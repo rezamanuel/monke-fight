@@ -45,6 +45,7 @@ namespace Monke.GameState
             m_MatchLogic.SelectCardServerRpc(chosenCardID);
         }
 
+        //executing twice on host?
         public void ClearCards(){
             m_CardPanel.ClearDisplayedCards();
         }

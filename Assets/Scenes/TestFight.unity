@@ -529,6 +529,7 @@ MonoBehaviour:
   clientMatchState: {fileID: 1660722739}
   m_NetcodeHooks: {fileID: 1660722738}
   networkMatchLogic: {fileID: 1660722740}
+  MatchUI: {fileID: 8512941352890412343}
 --- !u!114 &1660722737
 MonoBehaviour:
   m_ObjectHideFlags: 0
