@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Monke.GameState;
 using Unity.Netcode;
+using Monke.Cards;
 namespace Monke.UI
 {
     public class CardPanel : NetworkBehaviour
@@ -14,39 +16,52 @@ namespace Monke.UI
         [SerializeField] List<GameObject> m_DisplayedCards;
         [SerializeField] int m_SelectedCardIndex;
         [SerializeField] int m_HoveredCardIndex;
-        public void SetSelectedCardIndex(int index)
+
+        public void RequestHover(int index){
+            RequestHoverServerRpc(index);
+        }
+        public void RequestSelect(int index){
+            RequestSelectCardServerRpc(index);
+        }
+        [ServerRpc(RequireOwnership = false)] void RequestHoverServerRpc(int index, ServerRpcParams serverRpcParams = default){
+            if(serverRpcParams.Receive.SenderClientId.Equals(ClientMatchState.Instance.m_ClientInControl)){
+                // if client is in control, set the hover
+                SetHoveredCardIndexClientRpc(index);
+            }
+        }
+        [ServerRpc(RequireOwnership = false)] void RequestSelectCardServerRpc(int index, ServerRpcParams serverRpcParams = default){
+            if(serverRpcParams.Receive.SenderClientId.Equals(ClientMatchState.Instance.m_ClientInControl)){
+                // if client is in control, set the selection
+                SetSelectedCardIndexClientRpc(index);
+            }
+        }
+        [ClientRpc] void SetHoveredCardIndexClientRpc(int index)
+        {
+            m_DisplayedCards[m_HoveredCardIndex].GetComponent<CardUI>().DisplayHoverGraphics(false);
+            m_HoveredCardIndex = index;
+            m_DisplayedCards[index].GetComponent<CardUI>().DisplayHoverGraphics(true);
+        }
+        [ClientRpc] void SetSelectedCardIndexClientRpc(int index)
         {
             m_SelectedCardIndex = index;
-            Debug.Log("Selected Index: "+ index);
+            m_DisplayedCards[index].GetComponent<CardUI>().DisplayClickGraphics();
 
-        }
-        [ClientRpc] public void SetHoveredCardIndexClientRpc(int index)
-        {
-            m_DisplayedCards[m_HoveredCardIndex].GetComponent<CardUI>().HoverOutline.gameObject.SetActive(false);
-            m_HoveredCardIndex = index;
-            m_DisplayedCards[index].GetComponent<CardUI>().HoverOutline.gameObject.SetActive(true);
-        }
-        public void OnHoverCardIndexChange(){
-
-        }
-        public void InitiateSelectionAnimation()
-        {
-            //Enter Player Selection (play anims)
+            ClientMatchState.Instance.ClientCardSelected(m_DisplayedCards[index].GetComponent<CardUI>().GetCard().cardID);
         }
 
-        public void FinalizeSelectionAnimation()
-        {
-            //Exit Player Selection (play anims)
+        public void ClearDisplayedCards(){
+            foreach (GameObject card_go in m_DisplayedCards){
+                card_go.GetComponent<CardUI>().OnHover -= RequestHover;
+                card_go.GetComponent<CardUI>().OnClick -= RequestSelect;
+                Destroy(card_go);
+            }
         }
-
         public void SetDisplayedCards(List<GameObject> cardObjectList)
         {
             int count = cardObjectList.Count;
             float panel_length = leftAnchor.position.x - RightAnchor.position.x;
             float partition_length = panel_length / count; // length of bound per card.
             int i = 0;
-            //Cleanup Displayed Cards.
-            m_DisplayedCards.Clear();
             foreach (GameObject card_go in cardObjectList)
             {
                 m_DisplayedCards.Add(card_go);
@@ -57,7 +72,9 @@ namespace Monke.UI
                 card_go.transform.position = new Vector3(leftAnchor.position.x - (i * partition_length) - (partition_length / 2),
                     this.transform.position.y, this.transform.position.z);
                 card_go.GetComponent<CardUI>().SetCardIndex(i);
-                card_go.GetComponent<CardUI>().OnHover += SetHoveredCardIndexClientRpc;
+                card_go.GetComponent<CardUI>().OnHover += RequestHover;
+                card_go.GetComponent<CardUI>().OnClick += RequestSelect;
+                
                 i++;
             }
         }

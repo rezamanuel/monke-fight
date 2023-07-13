@@ -35,46 +35,70 @@ namespace Monke.GameState
             networkMatchLogic.OnClientConnected += OnClientConnected;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkDespawn;
+            networkMatchLogic.OnCardSelected += OnCardSelected;
         }
         protected override void OnDestroy()
         {
             base.OnDestroy();
             networkMatchLogic.OnClientConnected -= OnClientConnected;
+            networkMatchLogic.OnCardSelected -= OnCardSelected;
             if (m_NetcodeHooks)
             {
                 m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
                 m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
             }
+            
         }
          /// <summary>
         /// Draws Cards into Character Card Inventory, Spawns UI for them thru NetworkManager.
         /// </summary>
-        /// <param name="serverCharacter"></param>
-        public void StartPlayerTurn(NetworkClient client){
+        void StartPlayerTurn(NetworkClient client){
             //Enable mouse for player in charge
             Debug.Log("Player " + client.ClientId + " Turn started");
             ServerCharacter server_character = client.PlayerObject.GetComponentInChildren<ServerCharacter>();
             server_character.m_CharacterCardInventory.DrawCards(5);
             networkMatchLogic.DisplayCardsClientRpc(server_character.m_CharacterCardInventory.m_DrawnCards.ToArray());
-
+            networkMatchLogic.SetControlClientRpc(client.ClientId);
         }
 
-        
         /// <summary>
-        /// Cleans up Character Card Inventory, Despawns/Destroys UI for discarded cards thru NetworkManager.
+        /// Prompts end of turn for current player in the Queue.
         /// </summary>
-        /// <param name="serverCharacter"></param>
-        public void EndPlayerTurn(NetworkClient client){
-            //Disable Mouse for player in charge
+        /// <param name="chosenCardIndex"></param>
+        void OnCardSelected(CardID chosenCardID){
+            var current_player = m_ClientTurnQueue[0];
+            ServerCharacter server_character = current_player.PlayerObject.GetComponentInChildren<ServerCharacter>();
+            server_character.m_CharacterCardInventory.PlayCard(chosenCardID);
+            networkMatchLogic.SetControlClientRpc(ulong.MaxValue); //removes control of player who just selected card
+            Debug.Log("OnCardSelected");
+            StartCoroutine(EndPlayerTurn(current_player));
+        }
+        /// <summary>
+        /// Cleans up Character Card Inventory
+        /// </summary>
+        IEnumerator EndPlayerTurn(NetworkClient client){
+            yield return new WaitForSeconds(2);
+            Debug.Log("end of 2 seconds");
+            ServerCharacter server_character = client.PlayerObject.GetComponentInChildren<ServerCharacter>();
+            server_character.m_CharacterCardInventory.ClearDrawnCards();
+            networkMatchLogic.ClearCardsClientRpc();
+            m_ClientTurnQueue.Remove(client);
+            CheckForPendingTurns();
+
         }
 
-        public void CheckForPendingTurns(){
-            // if there's more characters left in the turn queue, start next one.
-
+        void CheckForPendingTurns(){
+            // if there's more  characters left in the turn queue, start next one.
+            if(m_ClientTurnQueue.Count > 0){
+                StartPlayerTurn(m_ClientTurnQueue[0]);
+            }
+            else{
+                Debug.Log("ONTO FIGHTSTATE!!!!");
+            }
             //else, Progress to FightState.
         }
 
-        public void OnClientConnected(ulong clientId){
+        void OnClientConnected(ulong clientId){
             // add client to turn queue
             if(!queueStarted){
                 m_ClientTurnQueue.Add(MonkeNetworkManager.Singleton.ConnectedClients[clientId]);

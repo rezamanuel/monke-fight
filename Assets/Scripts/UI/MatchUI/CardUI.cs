@@ -1,26 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
+using Monke.Cards;
 using System;
-using UnityEngine.EventSystems;
 namespace Monke.UI
 {
     public class CardUI : MonoBehaviour
     {
-        [SerializeField] public int CardIndex { get; private set; }
-        [SerializeField] public Transform HoverOutline;
+        [SerializeField] public int m_CardIndex { get; private set; }
+        [SerializeField] Transform m_HoverOutline;
+        [SerializeField] Card m_Card;
         public event Action<int> OnHover;
-        public event Action<int> OnClick;
+        public event Action<int> OnClick; //Informs CardPanelGraphics a card has been clicked.z
 
         public void SetCardIndex(int i){
-            CardIndex = i;
+            m_CardIndex = i;
         }
         public void InvokeOnHover(){
-            OnHover?.Invoke(CardIndex);
+            OnHover?.Invoke(m_CardIndex);
         }
         public void InvokeOnClick(){
-            OnClick?.Invoke(CardIndex);
+        
+            OnClick?.Invoke(m_CardIndex);
+
+        }
+        public Card GetCard(){
+            return m_Card;
+        }
+        public void DisplayHoverGraphics(bool isOutlined){
+            m_HoverOutline.gameObject.SetActive(isOutlined);
+        }
+        public void DisplayClickGraphics(){
+            m_HoverOutline.gameObject.SetActive(true);
+            m_HoverOutline.gameObject.GetComponent<Image>().color = Color.green;
         }
 
     }

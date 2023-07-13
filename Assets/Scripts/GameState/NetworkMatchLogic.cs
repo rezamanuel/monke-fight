@@ -16,33 +16,46 @@ namespace Monke.GameState
     public class NetworkMatchLogic : NetworkBehaviour
     {   
 
-        [SerializeField] List<NetworkClient> m_ClientTurnQueue; //Server-side updates.
         public event Action<ulong> OnClientConnected;
-
+        public event Action<CardID> OnCardSelected;
         [ServerRpc(RequireOwnership = false)] void InvokeOnClientConnectedServerRpc(ServerRpcParams serverRpcParams = default)
         {
             OnClientConnected?.Invoke(serverRpcParams.Receive.SenderClientId);
-            
         }
         
         [ClientRpc] public void DisplayCardsClientRpc(CardID[] cardIDs){
-            List<GameObject> spawned_cards = new List<GameObject>();
+            List<GameObject> spawned_card_gos = new List<GameObject>();
             foreach(CardID c_id in cardIDs){
                 GameObject card_prefab = GameDataSource.Instance.GetCardPrototypeByID(c_id).m_UICardPrefab;
                 GameObject card_go = Instantiate(card_prefab) as GameObject;
-                spawned_cards.Add(card_go);
+                spawned_card_gos.Add(card_go);
             }
-             ClientMatchState.Instance.OnDisplayCards(spawned_cards);
+            ClientMatchState.Instance.DisplayCards(spawned_card_gos);
+        }
+        [ClientRpc] public void ClearCardsClientRpc(){
+            ClientMatchState.Instance.ClearCards();
         }
 
+        /// <summary>
+        /// Sets a particular NetworkClient in control of the GameState-changing actions. (ie selecting a card)
+        /// </summary>
+        /// <param name="clientId"></param>
+        [ClientRpc] public void SetControlClientRpc(ulong clientId){
+            ClientMatchState.Instance.SetClientInControl(clientId);
+        }
+
+        [ServerRpc(RequireOwnership = false)] public void SelectCardServerRpc(CardID selectedCardID){
+            Debug.Log("InvokedOnCardSelected");
+            OnCardSelected?.Invoke(selectedCardID);
+            
+        }
         override public void OnNetworkSpawn()
         {
              if (!MonkeNetworkManager.Singleton.IsClient)
             {
                 enabled = false;
                 return;
-            } 
-            
+            }
             InvokeOnClientConnectedServerRpc();
         }
         override public void OnNetworkDespawn()

@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1458632788167966159, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1943559787703955276, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}
+      propertyPath: m_Card
+      value: 
+      objectReference: {fileID: 11400000, guid: edde51baf5892d04abe90e6c80750738, type: 2}
+    - target: {fileID: 2905462202341128019, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4934482582027447161, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -91,9 +103,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5462801679054668550, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5717426173109217919, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}
       propertyPath: m_Name
-      value: CardTemplate2
+      value: DamageIncrease
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}
