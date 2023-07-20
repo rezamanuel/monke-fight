@@ -25,7 +25,7 @@ namespace Monke.GameState
         [SerializeField] NetworkMatchLogic networkMatchLogic;
         List<NetworkClient> m_ClientTurnQueue;
         [SerializeField] NetworkObject MatchUI;
-        
+
 
         protected override void Awake()
         {
@@ -33,21 +33,28 @@ namespace Monke.GameState
             networkMatchLogic = GetComponent<NetworkMatchLogic>();
             m_ClientTurnQueue = new List<NetworkClient>();
             clientMatchState = GetComponent<ClientMatchState>();
-            networkMatchLogic.OnClientConnected += OnClientConnected;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkDespawn;
-            networkMatchLogic.OnCardSelected += OnCardSelected;
+
+            if (MonkeNetworkManager.Singleton.IsServer)
+            {
+                networkMatchLogic.OnClientConnected += OnClientConnected;
+                networkMatchLogic.OnCardSelected += OnCardSelected;
+            }
         }
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            networkMatchLogic.OnClientConnected -= OnClientConnected;
-            networkMatchLogic.OnCardSelected -= OnCardSelected;
             if (m_NetcodeHooks)
             {
                 m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
                 m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
             }
+            if(MonkeNetworkManager.Singleton.IsServer){
+                networkMatchLogic.OnClientConnected -= OnClientConnected;
+                networkMatchLogic.OnCardSelected -= OnCardSelected;
+            }
+           
             
         }
          /// <summary>
@@ -58,6 +65,7 @@ namespace Monke.GameState
             Debug.Log("Player " + client.ClientId + " Turn started");
             ServerCharacter server_character = client.PlayerObject.GetComponentInChildren<ServerCharacter>();
             server_character.m_CharacterCardInventory.DrawCards(5);
+            Debug.Log("Cards Drawn: " + server_character.m_CharacterCardInventory.m_DrawnCards.Count);
             networkMatchLogic.DisplayCardsClientRpc(server_character.m_CharacterCardInventory.m_DrawnCards.ToArray());
             networkMatchLogic.SetControlClientRpc(client.ClientId);
             
@@ -123,6 +131,7 @@ namespace Monke.GameState
                 enabled = false;
                 return;
             }
+            
         }
         void OnNetworkDespawn()
         {

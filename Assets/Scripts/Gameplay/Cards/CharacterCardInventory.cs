@@ -39,7 +39,7 @@ namespace Monke.Gameplay.Character
 
         public void PlayCard(CardID cardID)
         {
-            m_DrawnCards.Add(cardID);
+            m_ActiveCards.Add(cardID);
             Card card = GameDataSource.Instance.GetCardPrototypeByID(cardID);
             card.OnPlay(m_ServerCharacter);
         }

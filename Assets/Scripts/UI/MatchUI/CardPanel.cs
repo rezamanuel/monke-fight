@@ -33,6 +33,8 @@ namespace Monke.UI
             if(serverRpcParams.Receive.SenderClientId.Equals(ClientMatchState.Instance.m_ClientInControl)){
                 // if client is in control, set the selection
                 SetSelectedCardIndexClientRpc(index);
+                //call ClientMatchState on Server, which will trigger next turn.
+                 ClientMatchState.Instance.ClientCardSelected(m_DisplayedCards[index].GetComponent<CardUI>().GetCard().cardID);
             }
         }
         [ClientRpc] void SetHoveredCardIndexClientRpc(int index)
@@ -46,15 +48,16 @@ namespace Monke.UI
             m_SelectedCardIndex = index;
             m_DisplayedCards[index].GetComponent<CardUI>().DisplayClickGraphics();
 
-            ClientMatchState.Instance.ClientCardSelected(m_DisplayedCards[index].GetComponent<CardUI>().GetCard().cardID);
+           
         }
 
         public void ClearDisplayedCards(){
             foreach (GameObject card_go in m_DisplayedCards){
                 card_go.GetComponent<CardUI>().OnHover -= RequestHover;
                 card_go.GetComponent<CardUI>().OnClick -= RequestSelect;
-                Destroy(card_go,.5f);
+                Destroy(card_go,0.1f);
             }
+            m_DisplayedCards.Clear();
         }
         public void SetDisplayedCards(List<GameObject> cardObjectList)
         {
