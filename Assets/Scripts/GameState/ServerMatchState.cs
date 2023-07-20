@@ -80,7 +80,6 @@ namespace Monke.GameState
             ServerCharacter server_character = current_player.PlayerObject.GetComponentInChildren<ServerCharacter>();
             server_character.m_CharacterCardInventory.PlayCard(chosenCardID);
             networkMatchLogic.SetControlClientRpc(ulong.MaxValue); //removes control of player who just selected card
-            Debug.Log("OnCardSelected");
             StartCoroutine(EndPlayerTurn(current_player));
         }
         /// <summary>
@@ -88,7 +87,6 @@ namespace Monke.GameState
         /// </summary>
         IEnumerator EndPlayerTurn(NetworkClient client){
             yield return new WaitForSeconds(2);
-            Debug.Log("end of 2 seconds");
             ServerCharacter server_character = client.PlayerObject.GetComponentInChildren<ServerCharacter>();
             server_character.m_CharacterCardInventory.ClearDrawnCards();
             networkMatchLogic.ClearCardsClientRpc();
@@ -104,9 +102,11 @@ namespace Monke.GameState
                 StartPlayerTurn(m_ClientTurnQueue[0]);
             }
             else{
-                Debug.Log("ONTO FIGHTSTATE!!!!");
+                Debug.Log("FIGHT!!!");
+                SceneLoaderWrapper.Instance.QueueNextScene("Fight");
+                SceneLoaderWrapper.Instance.UnloadScene();
+                
             }
-            //else, Progress to FightState.
         }
 
         void OnClientConnected(ulong clientId){

@@ -12,7 +12,10 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 73ef8a96d7dbdd24c8fb0ddf3d252948
   - enabled: 1
-    path: Assets/Scenes/TestFight.unity
+    path: Assets/Scenes/Match.unity
     guid: 55bfa01026e94ad4294d1da0dcb88ece
+  - enabled: 1
+    path: Assets/Scenes/Fight.unity
+    guid: 1ff516ea39dc36e4db508f0837322135
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 43fee1e23c88c194db04023e30bc3eb1, type: 2}
