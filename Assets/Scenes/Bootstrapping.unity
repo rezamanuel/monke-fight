@@ -399,7 +399,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2931645145299431019, guid: 545ed62fae8c14b479fa51caaf3cb35a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000020980835
+      value: -0.0000076293945
       objectReference: {fileID: 0}
     - target: {fileID: 2931645145299431019, guid: 545ed62fae8c14b479fa51caaf3cb35a, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -657,23 +657,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec463e8f8f03548498440e75619b40e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RunInBackground: 1
-  LogLevel: 1
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 768611621}
     PlayerPrefab: {fileID: 7614116224725027697, guid: 71118d0937355484e8bcdd1458814406, type: 3}
-    NetworkPrefabs:
-    - Override: 0
-      Prefab: {fileID: 7614116224725027697, guid: 71118d0937355484e8bcdd1458814406, type: 3}
-      SourcePrefabToOverride: {fileID: 7614116224725027697, guid: 71118d0937355484e8bcdd1458814406, type: 3}
-      SourceHashToOverride: 0
-      OverridingTargetPrefab: {fileID: 0}
-    - Override: 0
-      Prefab: {fileID: 7922017633417786064, guid: b316982f99afe01408063a02c948845b, type: 3}
-      SourcePrefabToOverride: {fileID: 7614116224725027697, guid: 71118d0937355484e8bcdd1458814406, type: 3}
-      SourceHashToOverride: 0
-      OverridingTargetPrefab: {fileID: 0}
+    Prefabs:
+      NetworkPrefabsLists: []
     TickRate: 45
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -689,6 +678,19 @@ MonoBehaviour:
     LoadSceneTimeOut: 120
     SpawnTimeout: 1
     EnableNetworkLogs: 1
+    OldPrefabList:
+    - Override: 0
+      Prefab: {fileID: 7614116224725027697, guid: 71118d0937355484e8bcdd1458814406, type: 3}
+      SourcePrefabToOverride: {fileID: 7614116224725027697, guid: 71118d0937355484e8bcdd1458814406, type: 3}
+      SourceHashToOverride: 0
+      OverridingTargetPrefab: {fileID: 0}
+    - Override: 0
+      Prefab: {fileID: 7922017633417786064, guid: b316982f99afe01408063a02c948845b, type: 3}
+      SourcePrefabToOverride: {fileID: 7614116224725027697, guid: 71118d0937355484e8bcdd1458814406, type: 3}
+      SourceHashToOverride: 0
+      OverridingTargetPrefab: {fileID: 0}
+  RunInBackground: 1
+  LogLevel: 1
 --- !u!114 &768611621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,7 +706,6 @@ MonoBehaviour:
   m_ProtocolType: 0
   m_MaxPacketQueueSize: 128
   m_MaxPayloadSize: 6144
-  m_MaxSendQueueSize: 0
   m_HeartbeatTimeoutMS: 500
   m_ConnectTimeoutMS: 1000
   m_MaxConnectAttempts: 60
