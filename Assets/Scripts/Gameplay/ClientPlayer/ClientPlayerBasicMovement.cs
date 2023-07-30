@@ -4,14 +4,14 @@ using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
-public class ClientPlayerBasicMovement : NetworkBehaviour 
+public class ClientPlayerBasicMovement : NetworkBehaviour
 
 {
+    public Vector3 m_Velocity; // should be readonly... havent figured out how to do it yet -- {get; private set} doesn't work
+    public Vector3 m_MouseWorldPosition;
     [SerializeField] private float MoveSpeed = 11f;
     [SerializeField] Vector2 m_MousePosition;
-    [SerializeField] Vector3 m_MouseWorldPosition;
     [SerializeField] Vector2 m_MovementInput;
-    [SerializeField] Vector3 m_Velocity;
     [SerializeField] float jumpVelocity = 11f;
     [SerializeField] float jumpPower;
     [SerializeField] float movementLerpPercent;
@@ -33,15 +33,19 @@ public class ClientPlayerBasicMovement : NetworkBehaviour
         //ignore if 0, we want to smooth down to 0.
         if(m_MovementInput.x == 0)return;
         m_Velocity.x =  MoveSpeed * m_MovementInput.x * Time.fixedDeltaTime; //velocity per frame
+        
     }
     void OnLook(){
+        Debug.Log("onlook");
         m_MousePosition= Mouse.current.position.ReadValue();
+         m_MouseWorldPosition.z = Camera.main.nearClipPlane + 1;
+        m_MouseWorldPosition = Camera.main.ScreenToWorldPoint(m_MousePosition);
+        m_MouseWorldPosition.z = 0;
+        if(m_MouseWorldPosition.x-transform.position.x < 0) transform.rotation = Quaternion.AngleAxis( 180f, Vector3.up);
+        else transform.rotation = Quaternion.AngleAxis( 0, Vector3.up);
     }
     void OnFire(){
-        m_MouseWorldPosition = m_MousePosition;
-        m_MouseWorldPosition.z = Camera.main.nearClipPlane + 1;
-        m_MouseWorldPosition = Camera.main.ScreenToWorldPoint(m_MouseWorldPosition);
-        m_MouseWorldPosition.z = 0;
+       
     }
     override public void OnNetworkSpawn(){
         if (!IsClient || !IsOwner)
