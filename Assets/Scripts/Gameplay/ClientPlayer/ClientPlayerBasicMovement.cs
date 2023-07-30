@@ -36,7 +36,6 @@ public class ClientPlayerBasicMovement : NetworkBehaviour
         
     }
     void OnLook(){
-        Debug.Log("onlook");
         m_MousePosition= Mouse.current.position.ReadValue();
          m_MouseWorldPosition.z = Camera.main.nearClipPlane + 1;
         m_MouseWorldPosition = Camera.main.ScreenToWorldPoint(m_MousePosition);

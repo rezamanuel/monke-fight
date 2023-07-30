@@ -2923,7 +2923,7 @@ GameObject:
   - component: {fileID: 516751163753883121}
   - component: {fileID: 4085956696654945408}
   - component: {fileID: 2701767092221001410}
-  - component: {fileID: 3820059221713060346}
+  - component: {fileID: 1723425017934464267}
   m_Layer: 0
   m_Name: monke2_run
   m_TagString: Untagged
@@ -2998,7 +2998,7 @@ MonoBehaviour:
   - m_Rig: {fileID: 2976735602281308038}
     m_Active: 1
   m_Effectors: []
---- !u!114 &3820059221713060346
+--- !u!114 &1723425017934464267
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3007,7 +3007,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6521249687031014705}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Script: {fileID: 11500000, guid: 0fa3195f401d4344b98907e89ed80628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TransitionStateInfoList: []
