@@ -2,86 +2,136 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
-using Monke.Gameplay.Character;
+using UnityEngine.InputSystem;
 using Monke.Gameplay.Actions;
+using Monke.Gameplay.Character;
+
 using UnityEngine.Assertions;
 
 namespace Monke.Gameplay.ClientPlayer
 {
-    /// <summary>
-    ///  Sends input to the server
-    /// </summary>
-    [RequireComponent(typeof(ServerCharacter))]
-    public class ClientPlayerInput:NetworkBehaviour
+    [RequireComponent(typeof(PlayerInput))]
+    public class ClientPlayerInput : NetworkBehaviour
+
     {
-        // InputTriggerStyles are how actions are triggered (ie via key release, mouse click, etc.)
+        public Vector3 m_Velocity; // should be readonly... havent figured out how to do it yet -- {get; private set} doesn't work
+        public Vector3 m_MouseWorldPosition;
+        [SerializeField] private float MoveSpeed = 11f;
+        [SerializeField] Vector2 m_MousePosition;
+        [SerializeField] Vector2 m_MovementInput;
+        [SerializeField] float jumpVelocity = 11f;
+        [SerializeField] float jumpPower;
+        [SerializeField] float movementLerpPercent;
+        [SerializeField] float gravityLerpPercent;
+        [SerializeField] float jumpDecayTime;
+        [SerializeField] bool isTouchingGround = true;
+        [SerializeField] bool isJumping;
+        [SerializeField] float gravity = 9.81f;
+        [SerializeField] Transform ArmTarget; // animation target for 'aiming'
         ServerCharacter m_ServerCharacter;
-        public enum InputTriggerStyle{
-            KeyRelease,
-            KeyPress,
-            MouseClick
-        }
-        struct ActionRequest{
-            public ActionID actionID;
-            public InputTriggerStyle inputTriggerStyle;
-        }
-        //static array of action Requests that can be inputted per frame. 
-        //static = less memory overhead, we won't need more than 5
-        ActionRequest[] m_ActionRequests = new ActionRequest[5];
-        int m_ActionRequestCount;
+        ClientPlayerActionInput m_clientPlayerInput;
 
-        public void Awake(){
-            m_ServerCharacter = this.GetComponent<ServerCharacter>();
-            
+        [SerializeField] CapsuleCollider m_MovementCollider;
+    // Start is called before the first frame update
+    void Start()
+        {
+            jumpPower = jumpVelocity;
+            m_ServerCharacter = GetComponent<ServerCharacter>();
+            m_clientPlayerInput = GetComponent<ClientPlayerActionInput>();
         }
 
-        public override void OnNetworkSpawn(){
+        void OnMove(InputValue value)
+        {
+            m_MovementInput = value.Get<Vector2>();
+            //ignore if 0, we want to smooth down to 0.
+            if (m_MovementInput.x == 0) return;
+            m_Velocity.x = MoveSpeed * m_MovementInput.x * Time.fixedDeltaTime; //velocity per frame
+
+        }
+        void OnLook()
+        {
+            m_MousePosition = Mouse.current.position.ReadValue();
+            m_MouseWorldPosition.z = Camera.main.nearClipPlane + 1;
+            m_MouseWorldPosition = Camera.main.ScreenToWorldPoint(m_MousePosition);
+            m_MouseWorldPosition.z = 0;
+            if (m_MouseWorldPosition.x - transform.position.x < 0) transform.rotation = Quaternion.AngleAxis(180f, Vector3.up);
+            else transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+        }
+        void OnFire()
+        {
+            // will trigger whatever action ID is occupying the 1st action slot.
+            ActionRequestData data = new ActionRequestData
+            {
+                actionID = m_ServerCharacter.m_CharacterAttributes.m_ActionSlots[0],
+                m_Position = ArmTarget.position,
+                m_Direction = m_MouseWorldPosition,
+                m_actionType = ActionType.Shoot,
+            };
+            Assert.IsNotNull(GameDataSource.Instance.GetActionPrototypeByID(data.actionID),
+                $"Action with actionID {data.actionID} must be contained in the Action prototypes of ActionSource!");
+
+            m_clientPlayerInput.RequestAction(data.actionID, ClientPlayerActionInput.InputTriggerStyle.MouseClick);
+        }
+        override public void OnNetworkSpawn()
+        {
+            if (!IsClient || !IsOwner)
+            {
+                GetComponent<PlayerInput>().enabled = false;
+                enabled = false;
+                // dont need to do anything else if not the owner
+                return;
+            }
+        }
+        void OnCollisionEnter(Collision c)
+        {
+            isTouchingGround = true;
+            isJumping = false;
+            m_Velocity.y = 0;
+            jumpPower = jumpVelocity;
+        }
+        void OnCollisionExit(Collision c)
+        {
+            isTouchingGround = false;
+        }
+        void OnJump(InputValue value)
+        {
+            if (!isTouchingGround && !isJumping) return;
+            else
+            {
+                isJumping = value.isPressed;
+            }
+
+        }
+         public override void OnNetworkSpawn(){
             if (!IsClient || !IsOwner) enabled = false;
             m_ActionRequestCount = 0;
         }
-        public override void OnNetworkDespawn(){
-            // unsubscribe from events / delegates
-        }
-
-        public void SendActionRequest(ActionRequestData action){
-            m_ServerCharacter.DoActionServerRpc(action);
-        }
-
-         /// <summary>
-        /// Request an action be performed. This will occur on the next FixedUpdate.
-        /// </summary>
-        /// <param name="actionID"> The action you'd like to perform. </param>
-        /// <param name="triggerStyle"> What input style triggered this action. </param>
-        /// <param name="targetId"> NetworkObjectId of target. </param>
-        public void RequestAction(ActionID actionID, InputTriggerStyle triggerStyle)
+        void FixedUpdate()
         {
-            Assert.IsNotNull(GameDataSource.Instance.GetActionPrototypeByID(actionID),
-                $"Action with actionID {actionID} must be contained in the Action prototypes of ActionSource!");
-
-            if (m_ActionRequestCount < m_ActionRequests.Length)
+            if (m_MovementInput.x == 0)
+                if (Mathf.Abs(m_Velocity.x) < .01f)
+                {
+                    m_Velocity.x = 0;
+                }
+                else
+                {
+                    m_Velocity.x = Mathf.Lerp(m_Velocity.x, 0, movementLerpPercent * .01f);
+                }
+            if (isJumping && jumpPower > 0)
             {
-                m_ActionRequests[m_ActionRequestCount].actionID = actionID;
-                m_ActionRequests[m_ActionRequestCount].inputTriggerStyle = triggerStyle;
-                m_ActionRequestCount++;
+
+                m_Velocity.y = Mathf.Lerp(jumpPower, 0, jumpDecayTime * .01f);
+                jumpPower -= jumpDecayTime * Time.fixedDeltaTime;
+
             }
+            else if (!isTouchingGround)
+            {
+                m_Velocity.y = Mathf.Lerp(m_Velocity.y, -gravity * Time.fixedDeltaTime, Time.fixedDeltaTime * gravityLerpPercent * .01f);
+            }
+            transform.position += m_Velocity;
         }
-
-        
-        
-
-        void Update()
-        {
-            //Process Key Inputs + request actions.
-            
-            //if X key, Request Action
-
-        }
-
-        void FixedUpdate(){
-            //dequeue action requests, pass onto ServerActionPlayer thru SendActionRequest
-
-            //foreach ActionRequests[], verify prototype exists in ActionSource, Send Action Request.
-        }
-        
     }
+
 }
+
+

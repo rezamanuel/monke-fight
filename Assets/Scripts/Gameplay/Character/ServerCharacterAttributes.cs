@@ -13,7 +13,7 @@ namespace Monke.Gameplay.Character
     {
         public float m_BulletSpeed { get; private set; }
         public float m_BulletForce { get; private set; }
-        public float m_BulletDamage { get; private set; }
+        public int m_BulletDamage { get; private set; }
         public float m_BulletSize { get; private set; }   
         public int m_ClipSize { get; private set; } 
         public int m_MaxHealth { get; private set; } 
@@ -40,7 +40,7 @@ namespace Monke.Gameplay.Character
         private void InitializeAttributes(){
             m_BulletSpeed = 1.0f;
             m_BulletForce = 1.0f;
-            m_BulletDamage = 1.0f;
+            m_BulletDamage = 1;
             m_BulletSize = 1.0f;
             m_ClipSize = 5;
             m_MaxHealth = 100;
@@ -53,7 +53,7 @@ namespace Monke.Gameplay.Character
                     case CardBuffType.BulletForce:
                         m_BulletForce += amount; break;
                     case CardBuffType.BulletDamage:
-                        m_BulletDamage += amount; break;                
+                        m_BulletDamage += Mathf.RoundToInt(amount); break;                
                     case CardBuffType.BulletSize:
                         m_BulletSize += amount; break;
                     case CardBuffType.ClipSize:

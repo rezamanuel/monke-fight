@@ -2,6 +2,9 @@ using UnityEngine;
 using Unity.Netcode;
 using System.Collections.Generic;
 using Monke.Gameplay.Character;
+using Monke.Projectiles;
+using Monke.Infrastructure;
+using Monke.Networking;
 
 namespace Monke.Gameplay.Actions
 {
@@ -10,18 +13,32 @@ namespace Monke.Gameplay.Actions
 
         [SerializeField] GameObject bulletPrefab;
         [SerializeField] string animationName;
+        float bulletSize;
 
         public override void End()
         {
-            throw new System.NotImplementedException();
+            isActive = false;
         }
 
         public override void OnStart(ServerCharacter serverCharacter){
-            
+           
+            NetworkObject basicBullet_no =  NetworkObjectPool.Singleton.GetNetworkObject(bulletPrefab);
+            basicBullet_no.transform.SetPositionAndRotation(serverCharacter.transform.position, Quaternion.identity);
+            basicBullet_no.Spawn(true);
+            BasicBullet basicBullet = basicBullet_no.GetComponent<BasicBullet>();
+            var characterAttributes = serverCharacter.m_CharacterAttributes;
+            basicBullet.Initialize(serverCharacter.OwnerClientId,
+             characterAttributes.m_BulletSpeed, 
+             characterAttributes.m_BulletForce,
+              characterAttributes.m_BulletDamage,
+               characterAttributes.m_BulletSize,
+               m_Data.m_Direction);
+            End();
         }
-        public override void OnUpdate (ClientCharacter clientCharacter)
-        {
 
+        public override void OnUpdate(ServerCharacter clientCharacter)
+        {
+            return;
         }
     }
 } 

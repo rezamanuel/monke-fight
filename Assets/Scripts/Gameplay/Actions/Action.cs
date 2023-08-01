@@ -23,8 +23,6 @@ namespace Monke.Gameplay.Actions
 
         protected ActionRequestData m_Data;
 
-        public ref ActionRequestData Data => ref m_Data;
-
         public void Initialize(ref ActionRequestData data)
         {
             m_Data = data;
@@ -41,7 +39,7 @@ namespace Monke.Gameplay.Actions
         }
 
         public abstract void OnStart(ServerCharacter serverCharacter);
-        public abstract void OnUpdate(ClientCharacter clientCharacter);
+        public abstract void OnUpdate(ServerCharacter clientCharacter);
 
         public abstract void End();
         public virtual void End(ServerCharacter serverCharacter)

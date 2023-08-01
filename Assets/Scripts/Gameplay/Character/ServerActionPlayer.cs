@@ -78,6 +78,8 @@ namespace Monke.Gameplay.Character
                     ActionLibrary.ReturnAction(action);
                     m_ActiveActionList.Remove(action);
                 }
+                // else update old actions
+                action.OnUpdate(m_ServerCharacter);
             }
             // queue new actions
             foreach (var action in m_ActionQueue)

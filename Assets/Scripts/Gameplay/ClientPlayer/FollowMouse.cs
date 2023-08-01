@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Monke.Gameplay.ClientPlayer;
 public class FollowMouse : MonoBehaviour
 {
     /// <summary>
     /// Script for having a gameobject match the mouse position according to PlayerInput;
     /// </summary>
-    public ClientPlayerBasicMovement playerMovement;
+    public ClientPlayerInput playerMovement;
     void Awake()
     {
-        GetComponentInParent<ClientPlayerBasicMovement>();
+        GetComponentInParent<ClientPlayerInput>();
     }
 
     // Update is called once per frame
