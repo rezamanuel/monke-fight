@@ -29,7 +29,6 @@ namespace Monke.Gameplay.ClientPlayer
         [SerializeField] float gravity = 9.81f;
         [SerializeField] Transform ArmTarget; // animation target for 'aiming'
         ServerCharacter m_ServerCharacter;
-        ClientPlayerActionInput m_clientPlayerInput;
 
         [SerializeField] CapsuleCollider m_MovementCollider;
     // Start is called before the first frame update
@@ -37,7 +36,6 @@ namespace Monke.Gameplay.ClientPlayer
         {
             jumpPower = jumpVelocity;
             m_ServerCharacter = GetComponent<ServerCharacter>();
-            m_clientPlayerInput = GetComponent<ClientPlayerActionInput>();
         }
 
         void OnMove(InputValue value)
@@ -70,7 +68,7 @@ namespace Monke.Gameplay.ClientPlayer
             Assert.IsNotNull(GameDataSource.Instance.GetActionPrototypeByID(data.actionID),
                 $"Action with actionID {data.actionID} must be contained in the Action prototypes of ActionSource!");
 
-            m_clientPlayerInput.RequestAction(data.actionID, ClientPlayerActionInput.InputTriggerStyle.MouseClick);
+            m_ServerCharacter.DoActionServerRpc(data);
         }
         override public void OnNetworkSpawn()
         {
@@ -101,10 +99,6 @@ namespace Monke.Gameplay.ClientPlayer
                 isJumping = value.isPressed;
             }
 
-        }
-         public override void OnNetworkSpawn(){
-            if (!IsClient || !IsOwner) enabled = false;
-            m_ActionRequestCount = 0;
         }
         void FixedUpdate()
         {

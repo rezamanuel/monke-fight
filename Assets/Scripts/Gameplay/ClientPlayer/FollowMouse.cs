@@ -10,7 +10,6 @@ public class FollowMouse : MonoBehaviour
     public ClientPlayerInput playerMovement;
     void Awake()
     {
-        GetComponentInParent<ClientPlayerInput>();
     }
 
     // Update is called once per frame

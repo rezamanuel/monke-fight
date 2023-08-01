@@ -1,0 +1,7 @@
+MoveSpeed = 15.39f
+JumpVelocity = 0.59f
+JumpPower = 0.59f
+MovementLerpPercent = 12.9f
+GravityLerpPercent = 512.4f
+JumpDecayTime = 1.5f
+Gravity = 57.7f
