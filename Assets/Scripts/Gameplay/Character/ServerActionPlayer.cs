@@ -17,6 +17,8 @@ namespace Monke.Gameplay.Character
         {
             this.m_ServerCharacter = serverCharacter;
             this.m_ActionQueue = new List<Action>();
+            this.m_ActiveActionList = new List<Action>();
+            this.m_BlockingActionList = new Dictionary<ActionType, Action>();
         }
         private void TryReturnAction(Action action)
         {
@@ -31,6 +33,7 @@ namespace Monke.Gameplay.Character
             ActionID actionID = actionRequestData.actionID;
             var action = ActionLibrary.CreateAction(actionRequestData);
             m_ActionQueue.Add(action);
+            Debug.Log("ActionQueued: " + m_ActionQueue.Count);
         }
          public void ClearActions()
         {
@@ -65,7 +68,8 @@ namespace Monke.Gameplay.Character
             {
                 var action = keyValuePair.Value;
                 float slot_cooldown = m_ServerCharacter.m_CharacterAttributes.m_ActionCooldowns[action.m_ActionType];
-                Action blocking_action = m_BlockingActionList[action.m_ActionType];
+                Action blocking_action;
+                m_BlockingActionList.TryGetValue(action.m_ActionType, out blocking_action);
                 if (blocking_action.TimeRunning > slot_cooldown)
                 {
                     m_BlockingActionList.Remove(action.m_ActionType);
@@ -85,11 +89,17 @@ namespace Monke.Gameplay.Character
             foreach (var action in m_ActionQueue)
             {
                 //if cooldown has expired for that action's type, then queue; else discard.
-                Action blocking_action = m_BlockingActionList[action.m_ActionType];
+                Action blocking_action;
+                m_BlockingActionList.TryGetValue(action.m_ActionType, out blocking_action);
+                
                 if ( blocking_action == null)
                 {
                     m_BlockingActionList[action.m_ActionType] = action;
                     action.OnStart(this.m_ServerCharacter);
+                }
+                else{
+                    Debug.Log("Blocking Action:" +blocking_action.name);
+                    m_ActionQueue.Remove(action);
                 }
 
                 

@@ -33,6 +33,10 @@ namespace Monke.Gameplay.Character
             m_DamageReceiver = GetComponent<DamageReceiver>();
             m_CharacterAttributes = GetComponent<ServerCharacterAttributes>();
         }
+        
+        public void Update(){
+            m_ServerActionPlayer.OnUpdate();
+        }
 
         [ServerRpc]
         public void DoActionServerRpc(ActionRequestData actionRequestData) 
