@@ -13,12 +13,17 @@ namespace Monke.Gameplay.Character
         private List<Action> m_ActionQueue; // loaded at-will, unloaded each update()
         private List<Action> m_ActiveActionList; //list of active actions, check if still active every update(); if not, free from memory.
         private Dictionary<ActionType, Action> m_BlockingActionList; //list of actions that will block new action queuing, sorted by ActionType
+
+        private List<ActionType> expiredActionTypes; // used as a memo array to hold actiontypes we are removing from the blocking action list.
+        private List<Action> expiredActions; // used as a memo array to hold actions we are removing from iether active actions or the action queue.
         public ServerActionPlayer(ServerCharacter serverCharacter)
         {
             this.m_ServerCharacter = serverCharacter;
             this.m_ActionQueue = new List<Action>();
             this.m_ActiveActionList = new List<Action>();
             this.m_BlockingActionList = new Dictionary<ActionType, Action>();
+            this.expiredActionTypes = new List<ActionType>();
+            this.expiredActions = new List<Action>();
         }
         private void TryReturnAction(Action action)
         {
@@ -64,27 +69,35 @@ namespace Monke.Gameplay.Character
         public void OnUpdate()
         {
             // expire blocking actions (they do not End(), but stop blocking new actions in their slot)
-            foreach(var keyValuePair in m_BlockingActionList)
+            foreach(var actionType in m_BlockingActionList.Keys)
             {
-                var action = keyValuePair.Value;
+                var action = m_BlockingActionList[actionType];
                 float slot_cooldown = m_ServerCharacter.m_CharacterAttributes.m_ActionCooldowns[action.m_ActionType];
                 Action blocking_action;
                 m_BlockingActionList.TryGetValue(action.m_ActionType, out blocking_action);
                 if (blocking_action.TimeRunning > slot_cooldown)
                 {
-                    m_BlockingActionList.Remove(action.m_ActionType);
+                    expiredActionTypes.Add(action.m_ActionType);
                 }
             }
+            foreach(var actionType in expiredActionTypes){
+                m_BlockingActionList.Remove(actionType);
+            }
+            expiredActions.Clear();
             // expire old actions (they have End()'d )
             foreach (var action in m_ActiveActionList){
                 if(!action.isActive)
                 {
                     ActionLibrary.ReturnAction(action);
-                    m_ActiveActionList.Remove(action);
+                    expiredActions.Add(action);
                 }
                 // else update old actions
                 action.OnUpdate(m_ServerCharacter);
             }
+            foreach(var action in expiredActions){
+                m_ActiveActionList.Remove(action);
+            }
+            expiredActions.Clear();
             // queue new actions
             foreach (var action in m_ActionQueue)
             {
@@ -94,16 +107,19 @@ namespace Monke.Gameplay.Character
                 
                 if ( blocking_action == null)
                 {
-                    m_BlockingActionList[action.m_ActionType] = action;
+                    m_BlockingActionList.Add(action.m_ActionType, action);
                     action.OnStart(this.m_ServerCharacter);
                 }
                 else{
                     Debug.Log("Blocking Action:" +blocking_action.name);
-                    m_ActionQueue.Remove(action);
-                }
-
+                }              
                 
+                expiredActions.Add(action);  
             }
+            foreach(var action in expiredActions){
+                m_ActionQueue.Remove(action);
+            }
+            expiredActions.Clear();
         }
     }
 }

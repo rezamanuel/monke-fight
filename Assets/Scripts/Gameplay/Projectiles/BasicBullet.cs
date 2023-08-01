@@ -8,14 +8,13 @@ namespace Monke.Projectiles
 {
     public class BasicBullet : NetworkBehaviour
     {
-        TrailRenderer trailRenderer;
         [SerializeField] float m_BulletSpeed;
         [SerializeField] float m_BulletForce;
         [SerializeField] int m_BulletDamage;
         [SerializeField] float m_BulletSize;
         [SerializeField] SphereCollider m_OurCollider;
-
-        [SerializeField] Transform m_Visualization;
+        [SerializeField] Vector3 m_bulletGravity;
+        [SerializeField] Vector3 m_initialVelocity;
 
         [SerializeField] GameObject m_OnHitParticlePrefab;
 
@@ -38,6 +37,7 @@ namespace Monke.Projectiles
             m_BulletForce = force;
             m_BulletDamage = damage;
             m_BulletSize = size;
+            m_initialVelocity = direction;
         }
         override public void OnNetworkSpawn()
         {
@@ -50,12 +50,16 @@ namespace Monke.Projectiles
             } 
 
         void Update(){
-
         }
 
         void FixedUpdate(){
-            if(IsServer && m_IsDead){
+            if(IsServer){
+                if(m_IsDead)
                 NetworkObject.Despawn();
+                else{
+                    DetectCollisions();
+                    transform.position += m_initialVelocity * m_BulletSpeed - m_bulletGravity;
+                }
             }
         }
         void DetectCollisions()
@@ -81,6 +85,7 @@ namespace Monke.Projectiles
                     {
                         // we've hit all the enemies we're allowed to! So we're done
                         m_IsDead = true;
+                        Debug.Log("isDead!");
                     }
 
                     //all NPC layer entities should have one of these.
@@ -110,8 +115,6 @@ namespace Monke.Projectiles
         [ClientRpc]
         private void RecvHitEnemyClientRPC(ulong enemyId)
         {
-            //in the future we could do quite fancy things, like deparenting the Graphics Arrow and parenting it to the target.
-            //For the moment we play some particles (optionally), and cause the target to animate a hit-react.
 
             NetworkObject targetNetObject;
             if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(enemyId, out targetNetObject))
