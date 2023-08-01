@@ -28,7 +28,7 @@ namespace Monke.Gameplay.ClientPlayer
         [SerializeField] bool isJumping;
         [SerializeField] float gravity = 9.81f;
         [SerializeField] Transform ArmTarget; // animation target for 'aiming'
-        [SerializeField] Rigidbody rb;
+        //[SerializeField] Rigidbody rb;
         ServerCharacter m_ServerCharacter;
 
         [SerializeField] CapsuleCollider m_MovementCollider;
@@ -37,7 +37,7 @@ namespace Monke.Gameplay.ClientPlayer
         {
             jumpPower = jumpVelocity;
             m_ServerCharacter = GetComponent<ServerCharacter>();
-            rb = GetComponent<Rigidbody>();
+           // rb = GetComponent<Rigidbody>();
         }
 
         void OnMove(InputValue value)
@@ -124,8 +124,8 @@ namespace Monke.Gameplay.ClientPlayer
             {
                 m_Velocity.y = Mathf.Lerp(m_Velocity.y, -gravity * Time.fixedDeltaTime, Time.fixedDeltaTime * gravityLerpPercent * .01f);
             }
-            //transform.position += m_Velocity;
-            rb.position += m_Velocity;
+            transform.position += m_Velocity;
+            //rb.position += m_Velocity;
         }
     }
 

@@ -50,10 +50,9 @@ namespace Monke.GameState
                 m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
                 m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
             }
-            if(MonkeNetworkManager.Singleton.IsServer){
                 networkMatchLogic.OnClientConnected -= OnClientConnected;
                 networkMatchLogic.OnCardSelected -= OnCardSelected;
-            }
+            
            
             
         }
