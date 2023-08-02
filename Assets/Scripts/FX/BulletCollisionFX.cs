@@ -12,7 +12,7 @@ public class BulletCollisionFX : MonoBehaviour
         particleSystem = this.GetComponent<ParticleSystem>();
     }
     void OnCollisionEnter(){
-        particleSystem.Play();
+//particleSystem.Play();
     }
     void Start()
     {

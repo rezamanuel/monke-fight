@@ -43,7 +43,8 @@ namespace Monke.Projectiles
         {
             if(IsServer){
                 m_IsInitialized = true;
-        }
+                m_IsDead = false;
+            }
                 m_CollisionMask = LayerMask.GetMask(new[] { "Default", "Environment" });
                 m_BlockerMask = LayerMask.GetMask(new[] { "Default", "Environment" });
                 

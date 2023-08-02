@@ -16,6 +16,7 @@ namespace Monke.Gameplay.ClientPlayer
     {
         public Vector3 m_Velocity; // should be readonly... havent figured out how to do it yet -- {get; private set} doesn't work
         public Vector3 m_MouseWorldPosition;
+        public Transform m_ArmTarget; // animation target for 'aiming'
         [SerializeField] private float MoveSpeed = 11f;
         [SerializeField] Vector2 m_MousePosition;
         [SerializeField] Vector2 m_MovementInput;
@@ -27,17 +28,14 @@ namespace Monke.Gameplay.ClientPlayer
         [SerializeField] bool isTouchingGround = true;
         [SerializeField] bool isJumping;
         [SerializeField] float gravity = 9.81f;
-        [SerializeField] Transform ArmTarget; // animation target for 'aiming'
-        //[SerializeField] Rigidbody rb;
         ServerCharacter m_ServerCharacter;
 
-        [SerializeField] CapsuleCollider m_MovementCollider;
-    // Start is called before the first frame update
-    void Start()
+        // Start is called before the first frame update
+        void Start()
         {
             jumpPower = jumpVelocity;
             m_ServerCharacter = GetComponent<ServerCharacter>();
-           // rb = GetComponent<Rigidbody>();
+            // rb = GetComponent<Rigidbody>();
         }
 
         void OnMove(InputValue value)
@@ -63,7 +61,7 @@ namespace Monke.Gameplay.ClientPlayer
             ActionRequestData data = new ActionRequestData
             {
                 actionID = m_ServerCharacter.m_CharacterAttributes.m_ActionSlots[0],
-                m_Position = ArmTarget.position,
+                m_Position = m_ArmTarget.position,
                 m_Direction = m_MouseWorldPosition.normalized,
                 m_actionType = ActionType.Shoot,
             };
@@ -95,7 +93,7 @@ namespace Monke.Gameplay.ClientPlayer
         }
         void OnJump(InputValue value)
         {
-            if (!isTouchingGround && !isJumping) return;
+            if (isJumping) return;
             else
             {
                 isJumping = value.isPressed;

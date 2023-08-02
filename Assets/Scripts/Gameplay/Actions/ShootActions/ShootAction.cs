@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Monke.Gameplay.Character;
 using Monke.Projectiles;
 using Monke.Infrastructure;
-using Monke.Networking;
+using Monke.Gameplay.ClientPlayer;
 
 namespace Monke.Gameplay.Actions
 {
@@ -23,7 +23,7 @@ namespace Monke.Gameplay.Actions
         public override void OnStart(ServerCharacter serverCharacter){
            
             NetworkObject basicBullet_no =  NetworkObjectPool.Singleton.GetNetworkObject(bulletPrefab);
-            basicBullet_no.transform.SetPositionAndRotation(serverCharacter.transform.position, Quaternion.identity);
+            basicBullet_no.transform.SetPositionAndRotation(serverCharacter.m_ArmTarget.position, Quaternion.identity);
             basicBullet_no.Spawn(true);
             BasicBullet basicBullet = basicBullet_no.GetComponent<BasicBullet>();
             var characterAttributes = serverCharacter.m_CharacterAttributes;

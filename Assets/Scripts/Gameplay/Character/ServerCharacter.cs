@@ -13,6 +13,7 @@ namespace Monke.Gameplay.Character
     {
         public ClientCharacter m_ClientCharacter;
         public CharacterCardInventory m_CharacterCardInventory;
+        public Transform m_ArmTarget; // animation target for 'aiming' set on prefab
         ServerActionPlayer m_ServerActionPlayer;
         NetworkHealthState m_HealthState;
         DamageReceiver m_DamageReceiver;

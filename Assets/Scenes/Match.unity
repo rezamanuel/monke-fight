@@ -374,7 +374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PooledPrefabsList:
   - Prefab: {fileID: 730030169050511099, guid: 65d4799d4f0a1df41bf99526947b9941, type: 3}
-    PrewarmCount: 10
+    PrewarmCount: 40
 --- !u!4 &1196223986
 Transform:
   m_ObjectHideFlags: 0
