@@ -3,6 +3,7 @@ using Unity.Netcode;
 using Monke.Gameplay.Character;
 using Monke.Gameplay.Interfaces;
 using System.Collections.Generic; 
+using System.Collections;
 
 namespace Monke.Projectiles
 {
@@ -15,9 +16,9 @@ namespace Monke.Projectiles
         [SerializeField] SphereCollider m_OurCollider;
         [SerializeField] Vector3 m_bulletGravity;
         [SerializeField] Vector3 m_initialVelocity;
-
         [SerializeField] GameObject m_OnHitParticlePrefab;
-
+        [SerializeField]ParticleSystem m_ParticleSystem;
+        [SerializeField] float k_gravityStrength = .000000000000000000000000000000000000000000000000001f;
         /// <summary>
         /// The character that created us. Can be 0 to signal that we were created generically by the server.
         /// </summary>
@@ -38,7 +39,9 @@ namespace Monke.Projectiles
             m_BulletDamage = damage;
             m_BulletSize = size;
             m_initialVelocity = direction;
+            m_bulletGravity = Vector3.zero;
         }
+
         override public void OnNetworkSpawn()
         {
             if(IsServer){
@@ -55,13 +58,17 @@ namespace Monke.Projectiles
 
         void FixedUpdate(){
             if(IsServer){
-                if(m_IsDead)
-                NetworkObject.Despawn();
-                else{
+                if(!m_IsDead){
                     DetectCollisions();
-                    transform.position += m_initialVelocity * m_BulletSpeed - m_bulletGravity;
+                    
+                    m_bulletGravity += new Vector3(0,-k_gravityStrength,0);
+                    NetworkObject.transform.position += m_initialVelocity * m_BulletSpeed + m_bulletGravity;
                 }
             }
+        }
+        IEnumerator DespawnCoro(){
+            yield return new WaitForSeconds(.5f);
+            this.NetworkObject.Despawn();
         }
         void DetectCollisions()
         {
@@ -73,8 +80,11 @@ namespace Monke.Projectiles
                 if ((layerTest & m_BlockerMask) != 0)
                 {
                     //hit a wall; leave it for a couple of seconds.
+                    
                     m_BulletSpeed = 0f;
                     m_IsDead = true;
+                    m_ParticleSystem.Play();
+                    StartCoroutine(DespawnCoro());
                     return;
                 }
 
@@ -86,10 +96,11 @@ namespace Monke.Projectiles
                     {
                         // we've hit all the enemies we're allowed to! So we're done
                         m_IsDead = true;
-                        Debug.Log("isDead!");
+                        m_ParticleSystem.Play();
+                        StartCoroutine(DespawnCoro());
                     }
 
-                    //all NPC layer entities should have one of these.
+                    //all NPC layer entities should have one of these. 
                     var targetNetObj = m_CollisionCache[i].GetComponentInParent<NetworkObject>();
                     if (targetNetObj)
                     {

@@ -11,31 +11,39 @@ using UnityEngine.Assertions;
 namespace Monke.Gameplay.ClientPlayer
 {
     [RequireComponent(typeof(PlayerInput))]
+    [RequireComponent(typeof(PlayerController))]
     public class ClientPlayerInput : NetworkBehaviour
 
     {
         public Vector3 m_Velocity; // should be readonly... havent figured out how to do it yet -- {get; private set} doesn't work
         public Vector3 m_MouseWorldPosition;
         public Transform m_ArmTarget; // animation target for 'aiming'
-        [SerializeField] private float MoveSpeed = 11f;
         [SerializeField] Vector2 m_MousePosition;
         [SerializeField] Vector2 m_MovementInput;
-        [SerializeField] float jumpVelocity = 11f;
-        [SerializeField] float jumpPower;
+        public float jumpHeight = 4;
+        public float timeToJumpApex = .4f;
+        float m_AccelerationTimeAirborne = .2f;
+        float m_AccelerationTimeGrounded = .1f;
+        [SerializeField] float m_MoveSpeed = 6;
+
+        float m_Gravity;
+        float m_JumpVelocity;
+        float m_VelocityXSmoothing;
+        bool m_jumpFlag;
+
         [SerializeField] float movementLerpPercent;
-        [SerializeField] float gravityLerpPercent;
-        [SerializeField] float jumpDecayTime;
-        [SerializeField] bool isTouchingGround = true;
-        [SerializeField] bool isJumping;
-        [SerializeField] float gravity = 9.81f;
         ServerCharacter m_ServerCharacter;
+        public PlayerController m_PlayerController;
 
         // Start is called before the first frame update
         void Start()
         {
-            jumpPower = jumpVelocity;
             m_ServerCharacter = GetComponent<ServerCharacter>();
-            // rb = GetComponent<Rigidbody>();
+            m_PlayerController = GetComponent<PlayerController>();
+
+            m_Gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+            m_JumpVelocity = Mathf.Abs(m_Gravity) * timeToJumpApex;
+            print("Gravity: " + m_Gravity + "  Jump Velocity: " + m_JumpVelocity);
         }
 
         void OnMove(InputValue value)
@@ -43,8 +51,6 @@ namespace Monke.Gameplay.ClientPlayer
             m_MovementInput = value.Get<Vector2>();
             //ignore if 0, we want to smooth down to 0.
             if (m_MovementInput.x == 0) return;
-            m_Velocity.x = MoveSpeed * m_MovementInput.x * Time.fixedDeltaTime; //velocity per frame
-
         }
         void OnLook()
         {
@@ -52,8 +58,8 @@ namespace Monke.Gameplay.ClientPlayer
             m_MouseWorldPosition.z = Camera.main.nearClipPlane + 1;
             m_MouseWorldPosition = Camera.main.ScreenToWorldPoint(m_MousePosition);
             m_MouseWorldPosition.z = 0;
-            if (m_MouseWorldPosition.x - transform.position.x < 0) transform.rotation = Quaternion.AngleAxis(180f, Vector3.up);
-            else transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+            if (m_MouseWorldPosition.x - transform.position.x < 0) transform.GetChild(0).rotation = Quaternion.AngleAxis(90f, Vector3.up);
+            else transform.GetChild(0).rotation = Quaternion.AngleAxis(-90f, Vector3.up);
         }
         void OnFire()
         {
@@ -80,28 +86,25 @@ namespace Monke.Gameplay.ClientPlayer
                 return;
             }
         }
-        void OnCollisionEnter(Collision c)
-        {
-            isTouchingGround = true;
-            isJumping = false;
-            m_Velocity.y = 0;
-            jumpPower = jumpVelocity;
-        }
-        void OnCollisionExit(Collision c)
-        {
-            isTouchingGround = false;
-        }
         void OnJump(InputValue value)
         {
-            if (isJumping) return;
-            else
-            {
-                isJumping = value.isPressed;
-            }
-
+            m_jumpFlag = value.isPressed;
         }
         void FixedUpdate()
         {
+            if (m_PlayerController.collisions.above || m_PlayerController.collisions.below)
+            {
+                m_Velocity.y = 0;
+            }
+
+           
+
+            if (m_jumpFlag && m_PlayerController.collisions.below)
+            {
+                m_Velocity.y = m_JumpVelocity;
+            }
+
+            float targetVelocityX = m_MovementInput.x * m_MoveSpeed;
             if (m_MovementInput.x == 0)
                 if (Mathf.Abs(m_Velocity.x) < .01f)
                 {
@@ -109,21 +112,11 @@ namespace Monke.Gameplay.ClientPlayer
                 }
                 else
                 {
-                    m_Velocity.x = Mathf.Lerp(m_Velocity.x, 0, movementLerpPercent * .01f);
+                    m_Velocity.x = Mathf.Lerp(m_Velocity.x, 0, movementLerpPercent*.01f);
                 }
-            if (isJumping && jumpPower > 0)
-            {
-
-                m_Velocity.y = Mathf.Lerp(jumpPower, 0, jumpDecayTime * .01f);
-                jumpPower -= jumpDecayTime * Time.fixedDeltaTime;
-
-            }
-            else if (!isTouchingGround)
-            {
-                m_Velocity.y = Mathf.Lerp(m_Velocity.y, -gravity * Time.fixedDeltaTime, Time.fixedDeltaTime * gravityLerpPercent * .01f);
-            }
-            transform.position += m_Velocity;
-            //rb.position += m_Velocity;
+            else m_Velocity.x = targetVelocityX;
+            m_Velocity.y += m_Gravity * Time.deltaTime;
+            m_PlayerController.Move(m_Velocity * Time.deltaTime);
         }
     }
 
