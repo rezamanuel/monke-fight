@@ -32,6 +32,7 @@ namespace Monke.Gameplay.ClientPlayer
         bool m_jumpFlag;
 
         [SerializeField] float movementLerpPercent;
+        [SerializeField] Transform shootOrigin;
         ServerCharacter m_ServerCharacter;
         public PlayerController m_PlayerController;
 
@@ -59,7 +60,7 @@ namespace Monke.Gameplay.ClientPlayer
             m_MouseWorldPosition = Camera.main.ScreenToWorldPoint(m_MousePosition);
             m_MouseWorldPosition.z = 0;
             if (m_MouseWorldPosition.x - transform.position.x < 0) transform.GetChild(0).rotation = Quaternion.AngleAxis(90f, Vector3.up);
-            else transform.GetChild(0).rotation = Quaternion.AngleAxis(-90f, Vector3.up);
+            else transform.GetChild(0).rotation = Quaternion.AngleAxis(270f, Vector3.up);
         }
         void OnFire()
         {
@@ -67,8 +68,8 @@ namespace Monke.Gameplay.ClientPlayer
             ActionRequestData data = new ActionRequestData
             {
                 actionID = m_ServerCharacter.m_CharacterAttributes.m_ActionSlots[0],
-                m_Position = m_ArmTarget.position,
-                m_Direction = m_MouseWorldPosition.normalized,
+                m_Position = shootOrigin.position,
+                m_Direction = (m_MouseWorldPosition-shootOrigin.position).normalized,
                 m_actionType = ActionType.Shoot,
             };
             Assert.IsNotNull(GameDataSource.Instance.GetActionPrototypeByID(data.actionID),

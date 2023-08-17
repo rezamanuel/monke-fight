@@ -8,6 +8,7 @@ public class ClientPlayerAnimationBehaviour : NetworkBehaviour
 {
     Animator animator;
     ClientPlayerInput playerMovement;
+    [SerializeField] float RunSpeedModifierRatio =1f;
     // Start is called before the first frame update
     void Start () {
         
@@ -22,7 +23,7 @@ public class ClientPlayerAnimationBehaviour : NetworkBehaviour
     // Update is called once per frame
     void Update () {
 
-        animator.SetFloat("RunSpeedModifier",playerMovement.m_Velocity.magnitude);
+        animator.SetFloat("RunSpeedModifier",Mathf.Abs(playerMovement.m_Velocity.x)*RunSpeedModifierRatio*Mathf.Sin(transform.parent.rotation.y));
     }
 
 }

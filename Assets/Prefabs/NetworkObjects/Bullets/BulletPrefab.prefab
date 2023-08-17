@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 1555217566413283945}
   - component: {fileID: 293140441661340410}
   - component: {fileID: 783114167280862391}
-  - component: {fileID: 1173630705546914737}
   - component: {fileID: 7947024285950369465}
   - component: {fileID: 9077927180646054465}
   - component: {fileID: 2426727759813961232}
   - component: {fileID: 3144617671833823567}
   - component: {fileID: -2093370796944012570}
   - component: {fileID: -516846250235084947}
+  - component: {fileID: 2148437993796759971}
   m_Layer: 8
   m_Name: BulletPrefab
   m_TagString: Untagged
@@ -90,19 +90,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &1173630705546914737
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 730030169050511099}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &7947024285950369465
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -5084,12 +5071,13 @@ MonoBehaviour:
   m_BulletForce: 0
   m_BulletDamage: 0
   m_BulletSize: 0
-  m_OurCollider: {fileID: 1173630705546914737}
+  m_OurCollider: {fileID: 2148437993796759971}
   m_bulletGravity: {x: 0, y: 0, z: 0}
   m_initialVelocity: {x: 0, y: 0, z: 0}
   m_OnHitParticlePrefab: {fileID: 0}
   m_ParticleSystem: {fileID: 7947024285950369465}
-  k_gravityStrength: 0.05
+  k_GravityStrength: 0.05
+  m_TrailRenderer: {fileID: 0}
 --- !u!114 &-516846250235084947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5120,3 +5108,19 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 0
   SlerpPosition: 0
+--- !u!58 &2148437993796759971
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730030169050511099}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.00000047683716, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.50000006

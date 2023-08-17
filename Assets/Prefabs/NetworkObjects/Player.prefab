@@ -2982,6 +2982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f33a2b3c06635e41ae1343b10df6024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RunSpeedModifierRatio: 0.37
 --- !u!114 &2701767092221001410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3586,7 +3587,8 @@ MonoBehaviour:
   timeToJumpApex: 0.42
   m_MoveSpeed: 10.83
   movementLerpPercent: 12.9
-  m_PlayerController: {fileID: 0}
+  shootOrigin: {fileID: 8191373055623484682}
+  m_PlayerController: {fileID: 6861601635294777439}
 --- !u!114 &712207777497342715
 MonoBehaviour:
   m_ObjectHideFlags: 0
