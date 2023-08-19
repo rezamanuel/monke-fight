@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using System.Numerics;
+using Vector3 = UnityEngine.Vector3;
+using Vector2 = UnityEngine.Vector2;
 
 namespace Monke.Gameplay.ClientPlayer{
     [RequireComponent (typeof (BoxCollider2D))]
@@ -21,13 +24,26 @@ public class PlayerController : MonoBehaviour {
 	RaycastOrigins raycastOrigins;
 	public CollisionInfo collisions;
 
+	public ForceInfo forceInfo;
+	public Vector3 inputVelocity;
+
 	void Start() {
 		collider = GetComponent<BoxCollider2D> ();
 		CalculateRaySpacing ();
 	}
 	
-           
+	void FixedUpdate(){
 
+			forceInfo.force *= forceInfo.forceDecay;
+        Move(forceInfo.force+inputVelocity* Time.deltaTime);
+			//Move(forceInfo.force * Time.deltaTime);
+	}
+           
+	public void AddForce(Vector3 force, float forceDecay=.8f){
+
+			forceInfo.force = force;
+			forceInfo.forceDecay = forceDecay;
+	}
 	public void Move(Vector3 velocity) {
 		UpdateRaycastOrigins ();
 		collisions.Reset ();
@@ -191,6 +207,11 @@ public class PlayerController : MonoBehaviour {
 	struct RaycastOrigins {
 		public Vector2 topLeft, topRight;
 		public Vector2 bottomLeft, bottomRight;
+	}
+
+	public struct ForceInfo {
+			public float forceDecay;
+			public Vector3 force;
 	}
 
 	public struct CollisionInfo {

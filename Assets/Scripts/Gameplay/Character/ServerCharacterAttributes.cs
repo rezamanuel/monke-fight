@@ -39,7 +39,7 @@ namespace Monke.Gameplay.Character
         }
         private void InitializeAttributes(){
             m_BulletSpeed = 1.0f;
-            m_BulletForce = 1.0f;
+            m_BulletForce = .5f;
             m_BulletDamage = 1;
             m_BulletSize = 1.0f;
             m_ClipSize = 5;

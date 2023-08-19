@@ -91,14 +91,13 @@ namespace Monke.Gameplay.ClientPlayer
         {
             m_jumpFlag = value.isPressed;
         }
-        void FixedUpdate()
+        void Update()
         {
             if (m_PlayerController.collisions.above || m_PlayerController.collisions.below)
             {
                 m_Velocity.y = 0;
             }
 
-           
 
             if (m_jumpFlag && m_PlayerController.collisions.below)
             {
@@ -117,7 +116,8 @@ namespace Monke.Gameplay.ClientPlayer
                 }
             else m_Velocity.x = targetVelocityX;
             m_Velocity.y += m_Gravity * Time.deltaTime;
-            m_PlayerController.Move(m_Velocity * Time.deltaTime);
+            m_PlayerController.inputVelocity = m_Velocity;
+            
         }
     }
 
