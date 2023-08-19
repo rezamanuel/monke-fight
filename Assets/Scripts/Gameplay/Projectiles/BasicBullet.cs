@@ -142,7 +142,7 @@ namespace Monke.Projectiles
                     var targetNetObj = m_CollisionCache[i].GetComponent<NetworkObject>();
                     if (targetNetObj)
                     {
-                        RecvHitEnemyClientRPC(targetNetObj.NetworkObjectId);
+                        RecvHitEnemyClientRPC(targetNetObj.NetworkObjectId,  m_Velocity.normalized * m_BulletForce);
 
                         //retrieve the person that created us, if he's still around.
                         NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(m_SpawnerId, out var spawnerNet);
@@ -170,14 +170,14 @@ namespace Monke.Projectiles
         }
 
         [ClientRpc]
-        private void RecvHitEnemyClientRPC(ulong enemyId)
+        private void RecvHitEnemyClientRPC(ulong enemyId, Vector3 force)
         {
 
             NetworkObject targetNetObject;
             if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(enemyId, out targetNetObject))
             {
                 PlayerController enemyController = targetNetObject.GetComponent<PlayerController>();
-                enemyController.AddForce( m_Velocity.normalized * m_BulletForce);
+                enemyController.AddForce(force);
             }
         }
     }

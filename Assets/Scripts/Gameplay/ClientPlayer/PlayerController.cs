@@ -33,14 +33,12 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void FixedUpdate(){
-
 			forceInfo.force *= forceInfo.forceDecay;
         Move(forceInfo.force+inputVelocity* Time.deltaTime);
 			//Move(forceInfo.force * Time.deltaTime);
 	}
            
 	public void AddForce(Vector3 force, float forceDecay=.8f){
-
 			forceInfo.force = force;
 			forceInfo.forceDecay = forceDecay;
 	}
