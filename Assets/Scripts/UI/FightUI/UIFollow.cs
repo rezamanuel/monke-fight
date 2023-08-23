@@ -23,7 +23,7 @@ namespace Monke.UI
         {
             var screenPos = MainCamera.WorldToScreenPoint(Follow.position);
 
-            transform.position = screenPos + Displacement;
+            transform.position = screenPos + MainCamera.pixelHeight*(Displacement/100f);
         }
     }
 }

@@ -100,6 +100,9 @@ namespace Monke.Projectiles
         {
             var position = transform.localToWorldMatrix.MultiplyPoint(m_OurCollider.offset);
             var numCollisions = Physics2D.OverlapCircleNonAlloc(position, m_OurCollider.radius, m_CollisionCache, m_CollisionMask);
+            if(numCollisions == 0){
+                m_isColliding = true;
+            }
             for (int i = 0; i < numCollisions; i++)
             {
                 // unless bullet has exited
@@ -114,9 +117,8 @@ namespace Monke.Projectiles
                         }
                     }
                     m_isColliding = true;
-
+                    
                 }
-
                 int layerTest = 1 << m_CollisionCache[i].gameObject.layer;
                 if ((layerTest & m_BlockerMask) != 0)
                 {

@@ -43,7 +43,7 @@ namespace Monke.Gameplay.Character
             m_BulletDamage = 1;
             m_BulletSize = 1.0f;
             m_ClipSize = 5;
-            m_MaxHealth = 100;
+            m_MaxHealth = 30;
             m_MoveSpeed = 15.4f;
         }
         public void ApplyCardBuff(CardBuffType buff, float amount){

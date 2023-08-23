@@ -33,9 +33,12 @@ namespace Monke.GameState
                 enabled = false;
                 return;
             }
+            int i = 0;
             foreach(var p in Networking.MonkeNetworkManager.Singleton.ConnectedClientsList){
-                Debug.Log(p.ClientId);
+                p.PlayerObject.transform.position = m_PlayerSpawnPoints[i].position;
+                i++;
             }
+            
         }
         void OnNetworkDespawn()
         {
