@@ -27,14 +27,17 @@ public class PlayerController : MonoBehaviour {
 	public ForceInfo forceInfo;
 	public Vector3 inputVelocity;
 
+	public Vector3 actualVelocity = Vector3.zero;
+
 	void Start() {
 		collider = GetComponent<BoxCollider2D> ();
 		CalculateRaySpacing ();
 	}
 	
 	void FixedUpdate(){
-			forceInfo.force *= forceInfo.forceDecay;
-        Move(forceInfo.force+inputVelocity* Time.deltaTime);
+		forceInfo.force *= forceInfo.forceDecay;
+		actualVelocity = forceInfo.force + inputVelocity * Time.deltaTime;
+        Move(actualVelocity);
 			//Move(forceInfo.force * Time.deltaTime);
 	}
            
