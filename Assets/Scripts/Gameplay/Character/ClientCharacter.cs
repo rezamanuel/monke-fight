@@ -22,7 +22,7 @@ namespace Monke.Gameplay.Character
         }
         void VisualizeDeath(){
             
-            Instantiate(ragdollMonkeTemplate, this.transform.parent);
+            Instantiate(ragdollMonkeTemplate, this.transform.parent  );
             m_ClientMonkeTransform.gameObject.SetActive(false);
         }
     }
