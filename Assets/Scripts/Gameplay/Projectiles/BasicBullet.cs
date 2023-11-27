@@ -69,7 +69,6 @@ namespace Monke.Projectiles
             m_HitTargets.Clear();
             m_Velocity = Vector3.zero;
             m_PreviousFramePos = this.transform.position;
-
         }
 
         void Update()

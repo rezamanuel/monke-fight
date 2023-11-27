@@ -32,7 +32,6 @@ namespace Monke.Gameplay.Actions
         public static Action CreateAction(ActionRequestData actionData)
         {
             //check if action exists in ActionPool
-
             GetActionPool(actionData.actionID).Get( out Action action);
             action.Initialize(ref actionData);
             return action;

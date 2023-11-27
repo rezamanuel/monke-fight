@@ -3,6 +3,10 @@ using UnityEngine;
 using Monke.Gameplay.Actions;
 using System.Collections.Generic;
 using UnityEngine.Pool;
+using UnityEngine.InputSystem.Interactions;
+using System;
+using Action = Monke.Gameplay.Actions.Action;
+using System.Runtime.CompilerServices;
 
 namespace Monke.Gameplay.Character
 {
@@ -38,7 +42,6 @@ namespace Monke.Gameplay.Character
             ActionID actionID = actionRequestData.actionID;
             var action = ActionLibrary.CreateAction(actionRequestData);
             m_ActionQueue.Add(action);
-            Debug.Log("ActionQueued: " + m_ActionQueue.Count);
         }
          public void ClearActions()
         {
@@ -73,17 +76,20 @@ namespace Monke.Gameplay.Character
             {
                 var action = m_BlockingActionList[actionType];
                 float slot_cooldown = m_ServerCharacter.m_CharacterAttributes.m_ActionCooldowns[action.m_ActionType];
+
                 Action blocking_action;
                 m_BlockingActionList.TryGetValue(action.m_ActionType, out blocking_action);
                 if (blocking_action.TimeRunning > slot_cooldown)
                 {
+                     Debug.Log("ADDING ACTION TO EXPIRED ACTIONS");
                     expiredActionTypes.Add(action.m_ActionType);
                 }
             }
             foreach(var actionType in expiredActionTypes){
+                m_BlockingActionList[actionType].Reset();
                 m_BlockingActionList.Remove(actionType);
             }
-            expiredActions.Clear();
+            expiredActionTypes.Clear(); 
             // expire old actions (they have End()'d )
             foreach (var action in m_ActiveActionList){
                 if(!action.isActive)
@@ -96,6 +102,7 @@ namespace Monke.Gameplay.Character
             }
             foreach(var action in expiredActions){
                 m_ActiveActionList.Remove(action);
+                 
             }
             expiredActions.Clear();
             // queue new actions
@@ -104,11 +111,12 @@ namespace Monke.Gameplay.Character
                 //if cooldown has expired for that action's type, then queue; else discard.
                 Action blocking_action;
                 m_BlockingActionList.TryGetValue(action.m_ActionType, out blocking_action);
-                
                 if ( blocking_action == null)
                 {
                     m_BlockingActionList.Add(action.m_ActionType, action);
+                    m_ActiveActionList.Add(action); 
                     action.OnStart(this.m_ServerCharacter);
+                    
                 }
                 else{
                     Debug.Log("Blocking Action:" +blocking_action.name);
@@ -117,6 +125,7 @@ namespace Monke.Gameplay.Character
                 expiredActions.Add(action);  
             }
             foreach(var action in expiredActions){
+                TryReturnAction(action);
                 m_ActionQueue.Remove(action);
             }
             expiredActions.Clear();

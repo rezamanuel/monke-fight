@@ -28,6 +28,7 @@ namespace Monke.Gameplay.Actions
             m_Data = data;
             actionID = m_Data.actionID;
             m_ActionType = m_Data.m_actionType;
+            TimeStarted = UnityEngine.Time.time;
         }
 
 
@@ -35,7 +36,7 @@ namespace Monke.Gameplay.Actions
         {
             m_Data = default;
             actionID = default;
-            TimeStarted = 0;
+           TimeStarted = UnityEngine.Time.time;
         }
 
         public abstract void OnStart(ServerCharacter serverCharacter);

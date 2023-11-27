@@ -37,6 +37,7 @@ namespace Monke.Gameplay.Character
         
         public void Update(){
             m_ServerActionPlayer.OnUpdate();
+            
         }
 
         [ServerRpc]

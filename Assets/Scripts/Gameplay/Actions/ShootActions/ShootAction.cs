@@ -5,6 +5,7 @@ using Monke.Gameplay.Character;
 using Monke.Projectiles;
 using Monke.Infrastructure;
 using Monke.Gameplay.ClientPlayer;
+using Unity.VisualScripting;
 
 namespace Monke.Gameplay.Actions
 {
@@ -38,6 +39,7 @@ namespace Monke.Gameplay.Actions
 
         public override void OnUpdate(ServerCharacter clientCharacter)
         {
+            
             return;
         }
     }
