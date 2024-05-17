@@ -11,7 +11,7 @@ namespace Monke.GameState
 {
     /// <summary>
     /// Match State reflects a Connected State where Players choose cards for their Characters.
-    /// Each Player will choose a card from a pool
+    /// Each Player will choose a card from a pool 
     /// </summary>
     [RequireComponent(typeof(NetcodeHooks), typeof(NetworkMatchLogic))]
     public class ClientMatchState : GameStateBehaviour
