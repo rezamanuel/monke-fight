@@ -8,6 +8,7 @@ using Unity.Netcode;
 using Monke.Infrastructure;
 using Monke.Gameplay.ClientPlayer;
 using UnityEngine.iOS;
+using Monke.UI;
 namespace Monke.GameState 
 {
     /// <summary>
@@ -22,70 +23,61 @@ namespace Monke.GameState
         [SerializeField]
         [Tooltip("A collection of locations for spawning players")]
         private Transform[] m_PlayerSpawnPoints;
-        [SerializeField] private CharacterSpawner m_CharacterSpawner;
         
-        
-
+        // has the first player spawned?
+        // need to figure out how to make this consistent even when the first client to connect is not the server.
+   
         protected override void Awake()
         {
             base.Awake();
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkDespawn;
             SceneLoaderWrapper.Instance.OnClientSynchronized += OnClientSynchronized;
+            if(NetworkManager.Singleton.IsServer){
+                NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+
+            }
+            
+
         }
         protected override void OnDestroy()
         {
             m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
             m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkDespawn;
             SceneLoaderWrapper.Instance.OnClientSynchronized -= OnClientSynchronized;
-
-            // cleanup all client characters
-            if(MonkeNetworkManager.Singleton.IsServer)
-            {
-                foreach (var player in MonkeNetworkManager.Singleton.ConnectedClientsList)
-                {
-                    var serverCharacter = player.PlayerObject.GetComponent<ServerCharacter>();
-                    DespawnClientCharacterRpc();
-                }
+            if(NetworkManager.Singleton.IsServer){
+                NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
             }
+
+        }
+        void OnClientConnected(ulong clientId){
+            NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<ServerCharacter>().InitializeCharacter();
+            
         }
         void OnClientSynchronized()
         {
             // tell all player network objects to initialize client character
-            if(NetworkManager.Singleton.IsServer)
-            {
-                SpawnClientCharacters();
-            }
+            
              if(NetworkManager.Singleton.IsClient)
             {
                 Debug.Log( "Client is synchronized and fighting, enabling input!");
                 NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ClientPlayerInput>().SetEnabled(true);
-                Debug.Log(NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ClientPlayerInput>().enabled);
+                if (NetworkManager.Singleton.IsServer)
+                {
+                    // has the first player spawned?
+                    // need to figure out how to make this consistent even when the first client to connect is not the server.
+                    NetworkManager.Singleton.LocalClient.PlayerObject.transform.position = m_PlayerSpawnPoints[0].position;
+                }
+                else
+                {
+                    NetworkManager.Singleton.LocalClient.PlayerObject.transform.position = m_PlayerSpawnPoints[1].position;
+                }
             }
         }
 
-        void SpawnClientCharacters()
-        {
-            // tell all player network objects to initialize client character
-            Debug.Log("Spawning client character");
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-            foreach (var p in players)
-            {
-                m_CharacterSpawner.SpawnClientCharacter(p.GetComponent<ServerCharacter>(), p.GetComponent<NetworkObject>().OwnerClientId);
-            }
-        }
-        [ClientRpc]void DespawnClientCharacterRpc()
-        {
-            // tell all player network objects to despawn client character
-           ServerCharacter[] serverCharacters = GameObject.FindObjectsOfType<ServerCharacter>();
-            foreach (var serverCharacter in serverCharacters)
-            {
-                m_CharacterSpawner.DespawnClientCharacter(serverCharacter);
-            }
-        }
+        
         void OnNetworkSpawn()
         {
-           
         }
 
         void OnNetworkDespawn()

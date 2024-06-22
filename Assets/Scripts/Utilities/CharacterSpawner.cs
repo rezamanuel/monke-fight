@@ -3,6 +3,7 @@ using Monke.Gameplay.Character;
 using Unity.Netcode;
 public class CharacterSpawner : NetworkBehaviour
 {
+    /// <summary> DEPRECATED: This is the prefab spawner for the client character </summary>
     public GameObject m_ClientCharacterPrefab;
 
     public void SpawnClientCharacter(ServerCharacter character, ulong clientId)
@@ -12,14 +13,10 @@ public class CharacterSpawner : NetworkBehaviour
         GameObject clientCharacter = Instantiate(m_ClientCharacterPrefab, character.transform);
         clientCharacter.GetComponent<NetworkObject>().IncludeTransformWhenSpawning(clientId);
         clientCharacter.GetComponent<NetworkObject>().Spawn();
-
-        
-        character.InitializeClientCharacter(clientCharacter.GetComponent<ClientCharacter>());
     }
     public void DespawnClientCharacter(ServerCharacter character)
     {
         if (character.m_ClientCharacter == null) return;
-        character.CleanUpClientCharacter();
         Destroy(character.m_ClientCharacter.gameObject);
     }
 }

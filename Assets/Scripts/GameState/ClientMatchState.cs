@@ -48,13 +48,10 @@ namespace Monke.GameState
         }
         void OnClientSynchronized()
         {
-            if(NetworkManager.Singleton.IsServer)
-            {
-                // disable input for local client.
-                
-            }
             if(NetworkManager.Singleton.IsClient)
             {
+                
+                // disable input for local client.
                 Debug.Log( "Client is synchronized, disabling input!");
                 NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ClientPlayerInput>().SetEnabled(false);
             }
