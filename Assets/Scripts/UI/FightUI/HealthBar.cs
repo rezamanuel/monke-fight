@@ -17,6 +17,8 @@ namespace Monke.UI
         // Start is called before the first frame update
         void Awake(){
             m_Slider = GetComponent<Slider>();
+            m_NetworkHealthState = GetComponentInParent<NetworkHealthState>();
+            m_ServerCharacter = GetComponentInParent<ServerCharacter>();
             m_NetworkHealthState.HitPoints.OnValueChanged += UpdateHealthBar;
         }
         void OnEnable()

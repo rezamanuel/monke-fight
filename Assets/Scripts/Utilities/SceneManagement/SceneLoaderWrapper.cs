@@ -37,6 +37,7 @@ namespace Monke.Utilities
         private Scene m_LoadedScene;
 
         private string m_SceneToLoadNext; // scene name that will load after the current scene is unloaded on all clients.
+        public event System.Action OnClientSynchronized;
         public bool SceneIsLoaded
         {
             get
@@ -188,6 +189,7 @@ namespace Monke.Utilities
                     {
                         m_ClientLoadingScreen.StopLoadingScreen();
                         m_LoadingProgressManager.ResetLocalProgress();
+                        OnClientSynchronized?.Invoke();
                     }
                     break;
                 case SceneEventType.LoadComplete:
@@ -266,7 +268,9 @@ namespace Monke.Utilities
         [ClientRpc]
         void StopLoadingScreenClientRpc(ClientRpcParams clientRpcParams = default)
         {
+            Debug.Log("Stopping loading screen on client.");
             m_ClientLoadingScreen.StopLoadingScreen();
+            OnClientSynchronized?.Invoke();
         }
     }
 }

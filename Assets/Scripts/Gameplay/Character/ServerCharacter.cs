@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using Monke.Gameplay.Actions;
 using Unity.Netcode;
-
+using Monke.Gameplay.ClientPlayer;
 namespace Monke.Gameplay.Character
 {
     [RequireComponent(typeof(NetworkHealthState))]
@@ -13,7 +13,9 @@ namespace Monke.Gameplay.Character
     {
         public ClientCharacter m_ClientCharacter;
         public CharacterCardInventory m_CharacterCardInventory;
+        public ClientPlayerInput m_ClientPlayerInput;
         public Transform m_ArmTarget; // animation target for 'aiming' set on prefab
+
         ServerActionPlayer m_ServerActionPlayer;
         NetworkHealthState m_HealthState;
         DamageReceiver m_DamageReceiver;
@@ -33,9 +35,30 @@ namespace Monke.Gameplay.Character
             m_HealthState = GetComponent<NetworkHealthState>();
             m_DamageReceiver = GetComponent<DamageReceiver>();
             m_CharacterAttributes = GetComponent<ServerCharacterAttributes>();
+            m_ClientPlayerInput = GetComponentInChildren<ClientPlayerInput>();
         }
-        
+        // need to spawn client character with max health at start of fight state + get components so that animator rig can be setup correctly.
+        public void InitializeClientCharacter(ClientCharacter character)
+        {
+            if(m_ClientCharacter != null) return;
+
+            m_ClientCharacter = character;
+            m_ClientCharacter.gameObject.SetActive(true);
+            m_ClientPlayerInput = m_ClientCharacter.GetComponentInChildren<ClientPlayerInput>();
+            m_ArmTarget = m_ClientCharacter.transform.Find("ShoulderAnchor").GetChild(0);
+            //subscribe to health state events
+            m_HealthState.HitPointsDepleted += () => m_ClientPlayerInput.SetActive(false);
+            m_HealthState.HitPointsReplenished += () => m_ClientPlayerInput.SetActive(true);
+        }
+        public void CleanUpClientCharacter()
+        {
+            if(m_ClientCharacter == null) return;
+
+            m_HealthState.HitPointsDepleted -= () => m_ClientPlayerInput.SetActive(false);
+            m_HealthState.HitPointsReplenished -= () => m_ClientPlayerInput.SetActive(true);
+        }
         public void Update(){
+            
             m_ServerActionPlayer.OnUpdate();
             
         }
@@ -48,7 +71,6 @@ namespace Monke.Gameplay.Character
                 m_ServerActionPlayer.QueueAction(actionRequestData);
             }
         }
-
         public override void OnNetworkSpawn(){
             if (!IsServer) { enabled = false; }
              else

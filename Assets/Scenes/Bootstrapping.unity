@@ -329,8 +329,8 @@ Camera:
   m_GameObject: {fileID: 535997871}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.2742079, g: 0.6124677, b: 0.735849, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -399,7 +399,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2931645145299431019, guid: 545ed62fae8c14b479fa51caaf3cb35a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.00002861023
+      value: -0.000022888184
       objectReference: {fileID: 0}
     - target: {fileID: 2931645145299431019, guid: 545ed62fae8c14b479fa51caaf3cb35a, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -660,9 +660,10 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 768611621}
-    PlayerPrefab: {fileID: 7614116224725027697, guid: 71118d0937355484e8bcdd1458814406, type: 3}
+    PlayerPrefab: {fileID: 7614116224725027697, guid: a091f1cf0bea4494e95e15c6753e8c02, type: 3}
     Prefabs:
-      NetworkPrefabsLists: []
+      NetworkPrefabsLists:
+      - {fileID: 11400000, guid: 75d053f028fe9eb46bffcab88dc52bfa, type: 2}
     TickRate: 45
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -678,17 +679,7 @@ MonoBehaviour:
     LoadSceneTimeOut: 120
     SpawnTimeout: 1
     EnableNetworkLogs: 1
-    OldPrefabList:
-    - Override: 0
-      Prefab: {fileID: 7614116224725027697, guid: 71118d0937355484e8bcdd1458814406, type: 3}
-      SourcePrefabToOverride: {fileID: 7614116224725027697, guid: 71118d0937355484e8bcdd1458814406, type: 3}
-      SourceHashToOverride: 0
-      OverridingTargetPrefab: {fileID: 0}
-    - Override: 0
-      Prefab: {fileID: 7922017633417786064, guid: b316982f99afe01408063a02c948845b, type: 3}
-      SourcePrefabToOverride: {fileID: 7614116224725027697, guid: 71118d0937355484e8bcdd1458814406, type: 3}
-      SourceHashToOverride: 0
-      OverridingTargetPrefab: {fileID: 0}
+    OldPrefabList: []
   RunInBackground: 1
   LogLevel: 1
 --- !u!114 &768611621
@@ -713,7 +704,7 @@ MonoBehaviour:
   ConnectionData:
     Address: 127.0.0.1
     Port: 7777
-    ServerListenAddress: 
+    ServerListenAddress: 127.0.0.1
   DebugSimulator:
     PacketDelayMS: 0
     PacketJitterMS: 0
@@ -935,6 +926,37 @@ MonoBehaviour:
   autoInjectGameObjects: []
   initProgress: 0
   m_NetworkManager: {fileID: 768611620}
+--- !u!1 &2056953101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2056953102}
+  m_Layer: 0
+  m_Name: ClientController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2056953102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056953101}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.035228014, y: -3.2510529, z: -5.0211067}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4873807695714284464
 PrefabInstance:
   m_ObjectHideFlags: 0

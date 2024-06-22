@@ -20,7 +20,7 @@ namespace Monke.Gameplay.Character
         public float m_MoveSpeed { get; private set; }
         public Dictionary<ActionType, ActionID> m_ActionSlots;
         public Dictionary<ActionType, float> m_ActionCooldowns;
-
+        public int m_CharacterScore { get; private set; }
         private void InitializeActionSlots(){
             var action_defaults = GameDataSource.Instance.m_DefaultActionIDs;
             m_ActionSlots = new Dictionary<ActionType, ActionID>();
@@ -45,6 +45,10 @@ namespace Monke.Gameplay.Character
             m_ClipSize = 5;
             m_MaxHealth = 30;
             m_MoveSpeed = 15.4f;
+            m_CharacterScore = 0;
+        }
+        public void AddScore(int score){
+            m_CharacterScore += score;
         }
         public void ApplyCardBuff(CardBuffType buff, float amount){
             switch(buff){

@@ -6,6 +6,10 @@ using Monke.Cards;
 using Monke.UI;
 using Monke.Gameplay;
 using Unity.Netcode;
+using System.Linq;
+using UnityEngine.SceneManagement;
+using Monke.Gameplay.ClientPlayer;
+using Monke.Networking;
 
 namespace Monke.GameState
 {
@@ -33,8 +37,15 @@ namespace Monke.GameState
             Instance = this;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkDespawn;
+           
+        }
+        override protected void OnDestroy()
+        {
+            m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
+            m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkDespawn;
         }
 
+        
         public void SetClientInControl(ulong clientId){
             m_ClientInControl = clientId;
         }
@@ -44,28 +55,28 @@ namespace Monke.GameState
         public void ClientCardSelected(CardID chosenCardID){
             m_MatchLogic.SelectCardServerRpc(chosenCardID);
         }
-
         //executing twice on host?
         public void ClearCards(){
             m_CardPanel.ClearDisplayedCards();
         }
+
         void OnNetworkSpawn()
         {
-
             if (!NetworkManager.Singleton.IsClient)
             {
                 enabled = false;
                 return;
             }
             
-
         }
+
         void OnNetworkDespawn()
         {
             if (!NetworkManager.Singleton.IsClient)
             {
                 enabled = false;
             }
+           
         }
     }
 }

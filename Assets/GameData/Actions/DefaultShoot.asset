@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: DefaultShoot
   m_EditorClassIdentifier: 
   isActive: 0
-  defaultCooldown: 3
+  defaultCooldown: 0.5
   bulletPrefab: {fileID: 730030169050511099, guid: 65d4799d4f0a1df41bf99526947b9941, type: 3}
   animationName: 

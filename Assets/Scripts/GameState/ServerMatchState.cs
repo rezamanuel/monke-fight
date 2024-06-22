@@ -5,9 +5,7 @@ using Monke.Utilities;
 using Monke.Networking;
 using Monke.Cards;
 using Monke.Gameplay.Character;
-using Monke.Gameplay;
 using Unity.Netcode;
-using VContainer;
 
 namespace Monke.GameState
 {
@@ -25,6 +23,7 @@ namespace Monke.GameState
         [SerializeField] NetworkMatchLogic networkMatchLogic;
         List<NetworkClient> m_ClientTurnQueue;
         [SerializeField] NetworkObject MatchUI;
+        
 
 
         protected override void Awake()
@@ -50,12 +49,14 @@ namespace Monke.GameState
                 m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
                 m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
             }
+                if (MonkeNetworkManager.Singleton.IsServer)
+            {
                 networkMatchLogic.OnClientConnected -= OnClientConnected;
                 networkMatchLogic.OnCardSelected -= OnCardSelected;
-            
-           
-            
+            }
         }
+
+        
          /// <summary>
         /// Draws Cards into Character Card Inventory, Spawns UI for them thru NetworkManager.
         /// </summary>
@@ -102,6 +103,7 @@ namespace Monke.GameState
             }
             else{
                 Debug.Log("FIGHT!!!");
+
                 SceneLoaderWrapper.Instance.QueueNextScene("Fight");
                 SceneLoaderWrapper.Instance.UnloadScene();
                 
@@ -115,14 +117,14 @@ namespace Monke.GameState
                 m_ClientTurnQueue.Add(MonkeNetworkManager.Singleton.ConnectedClients[clientId]);
                 // if MonkeNetworkManager has at least 2 players connected, start turns
                 // Wait for 
-                if(m_ClientTurnQueue.Count >1){
+                
+               if(m_ClientTurnQueue.Count >1){
                     queueStarted = true;
                     NetworkClient nextplayer = m_ClientTurnQueue[0];
                     StartPlayerTurn(nextplayer);
                 }
             }
         }
-
         void OnNetworkSpawn()
         {
             if (!MonkeNetworkManager.Singleton.IsServer)
