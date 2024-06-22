@@ -56,7 +56,12 @@ namespace Monke.GameState
             {
                 SpawnClientCharacters();
             }
-            
+             if(NetworkManager.Singleton.IsClient)
+            {
+                Debug.Log( "Client is synchronized and fighting, enabling input!");
+                NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ClientPlayerInput>().SetEnabled(true);
+                Debug.Log(NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ClientPlayerInput>().enabled);
+            }
         }
 
         void SpawnClientCharacters()
@@ -80,22 +85,12 @@ namespace Monke.GameState
         }
         void OnNetworkSpawn()
         {
-            Debug.Log("OnNetworkSpawn");
-            if(NetworkManager.Singleton.IsClient)
-            {
-                Debug.Log( "Client is spawning");
-                NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ClientPlayerInput>().enabled = true;
-                Debug.Log(NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ClientPlayerInput>().enabled);
-            }
+           
         }
 
         void OnNetworkDespawn()
         {
-           if(NetworkManager.Singleton.IsClient)
-            {
-                
-                NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ClientPlayerInput>().SetActive(false);
-            }
+          
         }
     }
 }

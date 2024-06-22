@@ -36,10 +36,10 @@ namespace Monke.Gameplay.ClientPlayer
         ServerCharacter m_ServerCharacter;
         public PlayerController m_PlayerController;
         
-        public void SetActive(bool active)
+        public void SetEnabled(bool enabled)
         {
             if (!IsClient && !IsOwner) return;
-            enabled = active;
+            base.enabled = enabled;
         }
 
         // Start is called before the first frame update
@@ -86,13 +86,12 @@ namespace Monke.Gameplay.ClientPlayer
         }
         override public void OnNetworkSpawn()
         {
+            
             if (!IsClient || !IsOwner)
             {
-            
-                GetComponent<PlayerInput>().enabled = false;
-            
                 enabled = false;
-                // dont need to do anything else if not the owner
+                //disable input for non-owning clients
+                GetComponent<PlayerInput>().enabled = false;
                 return;
             }
             

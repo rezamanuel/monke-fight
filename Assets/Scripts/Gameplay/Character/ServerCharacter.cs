@@ -47,15 +47,15 @@ namespace Monke.Gameplay.Character
             m_ClientPlayerInput = m_ClientCharacter.GetComponentInChildren<ClientPlayerInput>();
             m_ArmTarget = m_ClientCharacter.transform.Find("ShoulderAnchor").GetChild(0);
             //subscribe to health state events
-            m_HealthState.HitPointsDepleted += () => m_ClientPlayerInput.SetActive(false);
-            m_HealthState.HitPointsReplenished += () => m_ClientPlayerInput.SetActive(true);
+            m_HealthState.HitPointsDepleted += () => m_ClientPlayerInput.SetEnabled(false);
+            m_HealthState.HitPointsReplenished += () => m_ClientPlayerInput.SetEnabled(true);
         }
         public void CleanUpClientCharacter()
         {
             if(m_ClientCharacter == null) return;
 
-            m_HealthState.HitPointsDepleted -= () => m_ClientPlayerInput.SetActive(false);
-            m_HealthState.HitPointsReplenished -= () => m_ClientPlayerInput.SetActive(true);
+            m_HealthState.HitPointsDepleted -= () => m_ClientPlayerInput.SetEnabled(false);
+            m_HealthState.HitPointsReplenished -= () => m_ClientPlayerInput.SetEnabled(true);
         }
         public void Update(){
             

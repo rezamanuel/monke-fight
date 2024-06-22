@@ -37,14 +37,28 @@ namespace Monke.GameState
             Instance = this;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkDespawn;
+            SceneLoaderWrapper.Instance.OnClientSynchronized += OnClientSynchronized;
            
         }
         override protected void OnDestroy()
         {
             m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
             m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkDespawn;
+            SceneLoaderWrapper.Instance.OnClientSynchronized -= OnClientSynchronized;
         }
-
+        void OnClientSynchronized()
+        {
+            if(NetworkManager.Singleton.IsServer)
+            {
+                // disable input for local client.
+                
+            }
+            if(NetworkManager.Singleton.IsClient)
+            {
+                Debug.Log( "Client is synchronized, disabling input!");
+                NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ClientPlayerInput>().SetEnabled(false);
+            }
+        }
         
         public void SetClientInControl(ulong clientId){
             m_ClientInControl = clientId;
