@@ -24,17 +24,17 @@ namespace Monke.UI
             RequestSelectCardServerRpc(index);
         }
         [ServerRpc(RequireOwnership = false)] void RequestHoverServerRpc(int index, ServerRpcParams serverRpcParams = default){
-            if(serverRpcParams.Receive.SenderClientId.Equals(ClientMatchState.Instance.m_ClientInControl)){
+            if(serverRpcParams.Receive.SenderClientId.Equals(ClientCardSelectState.Instance.m_ClientInControl)){
                 // if client is in control, set the hover
                 SetHoveredCardIndexClientRpc(index);
             }
         }
         [ServerRpc(RequireOwnership = false)] void RequestSelectCardServerRpc(int index, ServerRpcParams serverRpcParams = default){
-            if(serverRpcParams.Receive.SenderClientId.Equals(ClientMatchState.Instance.m_ClientInControl)){
+            if(serverRpcParams.Receive.SenderClientId.Equals(ClientCardSelectState.Instance.m_ClientInControl)){
                 // if client is in control, set the selection
                 SetSelectedCardIndexClientRpc(index);
                 //call ClientMatchState on Server, which will trigger next turn.
-                 ClientMatchState.Instance.ClientCardSelected(m_DisplayedCards[index].GetComponent<CardUI>().GetCard().cardID);
+                 ClientCardSelectState.Instance.ClientCardSelected(m_DisplayedCards[index].GetComponent<CardUI>().GetCard().cardID);
             }
         }
         [ClientRpc] void SetHoveredCardIndexClientRpc(int index)

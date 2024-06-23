@@ -17,19 +17,19 @@ namespace Monke.GameState
     /// Match State reflects a Connected State where Players choose cards for their Characters.
     /// Each Player will choose a card from a pool 
     /// </summary>
-    [RequireComponent(typeof(NetcodeHooks), typeof(NetworkMatchLogic))]
-    public class ClientMatchState : GameStateBehaviour
+    [RequireComponent(typeof(NetcodeHooks), typeof(CardSelectLogic))]
+    public class ClientCardSelectState : GameStateBehaviour
     {
         public override GameState ActiveState { get { return GameState.Match; } }
         /// <summary>
         /// Instance variable so UI can access the GameState obj
         /// </summary>
         /// <value></value>
-        public static ClientMatchState Instance {get; private set;}
+        public static ClientCardSelectState Instance {get; private set;}
         public ulong m_ClientInControl { get; private set; } //set by NetworkMatchLogic
 
         [SerializeField] NetcodeHooks m_NetcodeHooks;
-        [SerializeField] NetworkMatchLogic m_MatchLogic;
+        [SerializeField] CardSelectLogic m_MatchLogic;
         [SerializeField] CardPanel m_CardPanel; // needs to be set in inspector
         protected override void Awake()
         {

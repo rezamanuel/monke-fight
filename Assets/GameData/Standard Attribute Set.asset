@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BulletSpeed: 1
   m_BulletForce: 0.5
-  m_BulletDamage: 1
+  m_BulletDamage: 10
   m_BulletSize: 1
   m_ClipSize: 5
   m_MaxHealth: 10

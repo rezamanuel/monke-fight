@@ -13,7 +13,7 @@ namespace Monke.GameState
     /// <summary>
     /// RPC logic for MatchState
     /// </summary>
-    public class NetworkMatchLogic : NetworkBehaviour
+    public class CardSelectLogic : NetworkBehaviour
     {   
 
         public event Action<ulong> OnClientConnected;
@@ -30,10 +30,10 @@ namespace Monke.GameState
                 GameObject card_go = Instantiate(card_prefab) as GameObject;
                 spawned_card_gos.Add(card_go);
             }
-            ClientMatchState.Instance.DisplayCards(spawned_card_gos);
+            ClientCardSelectState.Instance.DisplayCards(spawned_card_gos);
         }
         [ClientRpc] public void ClearCardsClientRpc(){
-            ClientMatchState.Instance.ClearCards();
+            ClientCardSelectState.Instance.ClearCards();
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Monke.GameState
         /// </summary>
         /// <param name="clientId"></param>
         [ClientRpc] public void SetControlClientRpc(ulong clientId){
-            ClientMatchState.Instance.SetClientInControl(clientId);
+            ClientCardSelectState.Instance.SetClientInControl(clientId);
         }
 
         [ServerRpc(RequireOwnership = false)] public void SelectCardServerRpc(CardID selectedCardID){

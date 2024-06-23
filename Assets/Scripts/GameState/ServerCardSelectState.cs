@@ -13,14 +13,14 @@ namespace Monke.GameState
     /// Match State reflects a Connected State where Players choose cards for their Characters.
     /// Each Player will choose a card from a pool
     /// </summary>
-    [RequireComponent(typeof(NetcodeHooks), typeof(NetworkMatchLogic))]
-    public class ServerMatchState : GameStateBehaviour
+    [RequireComponent(typeof(NetcodeHooks), typeof(CardSelectLogic))]
+    public class ServerCardSelectState : GameStateBehaviour
     {
         public override GameState ActiveState { get { return GameState.Match; } }
         public bool queueStarted { private set; get; } = false;
-        [SerializeField] ClientMatchState clientMatchState;
+        [SerializeField] ClientCardSelectState clientMatchState;
         [SerializeField] NetcodeHooks m_NetcodeHooks;
-        [SerializeField] NetworkMatchLogic networkMatchLogic;
+        [SerializeField] CardSelectLogic networkMatchLogic;
         List<NetworkClient> m_ClientTurnQueue;
         [SerializeField] NetworkObject MatchUI;
         
@@ -29,9 +29,9 @@ namespace Monke.GameState
         protected override void Awake()
         {
             base.Awake();
-            networkMatchLogic = GetComponent<NetworkMatchLogic>();
+            networkMatchLogic = GetComponent<CardSelectLogic>();
             m_ClientTurnQueue = new List<NetworkClient>();
-            clientMatchState = GetComponent<ClientMatchState>();
+            clientMatchState = GetComponent<ClientCardSelectState>();
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkDespawn;
 

@@ -9,6 +9,7 @@ using Monke.Infrastructure;
 using Monke.Gameplay.ClientPlayer;
 using UnityEngine.iOS;
 using Monke.UI;
+using System;
 namespace Monke.GameState 
 {
     /// <summary>
@@ -51,9 +52,11 @@ namespace Monke.GameState
 
         }
         void OnClientConnected(ulong clientId){
-            NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<ServerCharacter>().InitializeCharacter();
-            
+            var player = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject;
+            player.GetComponent<ServerCharacter>().InitializeCharacter();
         }
+
+
         void OnClientSynchronized()
         {
             // tell all player network objects to initialize client character

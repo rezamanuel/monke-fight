@@ -4,6 +4,8 @@ using Monke.Gameplay.Actions;
 using Unity.Netcode;
 using Monke.Gameplay.ClientPlayer;
 using Unity.VisualScripting;
+using System.Text.RegularExpressions;
+using Monke.Networking;
 namespace Monke.Gameplay.Character
 {
     [RequireComponent(typeof(NetworkHealthState))]
@@ -63,6 +65,7 @@ namespace Monke.Gameplay.Character
                 
                 //subscribe to health state events
                 m_HealthState.HitPointsDepleted += () => m_ClientPlayerInput.SetEnabled(false);
+                m_HealthState.HitPointsDepleted += OnHitPointsDepleted;
                 m_HealthState.HitPointsReplenished += () => m_ClientPlayerInput.SetEnabled(true);
             }
             if (IsServer) 
@@ -76,6 +79,12 @@ namespace Monke.Gameplay.Character
                 enabled = false;
             }
         }
+
+        private void OnHitPointsDepleted()
+        {
+            PlayerLivesManager.Instance.OnPlayerDeath(this.NetworkObject.OwnerClientId);
+        }
+
         public override void OnNetworkDespawn()
         {
             if(IsClient && IsOwner)
@@ -93,9 +102,14 @@ namespace Monke.Gameplay.Character
         /// </summary>
         /// <param name="inflictor">Person dishing out this damage/healing. Can be null. </param>
         /// <param name="HP">The HP to receive. Positive value is healing. Negative is damage.  </param>
-        void ReceiveHP(ServerCharacter inflictor, int HP){
+        void ReceiveHP(ServerCharacter inflictor, int HP)
+        {
             HitPoints += HP;
-            if(HP<=0) m_ServerActionPlayer.ClearActions();
+            if (HP <= 0)
+            {
+                //if we are dead, clear all actions
+                m_ServerActionPlayer.ClearActions();
+            }
         }
 
         void InitializeHitPoints()
