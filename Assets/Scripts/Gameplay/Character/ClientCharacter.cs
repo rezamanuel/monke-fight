@@ -2,15 +2,15 @@ using UnityEngine;
 using Unity;
 using Unity.VisualScripting;
 using Unity.Netcode;
-
 namespace Monke.Gameplay.Character
 {
-    
+    // handles the visual representation of the character on the client-side
     public class ClientCharacter : MonoBehaviour
     {
         [SerializeField] NetworkHealthState m_NetworkHealthState; 
         [SerializeField] Transform m_ClientMonkeTransform;
         [SerializeField] Object ragdollMonkeTemplate;
+
         void Awake(){
             m_NetworkHealthState = GetComponentInParent<NetworkHealthState>();
         }

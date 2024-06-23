@@ -44,11 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe5e78a08ca91043b2557b761f8c5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ActionPrototypes: []
-  m_AllActions:
+  m_ActionPrototypes:
   - {fileID: 11400000, guid: 401de344c29a3df41b67c66962625656, type: 2}
-  - {fileID: 11400000, guid: 5304b897698999a4fa7af9e156e2138b, type: 2}
+  m_DefaultActions:
+  - {fileID: 11400000, guid: 401de344c29a3df41b67c66962625656, type: 2}
   m_CardPrototypes:
   - {fileID: 11400000, guid: edde51baf5892d04abe90e6c80750738, type: 2}
   - {fileID: 11400000, guid: 3a22bd85abb7fcb4c94674b52109a1ac, type: 2}
-  m_AllCards: []
+  - {fileID: 11400000, guid: dbbf803d0aeba584b83d117eff739132, type: 2}
+  - {fileID: 11400000, guid: 6de7dff2bac47404e8e4c820520a1c4a, type: 2}

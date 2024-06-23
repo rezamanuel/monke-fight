@@ -17,11 +17,13 @@ namespace Monke.UI
         // Start is called before the first frame update
         void Awake(){
             m_Slider = GetComponent<Slider>();
-            m_NetworkHealthState.HitPoints.OnValueChanged += UpdateHealthBar;
+            m_NetworkHealthState = GetComponentInParent<NetworkHealthState>();
+            m_ServerCharacter = GetComponentInParent<ServerCharacter>();
         }
         void OnEnable()
         {
             
+            m_NetworkHealthState.HitPoints.OnValueChanged += UpdateHealthBar;
         }
          void OnDisable()
         {
@@ -31,12 +33,9 @@ namespace Monke.UI
         private void UpdateHealthBar(int previousValue, int newValue)
         {
             m_Slider.value = newValue;
+            m_Slider.maxValue = m_ServerCharacter.m_CharacterAttributes.m_MaxHealth;
         }
 
-        [ClientRpc] void InitializeHealthBarClientRpc(int maxHealth){
-            m_Slider.maxValue = maxHealth;
-            m_Slider.value = maxHealth;
-        }
 
         // Update is called once per frame
         void Update()

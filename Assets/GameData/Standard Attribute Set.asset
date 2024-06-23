@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5fb1b29666876d4bacb161257e3ea3e, type: 3}
-  m_Name: DefaultShoot
+  m_Script: {fileID: 11500000, guid: 3bf2fe8025775e44fb2cad23fb39c4c6, type: 3}
+  m_Name: Standard Attribute Set
   m_EditorClassIdentifier: 
-  isActive: 0
-  defaultCooldown: 0.5
-  bulletPrefab: {fileID: 730030169050511099, guid: 65d4799d4f0a1df41bf99526947b9941, type: 3}
-  animationName: 
+  m_BulletSpeed: 1
+  m_BulletForce: 0.5
+  m_BulletDamage: 10
+  m_BulletSize: 1
+  m_ClipSize: 5
+  m_MaxHealth: 10
+  m_MoveSpeed: 15.4
+  m_CharacterScore: 0

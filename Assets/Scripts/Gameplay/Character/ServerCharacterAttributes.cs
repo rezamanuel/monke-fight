@@ -18,9 +18,11 @@ namespace Monke.Gameplay.Character
         public int m_ClipSize { get; private set; } 
         public int m_MaxHealth { get; private set; } 
         public float m_MoveSpeed { get; private set; }
+        public int m_CharacterScore { get; private set; }
         public Dictionary<ActionType, ActionID> m_ActionSlots;
         public Dictionary<ActionType, float> m_ActionCooldowns;
-
+        public DefaultAttributeSet m_DefaultAttributeSet;
+       
         private void InitializeActionSlots(){
             var action_defaults = GameDataSource.Instance.m_DefaultActionIDs;
             m_ActionSlots = new Dictionary<ActionType, ActionID>();
@@ -38,13 +40,18 @@ namespace Monke.Gameplay.Character
             }
         }
         private void InitializeAttributes(){
-            m_BulletSpeed = 1.0f;
-            m_BulletForce = .5f;
-            m_BulletDamage = 1;
-            m_BulletSize = 1.0f;
-            m_ClipSize = 5;
-            m_MaxHealth = 30;
-            m_MoveSpeed = 15.4f;
+            m_BulletSpeed = m_DefaultAttributeSet.m_BulletSpeed;
+            m_BulletForce = m_DefaultAttributeSet.m_BulletForce;
+            m_BulletDamage = m_DefaultAttributeSet.m_BulletDamage;
+            m_BulletSize = m_DefaultAttributeSet.m_BulletSize;
+            m_ClipSize = m_DefaultAttributeSet.m_ClipSize;
+            m_MaxHealth = m_DefaultAttributeSet.m_MaxHealth;
+            m_MoveSpeed = m_DefaultAttributeSet.m_MoveSpeed;
+            m_CharacterScore = m_DefaultAttributeSet.m_CharacterScore;
+
+        }
+        public void AddScore(int score){
+            m_CharacterScore += score;
         }
         public void ApplyCardBuff(CardBuffType buff, float amount){
             switch(buff){

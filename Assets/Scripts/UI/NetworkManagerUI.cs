@@ -13,6 +13,7 @@ public class NetworkManagerUI : MonoBehaviour
     [SerializeField] private Button clientBtn;
 
     [SerializeField] Object m_MatchScene;
+    [SerializeField] Object m_MatchScene2;
     // Start is called before the first frame update
     void Awake()
     {
@@ -29,6 +30,7 @@ public class NetworkManagerUI : MonoBehaviour
             SceneLoaderWrapper.Instance.AddOnSceneEventCallback();
              SceneManager.UnloadSceneAsync(1); // unload main menu
             SceneLoaderWrapper.Instance.LoadScene(m_MatchScene.name, true, LoadSceneMode.Additive);
+            // SceneLoaderWrapper.Instance.LoadScene(m_MatchScene2.name, true, LoadSceneMode.Additive);
         });
 
         clientBtn.onClick.AddListener(() =>
@@ -37,6 +39,7 @@ public class NetworkManagerUI : MonoBehaviour
             SceneLoaderWrapper.Instance.AddOnSceneEventCallback();
             SceneManager.UnloadSceneAsync(1); // unload main menu\
              SceneLoaderWrapper.Instance.LoadScene(m_MatchScene.name, true, LoadSceneMode.Additive);
+             // SceneLoaderWrapper.Instance.LoadScene(m_MatchScene2.name, true, LoadSceneMode.Additive);
 
         });
     }

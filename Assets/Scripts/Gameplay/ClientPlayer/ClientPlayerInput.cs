@@ -35,26 +35,32 @@ namespace Monke.Gameplay.ClientPlayer
         [SerializeField] Transform shootOrigin;
         ServerCharacter m_ServerCharacter;
         public PlayerController m_PlayerController;
+        
+        public void SetEnabled(bool enabled)
+        {
+            if (!IsClient && !IsOwner) return;
+            base.enabled = enabled;
+        }
 
         // Start is called before the first frame update
         void Start()
         {
             m_ServerCharacter = GetComponent<ServerCharacter>();
             m_PlayerController = GetComponent<PlayerController>();
-
             m_Gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
             m_JumpVelocity = Mathf.Abs(m_Gravity) * timeToJumpApex;
             print("Gravity: " + m_Gravity + "  Jump Velocity: " + m_JumpVelocity);
         }
-
         void OnMove(InputValue value)
         {
+            if (enabled == false) return;
             m_MovementInput = value.Get<Vector2>();
             //ignore if 0, we want to smooth down to 0.
             if (m_MovementInput.x == 0) return;
         }
         void OnLook()
         {
+            if (enabled == false) return;
             m_MousePosition = Mouse.current.position.ReadValue();
             m_MouseWorldPosition.z = Camera.main.nearClipPlane + 1;
             m_MouseWorldPosition = Camera.main.ScreenToWorldPoint(m_MousePosition);
@@ -64,6 +70,7 @@ namespace Monke.Gameplay.ClientPlayer
         }
         void OnFire()
         {
+            if (enabled == false) return;
             // will trigger whatever action ID is occupying the 1st action slot.
             ActionRequestData data = new ActionRequestData
             {
@@ -79,16 +86,21 @@ namespace Monke.Gameplay.ClientPlayer
         }
         override public void OnNetworkSpawn()
         {
+            
             if (!IsClient || !IsOwner)
             {
-                GetComponent<PlayerInput>().enabled = false;
                 enabled = false;
-                // dont need to do anything else if not the owner
+                //disable input for non-owning clients
+                GetComponent<PlayerInput>().enabled = false;
                 return;
             }
+            
+
         }
+
         void OnJump(InputValue value)
         {
+            if (!enabled) return;
             m_jumpFlag = value.isPressed;
         }
         void Update()

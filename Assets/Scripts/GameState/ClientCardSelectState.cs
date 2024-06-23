@@ -6,26 +6,30 @@ using Monke.Cards;
 using Monke.UI;
 using Monke.Gameplay;
 using Unity.Netcode;
+using System.Linq;
+using UnityEngine.SceneManagement;
+using Monke.Gameplay.ClientPlayer;
+using Monke.Networking;
 
 namespace Monke.GameState
 {
     /// <summary>
     /// Match State reflects a Connected State where Players choose cards for their Characters.
-    /// Each Player will choose a card from a pool
+    /// Each Player will choose a card from a pool 
     /// </summary>
-    [RequireComponent(typeof(NetcodeHooks), typeof(NetworkMatchLogic))]
-    public class ClientMatchState : GameStateBehaviour
+    [RequireComponent(typeof(NetcodeHooks), typeof(CardSelectLogic))]
+    public class ClientCardSelectState : GameStateBehaviour
     {
         public override GameState ActiveState { get { return GameState.Match; } }
         /// <summary>
         /// Instance variable so UI can access the GameState obj
         /// </summary>
         /// <value></value>
-        public static ClientMatchState Instance {get; private set;}
+        public static ClientCardSelectState Instance {get; private set;}
         public ulong m_ClientInControl { get; private set; } //set by NetworkMatchLogic
 
         [SerializeField] NetcodeHooks m_NetcodeHooks;
-        [SerializeField] NetworkMatchLogic m_MatchLogic;
+        [SerializeField] CardSelectLogic m_MatchLogic;
         [SerializeField] CardPanel m_CardPanel; // needs to be set in inspector
         protected override void Awake()
         {
@@ -33,8 +37,26 @@ namespace Monke.GameState
             Instance = this;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkDespawn;
+            SceneLoaderWrapper.Instance.OnClientSynchronized += OnClientSynchronized;
+           
         }
-
+        override protected void OnDestroy()
+        {
+            m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
+            m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkDespawn;
+            SceneLoaderWrapper.Instance.OnClientSynchronized -= OnClientSynchronized;
+        }
+        void OnClientSynchronized()
+        {
+            if(NetworkManager.Singleton.IsClient)
+            {
+                
+                // disable input for local client.
+                Debug.Log( "Client is synchronized, disabling input!");
+                NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ClientPlayerInput>().SetEnabled(false);
+            }
+        }
+        
         public void SetClientInControl(ulong clientId){
             m_ClientInControl = clientId;
         }
@@ -44,28 +66,28 @@ namespace Monke.GameState
         public void ClientCardSelected(CardID chosenCardID){
             m_MatchLogic.SelectCardServerRpc(chosenCardID);
         }
-
         //executing twice on host?
         public void ClearCards(){
             m_CardPanel.ClearDisplayedCards();
         }
+
         void OnNetworkSpawn()
         {
-
             if (!NetworkManager.Singleton.IsClient)
             {
                 enabled = false;
                 return;
             }
             
-
         }
+
         void OnNetworkDespawn()
         {
             if (!NetworkManager.Singleton.IsClient)
             {
                 enabled = false;
             }
+           
         }
     }
 }
