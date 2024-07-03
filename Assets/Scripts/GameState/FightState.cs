@@ -38,8 +38,6 @@ namespace Monke.GameState
                 NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
 
             }
-            
-
         }
         protected override void OnDestroy()
         {
@@ -49,7 +47,6 @@ namespace Monke.GameState
             if(NetworkManager.Singleton.IsServer){
                 NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
             }
-
         }
         void OnClientConnected(ulong clientId){
             var player = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject;

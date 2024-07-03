@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2698148479
+  GlobalObjectIdHash: 4263485786
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -435,17 +435,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1660722733}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4532e222629ffc4abf788ad30aff2f6, type: 3}
+  m_Script: {fileID: 11500000, guid: aa103d635c3e5e442b234e572e97814d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: Systems.ApplicationController
+    TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
-  clientMatchState: {fileID: 1660722739}
   m_NetcodeHooks: {fileID: 1660722738}
-  networkMatchLogic: {fileID: 1660722740}
-  MatchUI: {fileID: 8512941352890412343}
+  m_MatchLogic: {fileID: 1660722740}
+  m_CardPanel: {fileID: 8532159012823293204}
 --- !u!114 &1660722737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,7 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 607528754
+  GlobalObjectIdHash: 1455073
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -487,16 +486,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1660722733}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a92061b843f0cb44abad36c4293a2574, type: 3}
+  m_Script: {fileID: 11500000, guid: e016bb4309bf4854a8252f257f52e337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: Systems.ApplicationController
+    TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  clientMatchState: {fileID: 1660722736}
   m_NetcodeHooks: {fileID: 1660722738}
-  m_MatchLogic: {fileID: 1660722740}
-  m_CardPanel: {fileID: 8532159012823293204}
+  networkMatchLogic: {fileID: 1660722740}
+  MatchUI: {fileID: 8512941352890412343}
 --- !u!114 &1660722740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,7 +506,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1660722733}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3838bb97ab677224ea53f3f5fd847b34, type: 3}
+  m_Script: {fileID: 11500000, guid: c15a71a6ce1006a47b05a17d3cd80ef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1951351936
@@ -930,7 +930,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2388369203
+  GlobalObjectIdHash: 1787317819
   AlwaysReplicateAsRoot: 1
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0

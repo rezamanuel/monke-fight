@@ -20,7 +20,7 @@ namespace Monke.GameState
         public bool queueStarted { private set; get; } = false;
         [SerializeField] ClientCardSelectState clientMatchState;
         [SerializeField] NetcodeHooks m_NetcodeHooks;
-        [SerializeField] CardSelectLogic networkMatchLogic;
+        [SerializeField] CardSelectLogic cardSelectLogic;
         List<NetworkClient> m_ClientTurnQueue;
         [SerializeField] NetworkObject MatchUI;
         
@@ -29,7 +29,7 @@ namespace Monke.GameState
         protected override void Awake()
         {
             base.Awake();
-            networkMatchLogic = GetComponent<CardSelectLogic>();
+            cardSelectLogic = GetComponent<CardSelectLogic>();
             m_ClientTurnQueue = new List<NetworkClient>();
             clientMatchState = GetComponent<ClientCardSelectState>();
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
@@ -37,9 +37,10 @@ namespace Monke.GameState
 
             if (MonkeNetworkManager.Singleton.IsServer)
             {
-                networkMatchLogic.OnClientConnected += OnClientConnected;
-                networkMatchLogic.OnCardSelected += OnCardSelected;
+                SceneLoaderWrapper.Instance.OnClientSynchronized += OnClientSynchronized;
+                cardSelectLogic.OnCardSelected += OnCardSelected;
             }
+            SceneLoaderWrapper.Instance.OnClientSynchronized += OnClientSynchronized;
         }
         protected override void OnDestroy()
         {
@@ -51,13 +52,35 @@ namespace Monke.GameState
             }
                 if (MonkeNetworkManager.Singleton.IsServer)
             {
-                networkMatchLogic.OnClientConnected -= OnClientConnected;
-                networkMatchLogic.OnCardSelected -= OnCardSelected;
+                SceneLoaderWrapper.Instance.OnClientSynchronized -= OnClientSynchronized;
+                cardSelectLogic.OnCardSelected -= OnCardSelected;
             }
         }
 
-        
-         /// <summary>
+        void OnClientSynchronized(){
+            if(MonkeNetworkManager.Singleton.IsServer){
+                if(!queueStarted){
+                    queueStarted = true;
+                    Debug.Log("Queue Started");
+                    if(m_ClientTurnQueue.Count < MonkeNetworkManager.Singleton.ConnectedClients.Count){
+                    foreach(var client in MonkeNetworkManager.Singleton.ConnectedClients.Values){
+                        if(!m_ClientTurnQueue.Contains(client)){
+                            m_ClientTurnQueue.Add(client);
+                            Debug.Log("Client added to queue: " + client.ClientId);
+                            if(m_ClientTurnQueue.Count > 1){
+                                StartPlayerTurn(m_ClientTurnQueue[0]);
+                            }
+                        }
+                    }
+                }
+                }
+                else{
+                    Debug.Log("Queue already started");
+                }
+                
+            } 
+        } 
+        /// <summary>
         /// Draws Cards into Character Card Inventory, Spawns UI for them thru NetworkManager.
         /// </summary>
         void StartPlayerTurn(NetworkClient client){
@@ -66,8 +89,8 @@ namespace Monke.GameState
             ServerCharacter server_character = client.PlayerObject.GetComponentInChildren<ServerCharacter>();
             server_character.m_CharacterCardInventory.DrawCards(5);
             Debug.Log("Cards Drawn: " + server_character.m_CharacterCardInventory.m_DrawnCards.Count);
-            networkMatchLogic.DisplayCardsClientRpc(server_character.m_CharacterCardInventory.m_DrawnCards.ToArray());
-            networkMatchLogic.SetControlClientRpc(client.ClientId);
+            cardSelectLogic.DisplayCardsClientRpc(server_character.m_CharacterCardInventory.m_DrawnCards.ToArray());
+            cardSelectLogic.SetControlClientRpc(client.ClientId);
             
         }
 
@@ -79,7 +102,7 @@ namespace Monke.GameState
             var current_player = m_ClientTurnQueue[0];
             ServerCharacter server_character = current_player.PlayerObject.GetComponentInChildren<ServerCharacter>();
             server_character.m_CharacterCardInventory.PlayCard(chosenCardID);
-            networkMatchLogic.SetControlClientRpc(ulong.MaxValue); //removes control of player who just selected card
+            cardSelectLogic.SetControlClientRpc(ulong.MaxValue); //removes control of player who just selected card
             StartCoroutine(EndPlayerTurn(current_player));
         }
         /// <summary>
@@ -89,7 +112,7 @@ namespace Monke.GameState
             yield return new WaitForSeconds(2);
             ServerCharacter server_character = client.PlayerObject.GetComponentInChildren<ServerCharacter>();
             server_character.m_CharacterCardInventory.ClearDrawnCards();
-            networkMatchLogic.ClearCardsClientRpc();
+            cardSelectLogic.ClearCardsClientRpc();
             m_ClientTurnQueue.Remove(client);
             CheckForPendingTurns();
 
@@ -110,21 +133,7 @@ namespace Monke.GameState
             }
         }
 
-        void OnClientConnected(ulong clientId){
-            // add client to turn queue
-            Debug.Log("client connected, queue count: " + m_ClientTurnQueue.Count);
-            if(!queueStarted){
-                m_ClientTurnQueue.Add(MonkeNetworkManager.Singleton.ConnectedClients[clientId]);
-                // if MonkeNetworkManager has at least 2 players connected, start turns
-                // Wait for 
-                
-               if(m_ClientTurnQueue.Count >1){
-                    queueStarted = true;
-                    NetworkClient nextplayer = m_ClientTurnQueue[0];
-                    StartPlayerTurn(nextplayer);
-                }
-            }
-        }
+        
         void OnNetworkSpawn()
         {
             if (!MonkeNetworkManager.Singleton.IsServer)

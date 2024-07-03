@@ -4,12 +4,9 @@ using UnityEngine;
 using Monke.Utilities;
 using Monke.Cards;
 using Monke.UI;
-using Monke.Gameplay;
 using Unity.Netcode;
-using System.Linq;
-using UnityEngine.SceneManagement;
 using Monke.Gameplay.ClientPlayer;
-using Monke.Networking;
+
 
 namespace Monke.GameState
 {
@@ -50,13 +47,11 @@ namespace Monke.GameState
         {
             if(NetworkManager.Singleton.IsClient)
             {
-                
                 // disable input for local client.
-                Debug.Log( "Client is synchronized, disabling input!");
+                Debug.Log( "Client is synchronized, disabling input! (CardSelect)");
                 NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ClientPlayerInput>().SetEnabled(false);
             }
         }
-        
         public void SetClientInControl(ulong clientId){
             m_ClientInControl = clientId;
         }
