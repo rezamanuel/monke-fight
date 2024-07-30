@@ -26,7 +26,7 @@ namespace Monke.GameState
         public ulong m_ClientInControl { get; private set; } //set by NetworkMatchLogic
 
         [SerializeField] NetcodeHooks m_NetcodeHooks;
-        [SerializeField] CardSelectLogic m_MatchLogic;
+        [SerializeField] CardSelectLogic m_CardSelectLogic;
         [SerializeField] CardPanel m_CardPanel; // needs to be set in inspector
         protected override void Awake()
         {
@@ -59,7 +59,7 @@ namespace Monke.GameState
             m_CardPanel.SetDisplayedCards(cards);
         }
         public void ClientCardSelected(CardID chosenCardID){
-            m_MatchLogic.SelectCardServerRpc(chosenCardID);
+            m_CardSelectLogic.SelectCardServerRpc(chosenCardID);
         }
         //executing twice on host?
         public void ClearCards(){
@@ -78,10 +78,6 @@ namespace Monke.GameState
 
         void OnNetworkDespawn()
         {
-            if (!NetworkManager.Singleton.IsClient)
-            {
-                enabled = false;
-            }
            
         }
     }

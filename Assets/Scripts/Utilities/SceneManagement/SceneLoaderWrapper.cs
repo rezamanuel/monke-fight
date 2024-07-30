@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Monke.Utilities;
 using Unity.Netcode;
+using System;
 namespace Monke.Utilities
 {
     public class SceneLoaderWrapper : NetworkBehaviour
@@ -37,7 +38,7 @@ namespace Monke.Utilities
         private Scene m_LoadedScene;
 
         private string m_SceneToLoadNext; // scene name that will load after the current scene is unloaded on all clients.
-        public event System.Action OnClientSynchronized;
+        public event Action OnClientSynchronized;
         public bool SceneIsLoaded
         {
             get
@@ -187,6 +188,7 @@ namespace Monke.Utilities
                                                         // Only executes on client
                     if (NetworkManager.IsClient)
                     {
+                        Debug.Log($"All clients finished loading the {sceneEvent.SceneName} scene.");
                         m_ClientLoadingScreen.StopLoadingScreen();
                         m_LoadingProgressManager.ResetLocalProgress();
                         OnClientSynchronized?.Invoke();
@@ -247,6 +249,7 @@ namespace Monke.Utilities
                     {
                         // Send client RPC to make sure the client stops the loading screen after the server handles what it needs to after the client finished synchronizing, for example character spawning done server side should still be hidden by loading screen.
                         StopLoadingScreenClientRpc(new ClientRpcParams { Send = new ClientRpcSendParams { TargetClientIds = new[] { sceneEvent.ClientId } } });
+
                     }
                     break;
             }
@@ -269,7 +272,7 @@ namespace Monke.Utilities
         void StopLoadingScreenClientRpc(ClientRpcParams clientRpcParams = default)
         {
             Debug.Log("Stopping loading screen on client.");
-            m_ClientLoadingScreen.StopLoadingScreen();
+            m_ClientLoadingScreen.StopLoadingScreen();  
             OnClientSynchronized?.Invoke();
         }
     }

@@ -65,12 +65,12 @@ namespace Monke.Gameplay.Character
                 
                 //subscribe to health state events
                 m_HealthState.HitPointsDepleted += () => m_ClientPlayerInput.SetEnabled(false);
-                m_HealthState.HitPointsDepleted += OnHitPointsDepleted;
                 m_HealthState.HitPointsReplenished += () => m_ClientPlayerInput.SetEnabled(true);
             }
             if (IsServer) 
             {
-                m_ArmTarget = m_ClientCharacter.transform.Find("ShoulderAnchor").GetChild(0);
+                m_ArmTarget = m_ClientCharacter.transform.GetChild(0).Find("ShoulderAnchor").GetChild(0);
+                m_HealthState.HitPointsDepleted += OnHitPointsDepleted;
                 m_DamageReceiver.DamageReceived += ReceiveHP;
                 InitializeHitPoints();
                
@@ -93,8 +93,9 @@ namespace Monke.Gameplay.Character
                 m_HealthState.HitPointsReplenished -= () => m_ClientPlayerInput.SetEnabled(true);
             }
             if (!IsServer) return;
-
-             m_DamageReceiver.DamageReceived -= ReceiveHP;
+            
+            m_HealthState.HitPointsDepleted -= OnHitPointsDepleted;
+            m_DamageReceiver.DamageReceived -= ReceiveHP;
         }
 
         /// <summary>

@@ -1,15 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using Monke.Utilities;
-using Monke.Networking;
 using Monke.Gameplay.Character;
 using Unity.Netcode;
-using Monke.Infrastructure;
 using Monke.Gameplay.ClientPlayer;
-using UnityEngine.iOS;
-using Monke.UI;
-using System;
+using Monke.Networking;
 namespace Monke.GameState 
 {
     /// <summary>
@@ -34,9 +29,15 @@ namespace Monke.GameState
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkDespawn;
             SceneLoaderWrapper.Instance.OnClientSynchronized += OnClientSynchronized;
-            if(NetworkManager.Singleton.IsServer){
+        }
+        protected override void Start(){
+            base.Start();
+            PlayerLivesManager.Instance.OnRoundEnd += OnRoundEnd;
+            PlayerLivesManager.Instance.OnMatchEnd += OnMatchEnd;
+            if (MonkeNetworkManager.Singleton.IsServer)
+            {
                 NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-
+                
             }
         }
         protected override void OnDestroy()
@@ -44,16 +45,22 @@ namespace Monke.GameState
             m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
             m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkDespawn;
             SceneLoaderWrapper.Instance.OnClientSynchronized -= OnClientSynchronized;
-            if(NetworkManager.Singleton.IsServer){
-                NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
-            }
+            
         }
         void OnClientConnected(ulong clientId){
             var player = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject;
             player.GetComponent<ServerCharacter>().InitializeCharacter();
         }
 
-
+        void OnRoundEnd(){
+            
+                SceneLoaderWrapper.Instance.QueueNextScene("CardSelect");
+                SceneLoaderWrapper.Instance.UnloadScene();
+        }
+        void OnMatchEnd(){
+            SceneLoaderWrapper.Instance.QueueNextScene("MatchEnd");
+            SceneLoaderWrapper.Instance.UnloadScene();
+        }
         void OnClientSynchronized()
         {
             // tell all player network objects to initialize client character
@@ -82,7 +89,11 @@ namespace Monke.GameState
 
         void OnNetworkDespawn()
         {
-          
+            PlayerLivesManager.Instance.OnRoundEnd -= OnRoundEnd;
+            PlayerLivesManager.Instance.OnMatchEnd -= OnMatchEnd;
+             if(NetworkManager.Singleton.IsServer){
+                NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+            }
         }
     }
 }

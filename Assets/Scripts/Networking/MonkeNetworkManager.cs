@@ -5,7 +5,6 @@ using Unity.Netcode;
 using Monke.Utilities;
 namespace Monke.Networking
 {
-        
     public class MonkeNetworkManager : NetworkManager
     {
         void OnLoadEventCompleted (){
