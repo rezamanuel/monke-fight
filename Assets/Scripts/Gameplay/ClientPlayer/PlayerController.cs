@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour {
 		forceInfo.force *= forceInfo.forceDecay;
 		actualVelocity = forceInfo.force + inputVelocity * Time.deltaTime;
         Move(actualVelocity);
+		Physics.SyncTransforms();
 			//Move(forceInfo.force * Time.deltaTime);
 	}
            

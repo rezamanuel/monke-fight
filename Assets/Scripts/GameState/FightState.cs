@@ -5,6 +5,7 @@ using Monke.Gameplay.Character;
 using Unity.Netcode;
 using Monke.Gameplay.ClientPlayer;
 using Monke.Networking;
+using System.Collections;
 namespace Monke.GameState 
 {
     /// <summary>
@@ -53,9 +54,13 @@ namespace Monke.GameState
         }
 
         void OnRoundEnd(){
-            
-                SceneLoaderWrapper.Instance.QueueNextScene("CardSelect");
-                SceneLoaderWrapper.Instance.UnloadScene();
+                StartCoroutine(OnRoundEndCoroutine());
+        }
+
+        IEnumerator OnRoundEndCoroutine(){
+            yield return new WaitForSeconds(2);
+            SceneLoaderWrapper.Instance.QueueNextScene("CardSelect");
+            SceneLoaderWrapper.Instance.UnloadScene();
         }
         void OnMatchEnd(){
             SceneLoaderWrapper.Instance.QueueNextScene("MatchEnd");

@@ -11,7 +11,7 @@ namespace Monke.Gameplay.Character
     {
         [SerializeField] NetworkHealthState m_NetworkHealthState; 
         [SerializeField] Transform m_ClientMonkeTransform;
-        [SerializeField] Object ragdollMonkeTemplate;
+        [SerializeField] Rigidbody[] m_Rigidbodies;
 
         void Awake(){
             m_NetworkHealthState = GetComponentInParent<NetworkHealthState>();
@@ -23,17 +23,19 @@ namespace Monke.Gameplay.Character
             m_NetworkHealthState.HitPointsDepleted -= VisualizeDeath;
         }
         void VisualizeDeath(){
-            
-            Instantiate(ragdollMonkeTemplate, this.transform.parent  );
-            m_ClientMonkeTransform.gameObject.SetActive(false);
+            m_ClientMonkeTransform.GetComponent<Animator>().enabled = false;
+            foreach(Rigidbody rb in m_Rigidbodies){
+                rb.isKinematic = false;
+            }
             StartCoroutine(Respawn());
         }
 
         IEnumerator Respawn(){
-            yield return new WaitForSeconds(5);
-            m_ClientMonkeTransform.gameObject.SetActive(true);
-            // Destroy(this.transform.parent.Find("Ragdoll(Clone)").gameObject);
-            
+            yield return new WaitForSeconds(2);
+            foreach(Rigidbody rb in m_Rigidbodies){
+                rb.isKinematic = true;
+            }
+            m_ClientMonkeTransform.GetComponent<Animator>().enabled = true;
         }
     }
 }

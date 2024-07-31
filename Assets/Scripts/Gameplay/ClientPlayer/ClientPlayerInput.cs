@@ -66,8 +66,8 @@ namespace Monke.Gameplay.ClientPlayer
             m_MouseWorldPosition.z = Camera.main.nearClipPlane + 1;
             m_MouseWorldPosition = Camera.main.ScreenToWorldPoint(m_MousePosition);
             m_MouseWorldPosition.z = 0;
-            //if (m_MouseWorldPosition.x - transform.position.x < 0) transform.GetChild(0).rotation = Quaternion.AngleAxis(90f, Vector3.up);
-            //else transform.GetChild(0).rotation = Quaternion.AngleAxis(270f, Vector3.up);
+            if (m_MouseWorldPosition.x - transform.position.x < 0) transform.GetChild(0).rotation = Quaternion.AngleAxis(90f, Vector3.up);
+            else transform.GetChild(0).rotation = Quaternion.AngleAxis(270f, Vector3.up);
         }
         void OnFire()
         {
