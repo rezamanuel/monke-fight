@@ -29,7 +29,7 @@ namespace Monke.Cards
             ApplyBuffs(serverCharacter);
             Gameplay.Actions.Action action;
             if(GameDataSource.Instance.TryGetActionPrototypeByID(m_CardActionID, out action)){
-                serverCharacter.m_CharacterAttributes.m_ActionSlots[action.m_ActionType] = action.actionID;
+                //serverCharacter.m_CharacterAttributes.m_ActionSlots[action.m_ActionType] = action.actionID;
             }
         } 
 

@@ -115,7 +115,7 @@ namespace Monke.Gameplay.Character
 
         void InitializeHitPoints()
         {
-            HitPoints = m_CharacterAttributes.m_MaxHealth;
+            HitPoints = m_CharacterAttributes.m_MaxHealth.Value;
         }
 
     }

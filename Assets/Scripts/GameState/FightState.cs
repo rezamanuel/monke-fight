@@ -28,23 +28,26 @@ namespace Monke.GameState
         {
             base.Awake();
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
-            m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkDespawn;
+            m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
             SceneLoaderWrapper.Instance.OnClientSynchronized += OnClientSynchronized;
         }
         protected override void Start(){
             base.Start();
-            PlayerLivesManager.Instance.OnRoundEnd += OnRoundEnd;
-            PlayerLivesManager.Instance.OnMatchEnd += OnMatchEnd;
+           
             if (MonkeNetworkManager.Singleton.IsServer)
             {
+                foreach (var client in NetworkManager.Singleton.ConnectedClients)
+                {
+                    var player = NetworkManager.Singleton.ConnectedClients[client.Key].PlayerObject;
+                    player.GetComponent<ServerCharacter>().InitializeCharacter();
+                }
                 NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-                
             }
         }
         protected override void OnDestroy()
         {
             m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
-            m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkDespawn;
+            m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
             SceneLoaderWrapper.Instance.OnClientSynchronized -= OnClientSynchronized;
             
         }
@@ -90,6 +93,8 @@ namespace Monke.GameState
         
         void OnNetworkSpawn()
         {
+             PlayerLivesManager.Instance.OnRoundEnd += OnRoundEnd;
+            PlayerLivesManager.Instance.OnMatchEnd += OnMatchEnd;
         }
 
         void OnNetworkDespawn()

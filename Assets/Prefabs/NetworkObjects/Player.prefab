@@ -411,7 +411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NetworkHealthState: {fileID: 712207777497342715}
   m_Slider: {fileID: 968825350842013581}
-  m_ServerCharacter: {fileID: 656648316563225858}
+  m_CharacterAttributes: {fileID: 939038800615886075}
 --- !u!114 &9072685266919026593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3489,7 +3489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SyncPositionX: 1
   SyncPositionY: 1
-  SyncPositionZ: 0
+  SyncPositionZ: 1
   SyncRotAngleX: 0
   SyncRotAngleY: 0
   SyncRotAngleZ: 0
@@ -4689,7 +4689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SyncPositionX: 1
   SyncPositionY: 1
-  SyncPositionZ: 0
+  SyncPositionZ: 1
   SyncRotAngleX: 0
   SyncRotAngleY: 1
   SyncRotAngleZ: 0

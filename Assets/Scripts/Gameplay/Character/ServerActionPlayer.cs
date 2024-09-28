@@ -75,7 +75,7 @@ namespace Monke.Gameplay.Character
             foreach(var actionType in m_BlockingActionList.Keys)
             {
                 var action = m_BlockingActionList[actionType];
-                float slot_cooldown = m_ServerCharacter.m_CharacterAttributes.m_ActionCooldowns[action.m_ActionType];
+                float slot_cooldown = m_ServerCharacter.m_CharacterAttributes.GetCooldown(actionType);
 
                 Action blocking_action;
                 m_BlockingActionList.TryGetValue(action.m_ActionType, out blocking_action);

@@ -21,6 +21,9 @@ public class ClientPlayerAnimationBehaviour : NetworkBehaviour
         
     }
     public override void OnNetworkSpawn(){
+        if(!IsOwner){
+            enabled = false;
+        }
     }
     // Update is called once per frame
     void FixedUpdate () {

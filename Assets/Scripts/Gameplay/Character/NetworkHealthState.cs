@@ -6,7 +6,6 @@ namespace Monke.Gameplay.Character
 {
     public class NetworkHealthState : NetworkBehaviour
     {
-        [HideInInspector]
         public NetworkVariable<int> HitPoints = new NetworkVariable<int>();
 
         // public subscribable event to be invoked when HP has been fully depleted

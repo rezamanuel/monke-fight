@@ -58,38 +58,41 @@ namespace Monke.Gameplay.Actions
     public struct ActionID : INetworkSerializable, IEquatable<ActionID>
     {
         public int ID;
-
+    
         public ActionID(int id )
         {
             ID = id;
         }
-
         
         public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
         {
             serializer.SerializeValue(ref ID);
         }
-
+    
         public override bool Equals(object obj)
         {
-            return obj is ActionID other && Equals(other);
+            if (obj is ActionID other)
+            {
+                return Equals(other);
+            }
+            return false;
         }
-
+    
         public override int GetHashCode()
         {
             return ID;
         }
-
+    
         public static bool operator ==(ActionID x, ActionID y)
         {
             return x.Equals(y);
         }
-
+    
         public static bool operator !=(ActionID x, ActionID y)
         {
             return !(x == y);
         }
-
+    
         public override string ToString()
         {
             return $"ActionID({ID})";
@@ -98,7 +101,7 @@ namespace Monke.Gameplay.Actions
         {
             return ID == other.ID;
         }
-
+    
     }
 
    

@@ -21,13 +21,13 @@ namespace Monke.GameState
         {
             base.Awake();
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
-            m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkDespawn;
+            m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
             SceneLoaderWrapper.Instance.OnClientSynchronized += OnClientSynchronized;
         }
         protected override void OnDestroy()
         {
             m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
-            m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkDespawn;
+            m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
             
         }
         void OnClientSynchronized()

@@ -32,7 +32,7 @@ namespace Monke.GameState
             cardSelectLogic = GetComponent<CardSelectLogic>();
             m_ClientTurnQueue = new List<NetworkClient>();
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
-            m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkDespawn;
+            m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
 
             
         }

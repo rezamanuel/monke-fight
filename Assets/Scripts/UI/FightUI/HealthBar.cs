@@ -12,13 +12,12 @@ namespace Monke.UI
     {
         [SerializeField] NetworkHealthState m_NetworkHealthState;
         [SerializeField] Slider m_Slider;
-        [SerializeField] ServerCharacter m_ServerCharacter;
+        [SerializeField] ServerCharacterAttributes m_CharacterAttributes;
 
         // Start is called before the first frame update
         void Awake(){
             m_Slider = GetComponent<Slider>();
             m_NetworkHealthState = GetComponentInParent<NetworkHealthState>();
-            m_ServerCharacter = GetComponentInParent<ServerCharacter>();
         }
         void OnEnable()
         {
@@ -32,8 +31,9 @@ namespace Monke.UI
 
         private void UpdateHealthBar(int previousValue, int newValue)
         {
+            Debug.Log("HealthBar: " + newValue);
             m_Slider.value = newValue;
-            m_Slider.maxValue = m_ServerCharacter.m_CharacterAttributes.m_MaxHealth;
+            m_Slider.maxValue = m_CharacterAttributes.m_MaxHealth.Value;
         }
 
 

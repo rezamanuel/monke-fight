@@ -29,10 +29,10 @@ namespace Monke.Gameplay.Actions
             BasicBullet basicBullet = basicBullet_no.GetComponent<BasicBullet>();
             var characterAttributes = serverCharacter.m_CharacterAttributes;
             basicBullet.Initialize(serverCharacter.OwnerClientId,
-             characterAttributes.m_BulletSpeed, 
-             characterAttributes.m_BulletForce,
-              characterAttributes.m_BulletDamage,
-               characterAttributes.m_BulletSize,
+             characterAttributes.m_BulletSpeed.Value, 
+             characterAttributes.m_BulletForce.Value,
+              characterAttributes.m_BulletDamage.Value,
+               characterAttributes.m_BulletSize.Value,
                m_Data.m_Direction);
             End();
         }
