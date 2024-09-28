@@ -57,10 +57,9 @@ namespace Monke.Gameplay.Character
             }
         }
         private void InitializeActionCooldowns(){
-            int i = 0;
             foreach (var action_id in m_ActionSlots){
                 Action action_prototype = GameDataSource.Instance.GetActionPrototypeByID(action_id);
-                m_ActionCooldowns[i] = action_prototype.defaultCooldown;
+                m_ActionCooldowns.Add(action_prototype.defaultCooldown);
             }
         }
         private void InitializeAttributes(){
@@ -113,9 +112,12 @@ namespace Monke.Gameplay.Character
         }
         private void Awake(){
             InitializeAttributes();
+            
+
+        }
+        void Start(){
             InitializeActionSlots();
             InitializeActionCooldowns();
-
         }
 
         override public void OnNetworkSpawn(){
