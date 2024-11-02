@@ -18,7 +18,7 @@ namespace Monke
         private ulong WinnerClientId;
         private Dictionary<ulong, int> m_ConnectedClientLives = new Dictionary<ulong, int>();
 
-        static int m_MaxLives = 5;
+        static int m_MaxLives = 3;
 
         void Awake()
         {
