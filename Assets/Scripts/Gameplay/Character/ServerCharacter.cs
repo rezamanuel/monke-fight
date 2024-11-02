@@ -42,9 +42,7 @@ namespace Monke.Gameplay.Character
         }
         public void InitializeCharacter()
         {
-            Debug.Log("Initializing Character" + this.NetworkObject.OwnerClientId + " with prev HP" + HitPoints);
             InitializeHitPoints();
-            Debug.Log("Initializing Character" + this.NetworkObject.OwnerClientId + " with cur HP" + HitPoints);
         }
         public void Update(){
             
@@ -116,7 +114,7 @@ namespace Monke.Gameplay.Character
 
         void InitializeHitPoints()
         {
-            HitPoints = m_CharacterAttributes.m_MaxHealth.Value;
+            HitPoints =  m_CharacterAttributes.m_MaxHealth.Value;
         }
 
     }

@@ -15,13 +15,14 @@ namespace Monke.UI
         [SerializeField] ServerCharacterAttributes m_CharacterAttributes;
 
         // Start is called before the first frame update
-        void Awake(){
+        void Start()
+        {
             m_Slider = GetComponent<Slider>();
-            m_NetworkHealthState = GetComponentInParent<NetworkHealthState>();
+            m_CharacterAttributes = GetComponentInParent<ServerCharacterAttributes>();
         }
         void OnEnable()
         {
-            
+            Debug.Log("HealthBar: OnEnable");
             m_NetworkHealthState.HitPoints.OnValueChanged += UpdateHealthBar;
         }
          void OnDisable()
@@ -31,9 +32,11 @@ namespace Monke.UI
 
         private void UpdateHealthBar(int previousValue, int newValue)
         {
-            Debug.Log("HealthBar: " + newValue);
-            m_Slider.value = newValue;
             m_Slider.maxValue = m_CharacterAttributes.m_MaxHealth.Value;
+            Debug.Log("HealthBar: newValue" + newValue + " previousValue: " + previousValue);
+            m_Slider.value = newValue;
+            Debug.Log("HealthBar: m_Slider.value" + m_Slider.value);
+            
         }
 
 
