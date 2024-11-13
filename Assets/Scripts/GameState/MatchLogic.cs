@@ -15,6 +15,7 @@ namespace Monke.GameState
     {
         List<NetworkClient> m_ClientTurnQueue;
         public bool gameStarted { private set; get; } = false;
+        [SerializeField] Monke.Infrastructure.GameConfig m_GameConfig;
 
         protected void Awake()
         {
@@ -48,7 +49,12 @@ namespace Monke.GameState
                             Debug.Log("Client added to queue: " + client.ClientId);
                             // if NetworkManager has at least 2 players connected, load CardSelect.
                             if(m_ClientTurnQueue.Count > 1){
-                                SceneLoaderWrapper.Instance.LoadScene("CardSelect", true, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+                                if(m_GameConfig.skipCardSelect){
+                                    SceneLoaderWrapper.Instance.LoadScene("Fight", true, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+                                }
+                                else{
+                                    SceneLoaderWrapper.Instance.LoadScene("CardSelect", true, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+                                }
                             }
                         }
                     }
