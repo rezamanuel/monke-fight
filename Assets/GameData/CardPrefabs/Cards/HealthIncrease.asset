@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BuffTypes: 05000000
   m_Buffs:
-  - 50
+  - 10
   m_CardRarity: 0
   m_UICardPrefab: {fileID: 6700401748807304244, guid: c5268d77d9cc7c24cba95d977b1caa04, type: 3}

@@ -5,16 +5,33 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1458632788167966159, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -70.6325
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458632788167966159, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458632788167966159, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458632788167966159, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1943559787703955276, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}
       propertyPath: m_Card
       value: 
       objectReference: {fileID: 11400000, guid: edde51baf5892d04abe90e6c80750738, type: 2}
+    - target: {fileID: 2647099330556539920, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}
+      propertyPath: m_text
+      value: Damage Increase
+      objectReference: {fileID: 0}
     - target: {fileID: 2905462202341128019, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -111,5 +128,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: DamageIncrease
       objectReference: {fileID: 0}
+    - target: {fileID: 8862588147486038978, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a7c28e7693f545f47b6038f34d9cc77f, type: 3}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 235b069a13dc9e74bae1249b31fee540, type: 3}

@@ -24,13 +24,15 @@ namespace Monke.Gameplay.Character
             for (int i = 0; i < num; i++)
             {
                 int random_num = Random.Range(0, 100); // roll d100
-                if(random_num < 75){
-                    m_DrawnCards.Add(GameDataSource.Instance.GetRandomCard(CardRarity.Common));
-                }else if(random_num <90){
-                    m_DrawnCards.Add(GameDataSource.Instance.GetRandomCard(CardRarity.Rare));
-                }else{
-                    m_DrawnCards.Add(GameDataSource.Instance.GetRandomCard(CardRarity.Legendary));
-                }
+
+                m_DrawnCards.Add(GameDataSource.Instance.GetRandomCard(CardRarity.Common));
+                // if(random_num < 75){
+                    
+                // }else if(random_num <90){
+                //     m_DrawnCards.Add(GameDataSource.Instance.GetRandomCard(CardRarity.Rare));
+                // }else{
+                //     m_DrawnCards.Add(GameDataSource.Instance.GetRandomCard(CardRarity.Legendary));
+                // }
             }
         }
         public void ClearDrawnCards(){
