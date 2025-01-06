@@ -10,7 +10,7 @@ public class Instantiator : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(!IsOwner){
+        if(!IsOwner && m_SpawnButton != null){
             m_SpawnButton.SetActive(false);
             enabled = false;
         }
@@ -22,9 +22,11 @@ public class Instantiator : NetworkBehaviour
         GameObject go = NetworkManager.Instantiate(m_GameObjectToSpawn) as GameObject;
         Rigidbody rb = go.GetComponent<Rigidbody>();
         go.GetComponent<NetworkObject>().SpawnAsPlayerObject(client_id);
-        rb.isKinematic = false;
+
+        //rb.isKinematic = false;
     }
     public void hideUI(){
+        if(m_SpawnButton != null)
         m_SpawnButton.SetActive(false);
     }
 

@@ -68,9 +68,9 @@ namespace Systems{
             
             // UNCOMMENT BELOW FOR STEAM-COMPATIBLE BUILD
             
-            yield return new WaitUntil(() => SteamSettings.Initialized);
+            // yield return new WaitUntil(() => SteamSettings.Initialized);
 
-            Debug.Log( "Steam API is initialized. Starting Scene Load");
+            // Debug.Log( "Steam API is initialized. Starting Scene Load");
             // Must load the scene additively, meaning no scene unloaded
             // For additive structure, manually specify what scene gets unloaded and when.
             // never unload bootstrap; will house camera, other system-level things.

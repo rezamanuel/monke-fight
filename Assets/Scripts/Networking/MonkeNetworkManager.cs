@@ -10,6 +10,10 @@ namespace Monke.Networking
         void OnLoadEventCompleted (){
             SceneLoaderWrapper.Instance.AddOnSceneEventCallback();
         }
+        // called for local multiplayer 
+        public void StartHostLocal(){
+            StartHost();
+        }
     }
 
 }

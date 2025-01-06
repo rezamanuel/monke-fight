@@ -16,7 +16,7 @@ namespace Monke
         public event Action OnMatchEnd;
         public event Action OnRoundEnd;
         private ulong WinnerClientId;
-        private Dictionary<ulong, int> m_ConnectedClientLives = new Dictionary<ulong, int>();
+        [SerializeField] private Dictionary<ulong, int> m_ConnectedClientLives = new Dictionary<ulong, int>();
 
         static int m_MaxLives = 3;
 

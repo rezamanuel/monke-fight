@@ -1,3 +1,4 @@
+#if (UNITY_EDITOR) 
 using System.Collections;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -163,3 +164,5 @@ using UnityEngine;
             return EditorSceneManager.GetActiveScene().name.StartsWith(k_TestRunnerSceneName);
         }
     }
+
+#endif
