@@ -4778,10 +4778,10 @@ MonoBehaviour:
   m_ArmTarget: {fileID: 1562463611455679847}
   m_MousePosition: {x: 0, y: 0}
   m_MovementInput: {x: 0, y: 0}
-  jumpHeight: 5.19
-  timeToJumpApex: 0.42
+  jumpHeight: 5.45
+  timeToJumpApex: 0.26
   m_MoveSpeed: 10.83
-  movementLerpPercent: 1.87
+  movementLerpPercent: 1.63
   shootOrigin: {fileID: 1966517857933676204}
   m_PlayerController: {fileID: 6861601635294777439}
 --- !u!114 &712207777497342715
